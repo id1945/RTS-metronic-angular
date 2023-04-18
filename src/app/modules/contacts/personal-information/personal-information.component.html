@@ -1,0 +1,355 @@
+<div class="row">
+  <div class="col-xxl-12 order-1 order-xxl-1">
+    <!--begin::Header-->
+    <h5 class="card-title font-weight-bolder text-primary-gray mb-2">
+      {{'COMPANY_INFO.STAFFS.DETAIL.title' | translate}}
+    </h5>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="row col-12 alert alert-custom alert-white mx-0 p box-shadow">
+      <div class="col-2 pl-0">
+        <div>
+          <div class="symbol symbol-circle symbol-100" >
+            <img [src]="InfoNhanVien?.anhDaiDien" onError="this.src='assets/media/users/blank.png'" width="100px" height="100px" alt="image">
+          </div>
+          <div class="symbol symbol-lg-100 symbol-circle symbol-primary d-none">
+            <span class="font-size-h3 font-weight-boldest">JM</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-10">
+        <!--begin::Title-->
+        <div class="d-flex flex-column row py-3 m-0">
+          <a class="text-blue-01 font-weight-bold text-hover-primary font-size-h4 mb-0">{{InfoNhanVien?.hoTen}}</a>
+          <span class="text-primary-dark-5 font-weight-bold">{{InfoNhanVien?.tenChucVu}}</span>
+        </div>
+        <div class="d-flex justify-content-start align-items-center my-2">
+
+          <span class="bg-light mr-2">
+            <i class="la la-envelope-open-text text-blue-01 p-2"></i>
+          </span>
+          <a class="text-dark text-hover-primary font-weight-bold mr-2">{{InfoNhanVien?.emailCongTy}}</a>
+
+          <span class="bg-light mr-2">
+            <i class="la la-phone text-blue-01 p-2"></i>
+          </span>
+          <a class="text-dark text-hover-primary font-weight-bold mr-2">{{InfoNhanVien?.soDienThoai}}</a>
+
+          <!-- <div class="d-flex justify-content-start align-items-center my-2">
+            <span class="bg-light mr-2">
+              <i class="la la-map-marker-alt text-blue-01 p-2"></i>
+            </span>
+            <a class="text-dark text-hover-primary font-weight-bold mr-2">{{InfoNhanVien?.diaChiCuTru}}</a>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+    <!--end::Body-->
+  </div>
+</div>
+<div class="d-flex flex-row">
+  <!--begin::Aside-->
+  <div class="flex-row-auto offcanvas-mobile w-300px w-xl-400px w-xxl-500px box-shadow" id="kt_profile_aside">
+    <div class="card-header py-3 ">
+      <div class="card-title align-items-start flex-column">
+        <h3 class="card-label font-weight-bolder text-dark">{{'COMPANY_INFO.STAFFS.DETAIL.title' | translate}}</h3>
+      </div>
+    </div>
+    <div class="card card-custom card-stretch">
+      <!--begin::Body-->
+      <!--begin::Card-->
+      <div class="card card-custom card-stretch">
+        <!--begin::Body-->
+        <div class="card-body pt-4 employee_box px-4">
+
+          <!--begin::Info-->
+          <div class="mb-7 px-5">
+            <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  {{'COMPANY_INFO.STAFFS.DETAIL.fullName' | translate}}
+                </span>
+              </div>
+              <div class="col-8 ">
+                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                  style="font-size: 15px;">{{InfoNhanVien?.hoTen}}</a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  {{'COMPANY_INFO.STAFFS.DETAIL.position' | translate}}
+                </span>
+              </div>
+              <div class="col-8">
+                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                  style="font-size: 15px;">{{InfoNhanVien?.tenChucVu}}</a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  {{'COMPANY_INFO.STAFFS.DETAIL.department' | translate}}
+                </span>
+              </div>
+              <div class="col-8">
+                <a class="text-primary-dark font-weight-bold text-hover-primary  mb-0"
+                  style="font-size: 15px;">{{InfoNhanVien?.tenPhongBan}}</a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  Email
+                </span>
+              </div>
+              <div class="col-8 scroll-gray">
+                <a class="text-primary-dark font-weight-bold text-hover-primary  mb-0"
+                  style="font-size: 15px;">{{InfoNhanVien?.emailCongTy}}</a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  {{'COMPANY_INFO.STAFFS.DETAIL.phoneCompany' | translate}}
+                </span>
+              </div>
+              <div class="col-8 scroll-gray">
+                <a class="text-primary-dark font-weight-bold text-hover-primary  mb-0"
+                  style="font-size: 15px;">{{InfoNhanVien?.soMayLe}}</a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  {{'COMPANY_INFO.STAFFS.DETAIL.phoneNumber' | translate}}
+                </span>
+              </div>
+              <div class="col-8 scroll-gray">
+                <a class="text-primary-dark font-weight-bold text-hover-primary  mb-0"
+                  style="font-size: 15px;">{{InfoNhanVien?.soDienThoai}}</a>
+              </div>
+            </div>
+            <!-- <div class="d-flex justify-content-start align-items-center my-2 py-3">
+              <div class="col-4 pl-0">
+                <span class="mr-5">
+                  Đia chỉ cư trú
+                </span>
+              </div>
+            </div> -->
+            <!-- <div class="d-flex justify-content-start align-items-center my-2">
+                <span class="mr-5">
+                  <i class="la la-phone text-primary-dark p-2"></i>
+                </span>
+                <a class="text-dark text-hover-primary font-weight-bold">{{InfoNhanVien?.soDienThoai}}</a>
+              </div>
+              <div class="d-flex justify-content-start align-items-center my-2">
+                <span class="mr-5">
+                  <i class="la la-map-marker-alt text-primary-dark p-2"></i>
+                </span>
+                <a class="text-dark text-hover-primary font-weight-bold">{{InfoNhanVien?.diaChiCuTru}}</a>
+              </div> -->
+          </div>
+          <!--end::Info-->
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Card-->
+      <!--end::Body-->
+    </div>
+  </div>
+  <!--end::Aside-->
+
+  <!--begin::Content-->
+  <div class="flex-row-fluid ml-lg-8">
+    <div class="">
+      <div class="card card-custom">
+        <div class="card-body p-0">
+          <!--begin: Wizard-->
+          <div class="wizard wizard-3">
+            <!--begin: Wizard Nav-->
+            <div class="wizard-nav">
+              <div class="wizard-steps px-2 px-xxl-15 py-8 py-xxl-3">
+                <!--begin::Wizard Step 1 Nav-->
+                <div class="wizard-step" [class.active]="step == 1" (click)="step = 1">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span class="bg-light mx-2">
+                        <i class="flaticon-suitcase icon-2x text-primary-dark p-2"></i>
+                      </span> {{'COMPANY_INFO.STAFFS.DETAIL.work_history' | translate}}
+                    </h3>
+                    <div class="wizard-bar"></div>
+                  </div>
+                </div>
+                <!--end::Wizard Step 1 Nav-->
+                <!--begin::Wizard Step 2 Nav-->
+                <div class="wizard-step" [class.active]="step == 2" (click)="step = 2">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span class="bg-light mx-2">
+                        <i class="flaticon-comment icon-2x text-primary-dark p-2"></i>
+                      </span>{{'COMPANY_INFO.STAFFS.DETAIL.comment' | translate}} 
+                    </h3>
+                    <div class="wizard-bar"></div>
+                  </div>
+
+                </div>
+                <!--end::Wizard Step 2 Nav-->
+                <!--begin::Wizard Step 3 Nav-->
+                <div class="wizard-step" [class.active]="step == 3" (click)="step = 3">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span class="bg-light mx-2">
+                        <i class="flaticon-calendar-3 icon-2x text-primary-dark p-2"></i>
+                      </span>{{'COMPANY_INFO.STAFFS.DETAIL.schedule' | translate}} 
+                    </h3>
+                    <div class="wizard-bar"></div>
+
+                  </div>
+                </div>
+                <!--end::Wizard Step 3 Nav-->
+                <!--begin::Wizard Step 4 Nav-->
+                <div class="wizard-step" [class.active]="step == 4" (click)="step = 4">
+                  <div class="wizard-label">
+                    <h3 class="wizard-title">
+                      <span class="bg-light mx-2">
+                        <i class="flaticon2-image-file icon-2x text-primary-dark p-2"></i>
+                      </span>{{'COMPANY_INFO.STAFFS.DETAIL.image' | translate}} 
+                    </h3>
+                    <div class="wizard-bar"></div>
+                  </div>
+                </div>
+                <!--end::Wizard Step 4 Nav-->
+              </div>
+            </div>
+            <!--end: Wizard Nav-->
+            <!--begin: Wizard Body-->
+            <div class="row justify-content-center py-3 px-3 py-lg-3 px-lg-3">
+              <div class="col-xl-12 col-xxl-11">
+                <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form">
+                 
+                  <div class="pb-10" *ngIf="step == 1">
+                    <h4 class="mb-10 font-weight-bold text-dark">{{'COMPANY_INFO.STAFFS.DETAIL.work_history' | translate}} {{InfoNhanVien?.hoTen}}</h4>
+                    <div class="flex-wrap w-100 pr-3 scroll-gray">
+                      <!-- <ng-container>
+                        <div class="d-flex align-items-center mb-10">
+                          <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                            <span class="symbol-label">
+                              <i class="flaticon-suitcase icon-2x text-primary-dark p-2"></i>
+                            </span>
+                          </div>
+                          <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                            <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                              style="font-size: 15px;">Đi công tác Ninh Bình</a>
+                            <span class="text-muted">01/05/2021 - 06/05/2021</span>
+                          </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-10">
+                          <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                            <span class="symbol-label">
+                              <i class="flaticon-suitcase icon-2x text-primary-dark p-2"></i>
+                            </span>
+                          </div>
+                          <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                            <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                              style="font-size: 15px;">Đi công tác Hồ chí minh</a>
+                            <span class="text-muted">01/05/2021 - 06/05/2021</span>
+                          </div>
+                        </div>
+                      </ng-container> -->
+                    </div>
+                  </div>
+                  <div class="pb-5" *ngIf="step == 2">
+                    <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                      <input class="form-control form-control-lg form-control-solid" style="height: 60px;" type="text"
+                        placeholder="Cảm nghĩ của bạn về {{InfoNhanVien?.hoTen}} ?" />
+                    </div>
+
+                    <div class="d-flex justify-content-start align-items-center my-2 py-3">
+                      <button class="box-shadow btn btn-facebook" style="width: 180px;font-size: 15px;">Thêm nhận
+                        xét</button>
+
+                      <button class="box-shadow btn font-weight-bold text-primary-dark"
+                        style="width: 180px;margin-left: 20px;font-weight: bold;font-size: 15px;">Cancel</button>
+                    </div>
+
+                    <h4 class="mb-10 font-weight-bold text-dark" style="margin-top: 20px;">Mọi người nghĩ gì về
+                      {{InfoNhanVien?.hoTen}} ?</h4>
+
+                    <div class="flex-wrap w-100 pr-3 scroll-gray">
+                      <!-- <ng-container>
+                        <div class="d-flex align-items-center mb-10">
+                          <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                            <div class="symbol symbol-circle symbol-lg-75">
+                              <img [src]="InfoNhanVien?.anhDaiDien"
+                                onError="this.src='assets/media/users/person_1.svg'" alt="image">
+                            </div>
+                          </div>
+                          <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                            <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                              style="font-size: 15px;">Lê Văn Cẩn</a>
+                            <input class="form-control form-control-lg form-control-solid"
+                              style="height: 60px;margin-top: 10px;" type="text" readonly
+                              value="{{InfoNhanVien?.hoTen}} là một người dễ mến, gần gũi với đồng nghiệp, tôi rất yêu quí anh ấy!!! " />
+                          </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-10">
+                          <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                            <div class="symbol symbol-circle symbol-lg-75">
+                              <img [src]="InfoNhanVien?.anhDaiDien"
+                                onError="this.src='assets/media/users/person_2.svg'" alt="image">
+                            </div>
+                          </div>
+                          <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                            <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                              style="font-size: 15px;">Nguyễn Thị Thúy Hằng</a>
+                            <input class="form-control form-control-lg form-control-solid"
+                              style="height: 60px;margin-top: 10px;" type="text" readonly
+                              value="Một chàng trai hoà đồng, luôn giúp đỡ mọi người. Một người sếp tốt, không ngại khó khăn khi gặp công việc khó.! " />
+                          </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-10">
+                          <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                            <div class="symbol symbol-circle symbol-lg-75">
+                              <img [src]="InfoNhanVien?.anhDaiDien"
+                                onError="this.src='assets/media/users/person_1.svg'" alt="image">
+                            </div>
+                          </div>
+                          <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2 ">
+                            <a class="text-primary-dark font-weight-bold text-hover-primary mb-0"
+                              style="font-size: 15px;">Lê Văn Cẩn</a>
+                            <input class="form-control form-control-lg form-control-solid"
+                              style="height: 60px;margin-top: 10px;" type="text" readonly
+                              value="Rất hoà đồng, thân thiện và gần gũi với đồng nghiệp, tôi rất yêu quí anh ấy!!!  " />
+                          </div>
+                        </div>
+                      </ng-container> -->
+                    </div>
+                  </div>
+                  <div class="pb-5" *ngIf="step == 3">
+                    <h4 class="mb-10 font-weight-bold text-dark">{{'COMPANY_INFO.STAFFS.DETAIL.schedule' | translate}}  {{InfoNhanVien?.hoTen}}</h4>
+
+
+
+                  </div>
+                  <div class="pb-5" *ngIf="step == 4">
+                    <h4 class="mb-10 font-weight-bold text-dark">{{'COMPANY_INFO.STAFFS.DETAIL.image' | translate}} của {{InfoNhanVien?.hoTen}}</h4>
+                    <div class="my-5">
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!--end: Wizard Body-->
+          </div>
+          <!--end: Wizard-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end::Content-->
+</div>

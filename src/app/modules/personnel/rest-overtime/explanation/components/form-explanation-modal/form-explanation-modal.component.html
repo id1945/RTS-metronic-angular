@@ -1,0 +1,180 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Thông tin chi tiết'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup" (submit)="onSubmit()">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mã nhân viên
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="userInfo?.maNhanVien" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Họ tên
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="userInfo?.hoTen" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Chức danh	
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="userInfo?.chucVu" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Đơn vị
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="userInfo?.phongBan" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ngày giải trình
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="dataDetail?.WORKINGDAY | date: 'dd-MM-yyyy'" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ca làm việc
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="dataDetail?.SHIFT_CODE" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Lần đầu:
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="dataDetail?.VALIN1 | date: 'HH:mm'" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Lần cuối: 
+                </div>
+                <div class="col-12 col-md-7">
+                    <input [value]="dataDetail?.VALIN4 | date: 'HH:mm'" class="form-control input_42" readonly disabled/>
+                </div>
+            </div>
+        
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại kiểu công<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select
+                        formControlName="SymbolId"
+                        [nzOptions]="typeExplainOptions"
+                        nzShowSearch nzAllowClear 
+                        nzPlaceHolder="Loại kiểu công"
+                        style="width: 100%">
+                    </nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.SymbolId?.errors && f?.SymbolId?.touched">
+                        Loại kiểu công là bắt buộc
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại lý do<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select
+                        formControlName="Reason_Id"
+                        [nzOptions]="typeReasonOptions"
+                        nzShowSearch nzAllowClear 
+                        nzPlaceHolder="Loại lý do"
+                        style="width: 100%">
+                    </nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.Reason_Id?.errors && f?.Reason_Id?.touched">
+                        Loại lý do là bắt buộc
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Từ giờ<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-time-picker formControlName="FROMHOUR" nzFormat="HH:mm" class="form-control input_42"></nz-time-picker>
+                    <div class="form-text text-danger" *ngIf="f?.FROMHOUR?.errors && f?.FROMHOUR?.touched">
+                        Từ giờ là bắt buộc
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Đến giờ<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-time-picker formControlName="TOHOUR" nzFormat="HH:mm" class="form-control input_42"></nz-time-picker>
+                    <div class="form-text text-danger" *ngIf="f?.TOHOUR?.errors && f?.TOHOUR?.touched">
+                        Đến giờ là bắt buộc
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2 ctrl_label">
+                    Lý do<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-10">
+                    <textarea formControlName="Remark" cols="30" rows="3" placeholder="Lý do" class="w-100 form-control input_42 pt-3"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.Remark?.errors && f?.Remark?.touched">
+                        Lý do là bắt buộc
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 w_130 py-3 mr-2" 
+                    (nzOnCancel)="isVisible = false" 
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 w_130 py-3" (click)="onSubmit()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

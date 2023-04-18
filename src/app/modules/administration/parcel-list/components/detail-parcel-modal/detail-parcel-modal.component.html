@@ -1,0 +1,75 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="925" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="isVisible = false" [nzTitle]="'Chi tiết bưu phẩm của tôi'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 250px);">
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Tên người tạo
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenNguoiTao}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Tên người gửi
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenNguoiGui}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Số điện thoại gửi
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.sdtNguoiGui}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Địa chỉ
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.diaChi}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Mã bưu phẩm
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.maBuuPham}}
+            </div>
+        </div>
+        <!-- <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Hình thức
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.hinhThucDisplay}}
+            </div>
+        </div> -->
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 w_130 mr-2" (click)="isVisible = false">Đóng</button>
+            <button 
+                class="btn btn-danger btn-14 py-3 mr-2"
+                *ngIf="dataDetail?.isAllowXacNhan" 
+                nz-popconfirm
+                nzPopconfirmTitle="Bạn có chắc chắn không nhận bưu phẩm này không ?"
+                (nzOnConfirm)="onReject(dataDetail?.buuPhamId)">Không nhận</button>
+            <button
+                class="btn btn-primary btn-14 py-3"
+                *ngIf="dataDetail?.isAllowXacNhan" 
+                nz-popconfirm
+                nzPopconfirmTitle="Bạn có chắc chắn nhận bưu phẩm này không ?"
+                (nzOnConfirm)="onSubmit(dataDetail?.buuPhamId)">Xác nhận sẽ nhận</button>
+        </div>
+    </div>
+</nz-modal>

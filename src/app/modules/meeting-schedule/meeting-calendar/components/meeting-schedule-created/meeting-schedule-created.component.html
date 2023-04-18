@@ -1,0 +1,27 @@
+<!--begin::Card-->
+<div class="card card-custom card-stretch">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Các lịch họp đã tạo</h3>
+        </div>
+    </div>
+    <div class="card-body py-0 scroll-gray-8" style="height: 500px;">
+        <div class="d-flex align-items-center border-bottom py-2" *ngFor="let item of lichHopDaTao">
+            <!--begin::Bullet-->
+            <span class="bullet bullet-bar bg-success align-self-stretch mr-3"></span>
+            <!--end::Bullet-->
+            <!--begin::Text-->
+            <div class="d-flex flex-column flex-grow-1">
+                <a href="javascript:void(0)" (click)="detail.emit(item)" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">{{item?.tieuDe}} - {{item?.tenPhongHop || 'Họp trực tuyến'}}</a>
+                <span class="text-muted font-weight-bold">{{item?.thoiGianBatDau * 1000 | date: 'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+            <div class="d-flex align-content-center justify-content-end">
+                <i *ngIf="item?.isAllowEdit" class="far fa-edit icon-md align-self-center cursor-pointer text-warning m-2" title="Huỷ bỏ" (click)="edit.emit(item)"></i>
+                <i *ngIf="item?.isAllowHuy" class="fas fa-trash-alt icon-md align-self-center cursor-pointer text-danger m-2" title="Huỷ bỏ" (click)="reject?.showModal(item)"></i>
+            </div>
+            <!--end::Text-->
+        </div>
+    </div>
+</div>
+<!--end::Card-->
+<app-reject-modal #reject="reject" (loadList)="getList(); loadList.emit()"></app-reject-modal>

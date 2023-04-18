@@ -1,0 +1,388 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="925" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="saveDraft()" nzTitle="Thêm mới đăng ký Văn phòng phẩm">
+    <div class="card card-custom form_step">
+        <div class="card-body py-0">
+            <!--begin: Step -->
+            <div class="steps">
+                <div class="step">
+                    <div class="step_number" [class.bg-primary-1]="step === 1" [class.text-white]="step === 1"
+                        (click)="nextStep(1)">1</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 1">Thông tin đề nghị</div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step">
+                    <div class="step_number" [class.bg-primary-1]="step === 2" [class.text-white]="step === 2"
+                        (click)="nextStep(2)">2</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 2">Lựa chọn mặt hàng</div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step">
+                    <div class="step_number" [class.bg-primary-1]="step === 3" [class.text-white]="step === 3"
+                        (click)="nextStep(3)">3</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 3">Chi tiết mặt hàng</div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step">
+                    <div class="step_number" [class.bg-primary-1]="step === 4" [class.text-white]="step === 4"
+                        (click)="nextStep(4)">4</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 4">Hoàn Thành</div>
+                </div>
+            </div>
+            <!--end: Step -->
+        </div>
+
+        <div [ngClass]="{'d-block': step == 1, 'd-none': step != 1}" class="card-body scroll-gray-8 mt-7 py-0 px-10"
+            style="max-height: calc(100vh - 330px);">
+            <form [formGroup]="formGroup1">
+                <div class="row mb-8">
+                    <div class="col-5 ctrl_label">
+                        Người đề nghị
+                    </div>
+                    <div class="col-7">
+                        <input type="text" [value]="auth?.currentUserValue?.hoTen" class="form-control input_42"
+                            placeholder="Người đề nghị" readonly disabled>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-5 ctrl_label">
+                        Bộ phận
+                    </div>
+                    <div class="col-7">
+                        <input type="text" [value]="auth?.currentUserValue?.phongBan" class="form-control input_42" placeholder="Bộ phận"
+                            readonly disabled>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-5 ctrl_label">
+                        Khu vực <span class="text-danger"> (*)</span>
+                    </div>
+                    <div class="col-7 select_42">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Lựa chọn" [nzOptions]="khuVucOptions"
+                            formControlName="khuVucKey" style="width: 100%;" [nzDisabled]="hoSoId">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f1?.khuVucKey?.errors && f1?.khuVucKey?.touched">
+                            <span>Khu vực là bắt buộc nhập</span>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div [ngClass]="{'d-block': step == 2, 'd-none': step != 2}" class="card-body scroll-gray-8 mt-7 py-0 px-10"
+            style="max-height: calc(100vh - 330px);">
+            <div class="row mb-5">
+                <div class="col-12 input-group">
+                    <div class="input-group-prepend position-relative">
+                        <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 15px; right: 15px;"></i>
+                        <input type="text" class="form-control w_300" (input)="onSearchMatHang($event.target.value)" placeholder="Tìm kiếm..." />
+                    </div>
+                </div>
+            </div>
+            <table class="table table_classic table_40">
+                <thead>
+                    <tr>
+                        <th class="text-center"><label nz-checkbox [ngModel]="isAllChecked" (ngModelChange)="selectAll($event, matHangs)"></label></th>
+                        <th>Mặt hàng</th>
+                        <th>Đơn vị tính</th>
+                        <th class="text-right">Đơn giá</th>
+                        <th class="text-right">VAT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of matHangsFound" class="cursor-pointer">
+                        <td class="text-center">
+                            <label nz-checkbox [(ngModel)]="item.checked" (ngModelChange)="selectOne($event, item)"></label>
+                        </td>
+                        <td>{{item?.matHangDisplay}}</td>
+                        <td>{{item?.donViTinhDisplay}}</td>
+                        <td class="text-right">{{item?.donGia}}</td>
+                        <td class="text-right">{{item?.vat}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div [ngClass]="{'d-block': step == 3, 'd-none': step != 3}" class="card-body scroll-gray-8 mt-7 py-0 px-10"
+            style="max-height: calc(100vh - 330px);">
+            <form [formGroup]="formGroup2">
+                <table class="table table_classic table_40">
+                    <thead>
+                        <tr class="text-center">
+                            <th class="w_50 t_action">STT</th>
+                            <th class="w_150 text-nowrap">Mặt hàng<span class="text-danger"> (*)</span>
+                            </th>
+                            <th class="w_100">ĐVT<span class="text-danger"> (*)</span></th>
+                            <th class="w_110">Số lượng<span class="text-danger"> (*)</span></th>
+                            <!-- <th class="w_110">Đơn giá</th>
+                            <th class="w_60">VAT</th> -->
+                            <th class="w_200">Thành tiền</th>
+                            <th class="w_200">Người sử dụng<span class="text-danger"> (*)</span></th>
+                            <th class="w_110">Ghi chú</th>
+                            <th class="w_50 t_action">Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr formArrayName="fArray" *ngFor="let item of f2A['controls']; let i = index;">
+                            <ng-container [formGroupName]="i">
+                                <td>{{i + 1}}</td>
+                                <td>
+                                    <nz-select 
+                                        nzShowSearch 
+                                        nzAllowClear 
+                                        nzPlaceHolder="Lựa chọn" 
+                                        [nzDisabled]="true"
+                                        [nzOptions]="matHangOptions"
+                                        formControlName="matHangKey" 
+                                        style="width: 150px"
+                                        [class.is-invalid]="item?.controls?.matHangKey?.errors && item?.controls?.matHangKey?.touched">
+                                    </nz-select>
+                                </td>
+                                <td>
+                                    <nz-select
+                                        nzShowSearch
+                                        nzAllowClear
+                                        nzPlaceHolder="Lựa chọn"
+                                        [nzDisabled]="true"
+                                        [nzOptions]="donViTinhOptions"
+                                        formControlName="donViTinhKey"
+                                        style="width: 90px"
+                                        [class.is-invalid]="item?.controls?.donViTinhKey?.errors && item?.controls?.donViTinhKey?.touched">
+                                    </nz-select>
+                                </td>
+                                <td class="w_110">
+                                    <nz-input-number
+                                        [nzMin]="1"
+                                        [nzStep]="1"
+                                        [nzFormatter]="formatter"
+                                        [nzParser]="parser"
+                                        formControlName="soLuong"
+                                        (keyup)="handleCalc(item?.value, i)"
+                                        (click)="handleCalc(item?.value, i)"
+                                        [class.is-invalid]="item?.controls?.soLuong?.errors && item?.controls?.soLuong?.touched"
+                                        nzPlaceHolder="Nhập số lượng" class="w-100"
+                                    ></nz-input-number>
+                                </td>
+                                <!-- d-none ẩn đi -->
+                                <td class="w_110 d-none">
+                                    <nz-input-number
+                                        [nzMin]="0"
+                                        [nzStep]="1"
+                                        [nzFormatter]="formatter"
+                                        [nzParser]="parser"
+                                        [nzDisabled]="true"
+                                        formControlName="donGia" class="w-100"
+                                    ></nz-input-number>
+                                </td>
+                                <!-- d-none ẩn đi -->
+                                <td class="w_60 d-none">
+                                    <nz-input-number
+                                        [nzMin]="0"
+                                        [nzStep]="1"
+                                        [nzFormatter]="formatter"
+                                        [nzParser]="parser"
+                                        [nzDisabled]="true"
+                                        formControlName="vat" class="w-100"
+                                    ></nz-input-number>
+                                </td>
+                                <td class="w_200" [title]="item?.controls?.thanhTien?.value">
+                                    <nz-input-number
+                                        [nzMin]="0"
+                                        [nzStep]="1"
+                                        [nzFormatter]="formatter"
+                                        [nzParser]="parser"
+                                        formControlName="thanhTien" class="w-100 readonly"
+                                    ></nz-input-number>
+                                </td>
+                                <td>
+                                    <nz-select
+                                        nzMode="multiple"
+                                        nzPlaceHolder="Lựa chọn"
+                                        formControlName="nguoiSuDungKeys"
+                                        [nzOptions]="nguoiSuDungOptions"
+                                        [class.is-invalid]="item?.controls?.nguoiSuDungKeys?.errors && item?.controls?.nguoiSuDungKeys?.touched"
+                                        style="width: 200px">
+                                    </nz-select>
+                                </td>
+                                <td class="w_110">
+                                   <input placeholder="Ghi chú" formControlName="ghiChu" class="form-control-sm w_100">
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <button
+                                            nz-popconfirm
+                                            nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                            [nzIcon]="iconTpl"
+                                            [nzOkText]="'COMMON.btn.yes' | translate"
+                                            [nzCancelText]="'COMMON.btn.no' | translate"
+                                            class="btn btn-icon btn-hover"
+                                            (nzOnConfirm)="confirmRemoveRow(i, item?.controls?.matHangKey?.value)"
+                                            style="font-weight: 500; font-size: 14px">
+                                            <i class="fas fa-trash-alt icon-lg text-danger"></i></button>
+                                        <ng-template #iconTpl>
+                                            <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                        </ng-template>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </tr>
+                        <tr class="font-weight-bolder">
+                            <td colspan="2" class="border_top">Tổng</td>
+                            <td colspan="2" class="border_top text-right">
+                                <span class="truncate">{{soLuongTotal || 0 | number: '1.2-2'}}</span>
+                            </td>
+                            <td class="border_top"></td>
+                            <td colspan="2" class="border_top text-right">
+                                <span class="truncate">{{thanhTienTotal || 0 | number: '1.0'}}</span>
+                            </td>
+                            <td colspan="2" class="border_top"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <div [ngClass]="{'d-block': step == 4, 'd-none': step != 4}" class="card-body scroll-gray-8 py-0 px-10"
+            style="max-height: calc(100vh - 330px);">
+            <div class="pb-5">
+                <div class="header_a4">
+                    <div class="text-left">
+                        <div class="company"> CÔNG TY CỔ PHẦN LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM (HTV)</div>
+                        <!-- <div class="no">Số tờ trình: <b>3412MV921</b></div> -->
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240"></div>
+                        <div class="today">Hà Nội, Ngày {{today | date: 'dd'}} tháng {{today | date: 'MM'}} năm {{today
+                            | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">Đăng ký văn phòng phẩm</div>
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="text-blue-01">Thông tin đề nghị:</h4>
+                        <table class="table table_classic table_40 table_blue">
+                            <tbody>
+                                <tr>
+                                    <td class="pl-5 w_200">Người đề nghị</td>
+                                    <td>{{auth?.currentUserValue?.hoTen || '-'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-5 w_200">Bộ phận</td>
+                                    <td>{{auth?.currentUserValue?.phongBan || '-'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-5 w_200">Khu vực</td>
+                                    <td>{{getDisplayName('khuVucOptions', f1?.khuVucKey?.value) || '-'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-5 w_200">Ghi chú</td>
+                                    <td>{{f1?.ghiChu?.value || '-'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="text-blue-01">Chi tiết mặt hàng:</h4>
+                        <table class="table table_classic table_40 table_no table_blue">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th class="w_250">Mặt hàng</th>
+                                    <th class="w_70">ĐVT</th>
+                                    <th class="text-right w_70" >Số lượng</th>
+                                    <th class="text-right w_110" >Thành tiền</th>
+                                    <th class="w_150">Trạng thái</th>
+                                    <th class="w_110">Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of f2A?.value; let i = index; trackBy:trackByFn">
+                                    <td>{{i + 1}}</td>
+                                    <td [title]="getDisplayName('matHangOptions', item?.matHangKey)" class="truncate-2">
+                                        {{getDisplayName('matHangOptions', item?.matHangKey)}}
+                                    </td>
+                                    <td>
+                                        {{getDisplayName('donViTinhOptions', item?.donViTinhKey)}}
+                                    </td>
+                                    <td class="text-right">
+                                        {{item?.soLuong | number}}
+                                    </td>
+                                    <td class="text-right">
+                                        {{item?.thanhTien | number: '1.0'}}
+                                    </td>
+                                    <td>
+                                        {{getDisplayNameByKeys('nguoiSuDungOptions', item?.nguoiSuDungKeys)}}
+                                    </td>
+                                    <td class="text-right" [title]="item?.ghiChu">
+                                        <span class="truncate-2">{{item?.ghiChu}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="font-weight-bolder">
+                                    <td colspan="2" class="border_top">Tổng</td>
+                                    <td colspan="2" class="border_top text-right">
+                                        <span class="truncate">{{soLuongTotal || 0 | number: '1.2-2'}}</span>
+                                    </td>
+                                    <td class="border_top"></td>
+                                    <td colspan="2" class="border_top text-right">
+                                        <span class="truncate">{{thanhTienTotal || 0 | number: '1.0'}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="d-flex justify-content-between">
+                <div class="mr-2">
+                    <button *ngIf="step > 1" class="btn btn-light btn-14 py-3 w_130" (click)="prevStep()"
+                        [translate]="'COMMON.btn.before'">Trước</button>
+                </div>
+                <div>
+                    <div [ngSwitch]="step" class="d-flex">
+                        <div>
+                            <button 
+                                nz-popconfirm 
+                                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure_save_draft' | translate }}"
+                                [nzIcon]="iconTpl"
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                                (nzOnCancel)="removeDraft()" 
+                                (nzOnConfirm)="saveDraft()"
+                                [translate]="'COMMON.btn.cancel'">
+                            </button>
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </div>
+                        <div *ngSwitchCase="'1'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(2)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'2'">
+                            <div>
+                                <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(3)"
+                                    [translate]="'COMMON.btn.next'"></button>
+                            </div>
+                        </div>
+                        <div *ngSwitchCase="'3'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(4)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'4'">
+                            <button class="btn btn-primary btn-14 py-3 w_130 mr-2" (click)="hoSoId ? onEdit() : onCreate()"
+                                [translate]="'COMMON.btn.browser'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-modal>

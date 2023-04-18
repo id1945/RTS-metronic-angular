@@ -1,0 +1,52 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="600"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Kiểm tra phòng họp'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="fg">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Bộ phận <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="KhuVucKey" [nzOptions]="khuVucOptions" nzShowSearch nzAllowClear nzPlaceHolder="Chọn khu vực" style="width: 100%;"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.KhuVucKey?.errors && f?.KhuVucKey?.touched">
+                        <span>Thời gian kết thúc là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ghi chú cho lễ tân đặt phòng
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="NoteForLeTan" rows="3" placeholder="Ghi chú" class="form-control input_42 pt-3 min_h_42"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm 
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                (nzOnCancel)="isVisible = true" 
+                (nzOnConfirm)="isVisible = false">
+                Hủy
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()">Ghi lại</button>
+        </div>
+    </div>
+</nz-modal>

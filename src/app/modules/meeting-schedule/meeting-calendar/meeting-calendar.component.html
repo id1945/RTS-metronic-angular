@@ -1,0 +1,104 @@
+<div class="card card-custom">
+    <!--begin::Header-->
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Lịch làm việc</h3>
+        </div>
+        <div class="card-toolbar">
+            <button class="btn btn-primary mr-2" (click)="schedule?.showModal('create')"><i
+                    class="ki ki-plus icon-md mr-2"></i>Đặt lịch họp</button>
+            <button class="btn btn-primary" (click)="work?.showModal('create')">
+                <i class="ki ki-plus icon-md"></i>Thêm công việc
+            </button>
+        </div>
+    </div>
+    <!--end::Header-->
+
+    <!-- <pre>
+        {{events | json}}
+    </pre> -->
+
+    <!-- MenuContext -->
+    <ng-template
+        #cellTemplate
+        let-day="day"
+        let-openDay="openDay"
+        let-locale="locale"
+        let-tooltipPlacement="tooltipPlacement"
+        let-highlightDay="highlightDay"
+        let-unhighlightDay="unhighlightDay"
+        let-eventClicked="eventClicked">
+        <div
+            class="fill-height"
+            [class.bg_select]="day.events?.length > 0">
+            <div class="cal-cell-top">
+                <!-- badge -->
+                <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+                    {{ day.badgeTotal }}
+                </span>
+                <!-- day number -->
+                <span class="cal-day-number">
+                    {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+                </span>
+            </div>
+        </div>
+        <div
+            class="fill-height"
+            [class.bg_select]="day.events?.length > 0">
+            <!-- Content note on day! -->
+            <div 
+                *ngFor="let event of day.events" class="m-1 p-1"
+                [innerHTML]="event?.title | safe: 'html'"
+                (click)="event?.meta?.kieuCongViec == 1 ? schedule?.showModal('detail', event?.meta) : event?.meta?.isAllowEdit ? work?.showModal('edit', event?.meta) : work?.showModal('detail', event?.meta)"
+                [class.status-phonghop]="event?.meta?.kieuCongViec == 1"
+                [class.status-congviec]="event?.meta?.kieuCongViec == 2">
+            </div>
+        </div>
+    </ng-template>
+
+    <!--begin::Calendar-->
+    <div class="card-body">
+        <div class="gutter-b">
+            <div class="mt-5">
+                <mwl-utils-calendar-header
+                    [(view)]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="fetchCalendar($event)"
+                    [locale]="translate.currentLang">
+                </mwl-utils-calendar-header>
+            </div>
+            <div [ngSwitch]="view">
+                <mwl-calendar-month-view
+                    *ngSwitchCase="calendarView.Month" 
+                    [locale]="translate.currentLang"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [refresh]="refresh"
+                    [cellTemplate]="cellTemplate">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view *ngSwitchCase="calendarView.Week" [locale]="translate.currentLang" [viewDate]="viewDate" [events]="events"
+                    [refresh]="refresh">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view *ngSwitchCase="calendarView.Day" [locale]="translate.currentLang" [viewDate]="viewDate" [events]="events"
+                    [refresh]="refresh">
+                </mwl-calendar-day-view>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Danh sách chờ xác nhận -->
+                <app-confirmed-waiting #confirmedWaiting="confirmed-waiting" (loadList)="fetchCalendar()" (detail)="schedule?.showModal('detail', $event)"></app-confirmed-waiting>
+            </div>
+            <div class="col-lg-6">
+                <!-- Các lịch họp đã tạo -->
+                <app-meeting-schedule-created #meetingSchedule="meeting-schedule" (loadList)="fetchCalendar();" (edit)="schedule?.showModal('edit', $event)" (detail)="schedule?.showModal('detail', $event)"></app-meeting-schedule-created>
+            </div>
+        </div>
+    </div>
+    <!--end::Calendar-->
+</div>
+
+<!-- Modal create || edit || detail -->
+<app-form-schedule-modal #schedule="schedule" (loadList)="fetchCalendar();"></app-form-schedule-modal>
+<!-- Modal create || edit || detail -->
+<app-form-work-modal #work="work" (loadList)="fetchCalendar();"></app-form-work-modal>

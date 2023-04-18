@@ -1,0 +1,45 @@
+:host {
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    .image-box {
+      // flex: 1; // Full screen display: flex && flex: 1 && flex-basis: 200px;
+      display: inline-block;
+      border: solid 4px #fff;
+      box-shadow: 0 4px 8px -4px #000;
+      border-radius: 5px;
+      height: 200px;
+      margin: 0.5vmin;
+      overflow: hidden;
+      position: relative;
+
+      .item {
+        max-width: 100%;
+        height: inherit;
+        object-fit: cover;
+      }
+
+      /* background colours && width */
+
+      // &:nth-child(4n + 1) {
+      //   flex-basis: 200px;
+      //   background-image: radial-gradient(circle, yellow, orange);
+      // }
+
+      // &:nth-child(4n + 2) {
+      //   flex-basis: 200px;
+      //   background-image: radial-gradient(circle, lightblue, deepskyblue);
+      // }
+
+      // &:nth-child(4n + 3) {
+      //   flex-basis: 400px;
+      //   background-image: radial-gradient(circle, palegreen, yellowgreen);
+      // }
+
+      // &:nth-child(4n + 4) {
+      //   flex-basis: 200px;
+      //   background-image: radial-gradient(circle, lightcoral, tomato);
+      // }
+    }
+  }
+}

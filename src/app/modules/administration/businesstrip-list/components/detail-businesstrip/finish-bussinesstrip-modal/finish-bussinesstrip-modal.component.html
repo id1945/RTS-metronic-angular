@@ -1,0 +1,39 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Cập nhật kết thúc chuyến đi'"
+    (nzOnOk)="isVisible = false">
+
+    <form [formGroup]="formGroup">
+        <div class="col-12 row mb-5 px-8 my-10 mb-8 justify-content-around" style="margin-top: 100px;">
+            <div class="col-5 ctrl_label">
+             Km kết thúc <span *ngIf="f?.KmStart?.errors?.required" class="text-danger">(*)</span>
+            </div>
+            <div class="col-6">
+                <input formControlName="KmEnd" type="number" placeholder="Nhập Km kết thúc" class="form-control input_42" />
+                <div class="form-text text-danger" *ngIf="f?.KmEnd?.errors && f?.KmEnd?.touched">
+                    <span>Bạn phải nhập Km kết thúc.</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 row mb-5 px-8 my-10 mb-8 justify-content-around" style="margin-top: 100px;">
+            <div class="col-5 ctrl_label">
+            Vé gửi xe (Nếu có)
+            </div>
+            <div class="col-6">
+                <input formControlName="VeGuiXe" type="number" placeholder="Nhập vé gửi xe nếu có" class="form-control input_42" />
+            </div>
+        </div>
+    </form>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitApprove()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

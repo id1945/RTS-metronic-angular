@@ -1,0 +1,43 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Cập nhật mã vận đơn'"
+    (nzOnOk)="isVisible = false">
+
+    <form [formGroup]="formGroup">
+        <div class="col-12 row mb-5 px-8 my-10 mb-8 justify-content-around" style="margin-top: 100px;">
+            <div class="col-5 ctrl_label">
+              Mã vận đơn <span *ngIf="f?.maVanDon?.errors?.required" class="text-danger">(*)</span>
+            </div>
+            <div class="col-6">
+                <input formControlName="maVanDon" placeholder="Nhập mã vận đơn" class="form-control input_42" />
+                <div class="form-text text-danger" *ngIf="f?.maVanDon?.errors && f?.maVanDon?.touched">
+                    <span>Bạn phải nhập mã vận đơn.</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 row mb-5 px-8 my-10 mb-8 justify-content-around" style="margin-top: 100px;">
+            <div class="col-5 ctrl_label">
+              Đơn vị vận chuyển 
+            </div>
+            <div class="col-6">
+                <nz-radio-group formControlName="donViVanChuyenKey">
+                    <ng-container *ngFor="let item of loaiVanChuyenOptions">
+                        <label nz-radio [nzValue]="item.value">{{item.label}}</label>
+                    </ng-container>
+                </nz-radio-group>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitApprove()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

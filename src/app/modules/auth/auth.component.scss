@@ -1,0 +1,11 @@
+@import "../../../assets/sass/pages/login/login-1.scss";
+
+:host {
+  height: 100%;
+
+  .login-aside {
+    background: url('../../../assets/media/bg/bg_Portal.png') no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}

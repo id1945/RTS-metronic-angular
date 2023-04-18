@@ -1,0 +1,113 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="saveDraft()" [nzTitle]="dataRow?.baiVietId ? 'Cập nhật bài viết' : 'Thêm mới bài viết'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Nhóm bài viết<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="nhomBaiVietKey" [nzOptions]="nhomBaiVietOptions" nzShowSearch
+                        nzAllowClear nzPlaceHolder="Nhóm bài viết" style="width: 100%;">
+                    </nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.nhomBaiVietKey?.errors && f?.nhomBaiVietKey?.touched">
+                        <span>Nhóm bài viết là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tiêu đề <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tieuDe" placeholder="Tiêu đề" class="form-control input_42" />
+                    <input *ngIf="f?.tieuDe?.value" formControlName="tieuDeEng" placeholder="Tiêu đề tiếng anh" class="form-control input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.tieuDeEng?.errors && f?.tieuDeEng?.touched">
+                        <span>Tiêu đề là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ảnh đại diện bài viết
+                </div>
+                <div class="col-12 col-md-7 text-center">
+                    <app-select-file
+                        [reset]="true"
+                        [multiple]="false" 
+                        [acceptKey]="'image'" 
+                        [text]="'Tải ảnh lên'" 
+                        [(selectedFiles)]="selectedFiles">
+                    </app-select-file>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mô tả <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="moTa" cols="30" rows="4" placeholder="Mô tả" class="form-control"></textarea>
+                    <textarea *ngIf="f?.moTa?.value" formControlName="moTaEng" placeholder="Mô tả tiếng anh" cols="30" rows="4" class="form-control"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.moTaEng?.errors && f?.moTaEng?.touched">
+                        <span>Mô tả là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Nổi bật
+                </div>
+                <div class="col-12 col-md-7">
+                    <label nz-checkbox formControlName="isNoiBat">Chọn làm bài viết nổi bật</label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 ctrl_label mb-3">
+                    Nội dung bài viết <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12">
+                    <div [ngxSummernote]="config" formControlName="noiDung" class="position-relative"></div>
+                    <div [ngxSummernote]="config" formControlName="noiDungEng" *ngIf="f?.noiDung?.value" class="position-relative"></div>
+                    <div class="form-text text-danger" *ngIf="f?.noiDungEng?.errors && f?.noiDungEng?.touched">
+                        <span>Nội dung bài viết bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button 
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure_save_draft' | translate }}" 
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                    (nzOnCancel)="removeDraft()" 
+                    (nzOnConfirm)="saveDraft()">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="dataRow?.baiVietId ? onEdit() : onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

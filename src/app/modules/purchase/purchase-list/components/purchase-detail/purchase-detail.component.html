@@ -1,0 +1,265 @@
+<div class="detail">
+    <div class="d-flex flex-column-fluid title my-3">
+        {{'PURCHASE.CREATE.step_4.titlePurchaseDetail' | translate}}
+    </div>
+    <div *ngIf="dataDetail" class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="pb-5">
+                    <div class="detail_header">
+                        <div class="text-left">
+                            <div class="company">{{ 'PURCHASE.CREATE.step_4.companyName' | translate }}</div>
+                            <div class="no">Số YCMH: <b>{{dataDetail?.maYCMH}}</b></div>
+                        </div>
+                        <div class="text-right">
+                            <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240">
+                            </div>
+                            <div class="today">Hà Nội, Ngày {{dataDetail?.ngayTao * 1000 | date: 'dd'}} tháng {{dataDetail?.ngayTao * 1000 | date: 'MM'}} năm {{dataDetail?.ngayTao * 1000 | date: 'yyyy'}}</div>
+                        </div>
+                    </div>
+                    <div class="detail_name">
+                        <p>  {{'PURCHASE.CREATE.step_4.titlePurchaseDetail' | translate}}</p>
+                        <p class="i"> V/v : {{dataDetail?.mucDich || "-"}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div *ngIf="dataDetail?.isAllowPheDuyet==true">
+                                {{ 'PURCHASE.CREATE.step_4.dearLabel' | translate }} : {{ 'PURCHASE.CREATE.step_4.dearPerson' | translate }} : <b>{{tenNguoiPheDuyet}}</b>
+                            </div>
+
+                            <div class="mt-10 title_top" *ngIf="dataDetail?.taiLieuDinhKems?.length > 0">{{ 'PURCHASE.CREATE.step_4.basedOn' | translate }}:</div>
+                            <ul>
+                                <li *ngIf="dataDetail?.toTrinhNoiBoKey">
+                                    <div>Tờ trình số: <b> <a target="_blank" [routerLink]="['/submissions','detail',dataDetail?.toTrinhNoiBoKey]">{{dataDetail?.toTrinhNoiBoDisplay }}</a></b></div>
+                                    <!-- <div>Được phê duyệt ngày: <b>19/05/2021</b></div> -->
+                                </li>
+                            </ul>
+                            <table *ngIf="dataDetail?.taiLieuDinhKems?.length" class="w-100">
+                                <ng-container *ngFor="let item of dataDetail?.taiLieuDinhKems; let i = index">
+                                    <tr *ngFor="let row of item?.fileDinhKems; let j = index;">
+                                        <td class="col-2 p-0">
+                                            <span *ngIf="i == 0 && j ==0">{{ 'PURCHASE.CREATE.step_4.attachDocs' | translate }}</span>
+                                        </td>
+                                        <td class="col-4 col-md-3 p-0">
+                                            <span class="truncate-2">● {{ item?.loaiHoSo }}</span>
+                                        </td>
+                                        <td class="col-6 col-md-7 p-0">
+                                            <i class="flaticon2-file-1 icon-lg mx-3" style="color: #FF8F1F;"></i>
+                                            <a href="javascript:void(0)" (click)="api.downloadURI(row?.url, row?.tenFile)">{{row?.tenFile}}</a>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </table>
+
+                            <div class="mt-8">
+                                {{ 'PURCHASE.CREATE.step_4.departmentLabel' | translate }}
+                                <b>{{dataDetail?.nguoiTao.departmentName}}</b> <span
+                                    *ngFor="let item of dataDetail?.boPhanLienQuans; let i = index"> {{
+                                    'PURCHASE.CREATE.step_4.andLabel' | translate }} {{ 'PURCHASE.CREATE.step_4.departmentLabel' |
+                                    translate }} <b>{{item?.tenBoPhan}}</b></span> {{
+                                'PURCHASE.CREATE.step_4.suggestionsLabel' | translate }}:
+                            </div>
+                            <div class="mt-8" [innerHTML]="dataDetail?.ghiChu | safe: 'html'"></div>
+                        </div>
+                    </div>
+                    <div class="row mt-8">
+                        <div class="col-12">
+                            <div class="mb-5" *ngIf="dataDetail?.thongTinHangHoaDichVus?.length > 0">
+                                <div class="my-2 title_top" [translate]="'PURCHASE.CREATE.step_4.table.cphh.title'"></div>
+                                <div class="line-height-xl">
+                                    <table class="table table_classic table_40 table_blue">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.no'" class="max_w_50"></th>
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.goods_services'" class="min_w_120" ></th>
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.amount'" class="min_w_100"></th>
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.estimated_unit_price'" class="min_w_100" ></th>
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.into_money'" class="min_w_100"></th>
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.spending_code'" class="min_w_100"></th>
+                                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.recommended_supplier'" class="min_w_100"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of dataDetail?.thongTinHangHoaDichVus; let i = index" (click)="tableFullModal.showModal(dataDetail)" class="cursor-pointer">
+                                                <ng-container>
+                                                    <td class="text-center">{{i + 1}}</td>
+                                                    <td [title]="item?.tenHangHoaDichVu">
+                                                        <span class="truncate-2">{{item?.tenHangHoaDichVu || '-'}}</span>
+                                                    </td>
+                                                    <td [title]="item?.soLuong" class="text-right">
+                                                        <span class="truncate-2">{{item?.soLuong | number}}</span>
+                                                    </td>
+                                                    <td [title]="item?.duToanDonGia" class="text-right">
+                                                        <span class="truncate-2">{{item?.duToanDonGia | number}}</span>
+                                                    </td>
+                                                    <td [title]="item?.duToanThanhTien" class="text-right">
+                                                        <span class="truncate-2">{{item?.duToanThanhTien | number}}</span>
+                                                    </td>
+                                                    <td [title]="item?.maNganSach">
+                                                        <span class="truncate-2">{{item?.maNganSach || '-'}}</span>
+                                                    </td>
+                                                    <td [title]="nccDeXuat(item)">
+                                                        <span class="truncate-2">{{nccDeXuat(item) || '-'}}</span> 
+                                                    </td>
+                                                </ng-container>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7" class="tr_footer pr-2">
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <div class="mx-2">
+                                                            {{ 'PURCHASE.CREATE.step_4.table.cphh.total' | translate }}:
+                                                            <b>{{dataDetail?.tongDuToan | number}} VND</b>
+                                                        </div>
+                                                        <button (click)="getNganSach()" class="btn btn-sm btn-google">Chi tiết ngân sách</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <p>{{'PURCHASE.CREATE.step_4.typePurchaseLabel' | translate}}: <b>{{dataDetail?.kieuMuaSamDisplay || "-"}}</b></p>
+                            </div>
+                            <div class="mb-5" *ngIf="dataDetail?.boPhanLienQuans?.length > 0">
+                                <div class="my-2 title_top">{{ 'PURCHASE.CREATE.step_4.table.bpcm.title' | translate }}:</div>
+                                <div class="line-height-xl w-100">
+                                    <ul class="pl-6 mb-0 text-left">
+                                        <li *ngFor="let item of dataDetail?.boPhanLienQuans" class="font-weight-bolder">
+                                            {{item?.tenNhanVien}} - {{item?.tenBoPhan | titlecase}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="dataDetail?.isAllowPheDuyet==true">
+                    {{ 'PURCHASE.CREATE.step_4.departmentLabel' | translate }} <b>{{dataDetail?.nguoiTao.departmentName}}</b>
+                    <span *ngFor="let item of dataDetail?.boPhanLienQuans; let i = index"> {{ 'PURCHASE.CREATE.step_4.andLabel' |
+                        translate }} {{ 'PURCHASE.CREATE.step_4.departmentLabel' | translate }} <b>{{item?.tenBoPhan}}</b></span>
+                        {{ 'PURCHASE.CREATE.step_4.submitForApproveLabel' | translate }} <b>{{tenNguoiPheDuyet}}</b>
+                        {{'PURCHASE.CREATE.step_4.approvalLabel' | translate}}.
+                </div>
+            </div>
+
+            <!-- Phản hồi tham vấn -->
+            <ng-container *ngIf="dataDetail?.thamVan?.noiDungThuKiThamVans?.length">
+                <div class="d-flex flex-column-fluid title my-3">Tham vấn</div>
+                <div class="d-flex flex-column-fluid tham_van">
+                    <div class="card card-custom w-100 box-shadow">
+                        <div class="card-body">
+                            <div class="mb-5">
+                                <p class="tham_van_title">Nội dung văn bản trình kí</p>
+                                <div class="tham_van_content" [innerHTML]="dataDetail?.thamVan?.noiDungTrinhKi | safe: 'html'"></div>
+                            </div>
+
+                            <div class="mb-5">
+                                <p class="tham_van_title">Kiểm tra rà soát nội dung</p>
+                                <div class="tham_van_content" [innerHTML]="dataDetail?.thamVan?.noiDungKiemTra | safe: 'html'"></div>
+                            </div>
+
+                            <div class="mb-5 tham_van_thu_ky">
+                                <p class="tham_van_title">Tham vấn của thư ký TGĐ</p>
+                                <ng-container *ngFor="let item of dataDetail?.thamVan?.noiDungThuKiThamVans; let i = index">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="tham_van_content">
+                                            <b class="mr-2">{{i + 1}}. Tham vấn {{i+1}}:</b>{{item?.noiDungThamVan}}
+                                        </div>
+                                        <div >
+                                            <label nz-checkbox [(ngModel)]="item.isDaPheDuyet" [nzDisabled]="dataDetail?.isAllowResponseThamVan == false">BLĐ chấp thuận</label>
+                                        </div>
+                                    </div>
+                                    <div class="tham_van_phan_hoi_box">
+                                        <div class="tham_van_phan_hoi">Phản hồi tham vấn</div>
+                                        <textarea *ngIf="dataDetail?.isAllowResponseThamVan; else showText" [(ngModel)]="item.noiDungPhanHoi" class="tham_van_content tham_van_border form-control" rows="2"></textarea>
+                                        <ng-template #showText>
+                                            <p>{{item?.noiDungPhanHoi}}</p>
+                                        </ng-template>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-end">
+                    <div *ngIf="dataDetail?.isAllowTuChoi==true">
+                        <button class="btn btn-danger btn-14 py-3 w_130 mr-2" (click)="appApproveModal?.showModal(dataDetail, false)" [translate]="'COMMON.btn.reject'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowThamVan==true">
+                        <button class="btn btn-primary btn-14 py-3 w_130 mr-2" (click)="appConsultationModal?.showModal(dataDetail)" [translate]="'COMMON.btn.consultation'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet==true && dataDetail?.isAllowTuChoi==false">
+                        <button class="btn btn-primary btn-14 py-3 w_130" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.consultation'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet==true && dataDetail?.isAllowTuChoi==true">
+                        <button class="btn btn-primary btn-14 py-3 w_130" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowBackToDraft==true">
+                        <button
+                            nz-popconfirm 
+                            nzPopconfirmTitle="Bạn có chắc chắn chuyển về Nháp không ?"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate"
+                            class="btn btn-primary btn-14 mr-2 py-3 w_130" 
+                            (nzOnConfirm)="backToDraff()">
+                            Về Nháp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white" [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+
+<!-- Trợ lý + Thư ký được tham vấn  -->
+<app-consultation-modal #appConsultationModal (loadTimeLine)="getDetail()"></app-consultation-modal>
+<!-- Duyệt - Huỷ duyệt -->
+<app-approve-modal #appApproveModal (loadTimeLine)="getDetail()"></app-approve-modal>
+<!-- Bảng chi tiết -->
+<app-table-full-modal #tableFullModal></app-table-full-modal>
+
+<!-- Hiển thị ngân sách -->
+<app-basic-content-modal #basicContent="basic-content" [title]="'Chi tiết ngân sách'" [width]="1000">
+    <app-table [data]="dataTable.items" [maxHeight]="'calc(100vh - 250px)'" [minHeight]="'400px'">
+        <thead>
+            <tr>
+                <ng-container *ngFor="let col of dataTable.columns">
+                    <th
+                        [style.borderBottom]="'1px solid #e3ebf6'"
+                        [nzAlign]="'center'"
+                        [rowspan]="col?.rowspan"
+                        [colspan]="col?.colspan"
+                        [style.minWidth]="col?.width">
+                        {{ col?.title }}
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dataTable.items; let i = index">
+                <ng-container *ngFor="let col of dataTable.columns">
+                    <td [ngSwitch]="col.field" [nzAlign]="col?.align" [style.minWidth]="col?.width" [class]="col?.className" class="px-3">
+                        <span *ngSwitchCase="'stt'">{{ i + 1 }}</span>
+                        <span *ngSwitchCase="'BudgetName'">{{ data[col.field] }} - {{data?.Description}}</span>
+                        <span *ngSwitchCase="'DeparmentBudget'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'FullYearBudget'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'PercentBudgetOfAll'">{{ data[col.field] | number }}%</span>
+                        <span *ngSwitchCase="'BudgetToUse'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'UsedBudget'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'RemainingBudget'">{{ data[col.field] | number }}</span>
+                        <!-- <span *ngSwitchCase="'SavingsRatio'">{{ data[col.field] | number }}</span> -->
+                        <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </app-table>
+</app-basic-content-modal>

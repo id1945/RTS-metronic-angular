@@ -1,0 +1,132 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách KPI Quý</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-sm-12 col-xxl-9 px-0 input-group">
+                <nz-select ngModel="null"
+                    (ngModelChange)="paginator.NamKey = $event; getList()"
+                    [nzOptions]="namOptions" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Năm"
+                    class="w_200">
+                </nz-select>
+                <nz-select ngModel="null"
+                    (ngModelChange)="paginator.QuyKey = $event; getList()"
+                    [nzOptions]="quyOptions" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Quý"
+                    class="w_200">
+                </nz-select>
+                <nz-select ngModel="null"
+                    (ngModelChange)="paginator.PhongBanKey = $event; getList()"
+                    [nzOptions]="phongBanOptions" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Phòng ban"
+                    class="w_200">
+                </nz-select>
+                <nz-select ngModel="null"
+                    (ngModelChange)="paginator.TrangThaiKey = $event; getList()"
+                    [nzOptions]="trangThaiOptions" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Trạng thái"
+                    class="w_200">
+                </nz-select>
+            </div>
+            <div class="col-sm-12 col-xxl-3 p-0 text-right">
+                <button type="button" *ngIf="dataTable?.isAllowThemMoi" class="btn btn-primary" (click)="kpiForm?.showModal()">Thêm mới</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            *ngIf="col?.sortField"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width"
+                            [nzSortOrder]="col.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                        <th
+                            *ngIf="!col?.sortField"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" 
+                            [ngSwitch]="col.field" 
+                            [nzAlign]="col?.align" 
+                            class="px-5">
+                            <span 
+                                *ngSwitchCase="'trangThaiDisplay'"
+                                class="badge w-100 font_size_13 py-3" 
+                                [title]="data[col.field]"
+                                [class.badge-success]="data?.trangThaiKey == '5'"
+                                [class.badge-danger]="data?.trangThaiKey == '4'"
+                                [class.badge-info]="data?.trangThaiKey == '3'"
+                                [class.badge-primary]="data?.trangThaiKey == '2'"
+                                [class.badge-warning]="data?.trangThaiKey == '1'"
+                                [class.badge-secondary]="data?.trangThaiKey == '0'">
+                                {{ data[col.field] }}
+                            </span>
+                            <span *ngSwitchCase="'thaoTac'">
+                                <i *ngIf="data?.isAllowDoiQuyTrinhDuyet" (click)="switchApprove?.showModal(data?.kpiQuyId)" nz-icon nzType="setting" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#4caf50'" class="btn icon-md mr-1 p-0" title="Đổi quy trình duyệt"></i>
+                                <i 
+                                    *ngIf="data?.isAllowDelete" 
+                                    nz-icon nzType="delete" nzTheme="outline"
+                                    title="Xoá"
+                                    class="btn icon-md p-0"
+                                    nz-popconfirm
+                                    [nzTheme]="'twotone'" 
+                                    [nzTwotoneColor]="'#F64E60'"
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate" 
+                                    (nzOnConfirm)="onDelete(data?.kpiQuyId)">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </i>
+                            </span>
+                            <span *ngSwitchCase="'namDisplay'" class="truncate-2" [title]="data[col.field]">
+                                <!-- Detail  -->
+                                <a *ngIf="!data?.isAllowUpdate" [routerLink]="['/KPI', 'kpi', 'detail', data?.kpiQuyId]">{{ data[col.field] || '-' }}</a>
+                                <!-- Edit  -->
+                                <a *ngIf="data?.isAllowUpdate" [routerLink]="['/KPI', 'update-kpi-detail', data?.kpiQuyId]">{{ data[col.field] || '-' }}</a>
+                            </span>
+                            <span *ngSwitchCase="'phongBanDisplay'" class="truncate-2" [title]="data[col.field]">
+                                <!-- Detail  -->
+                                <a *ngIf="!data?.isAllowUpdate" [routerLink]="['/KPI', 'kpi', 'detail', data?.kpiQuyId]">{{ data[col.field] || '-' }}</a>
+                                <!-- Edit  -->
+                                <a *ngIf="data?.isAllowUpdate" [routerLink]="['/KPI', 'update-kpi-detail', data?.kpiQuyId]">{{ data[col.field] || '-' }}</a>
+                            </span>
+                            <span *ngSwitchDefault class="truncate-2 cursor-pointer" [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<!-- Create/Edit -->
+<app-kpi-form-modal #kpiForm="kpi-form" (loadList)="getList()"></app-kpi-form-modal>
+<!-- Chọn quy trình duyệt cho KPI Quý -->
+<app-switch-approve-modal #switchApprove="switch-approve" (loadList)="getList()"></app-switch-approve-modal>

@@ -1,0 +1,139 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="925" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="isVisible = false" [nzTitle]="'Chi tiết cán bộ nhận bưu phẩm'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 250px);">
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Tên người gửi
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenNguoiGui}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Tên công ty gửi
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenCongTyGui}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Số điện thoại gửi
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.sdtNguoiGui}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Địa chỉ người gửi 
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.diaChiNguoiGui}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Mã bưu phẩm
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.maBuuPham}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Ngày gửi
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.ngayGiao * 1000 | date: 'dd/MM/yyyy'}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Hình thức
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.hinhThucDisplay}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Cán bộ nhận bưu phẩm 
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenNguoiNhan}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Mã nhân viên người nhận
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.maNhanVienNguoiNhan}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Số máy lẻ người nhận
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.soMayLeNguoiNhan}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Phòng ban người nhận
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenPhongBanNguoiNhan}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                tài khoản người nhận
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.tenDangNhapNguoiNhan}}
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Ghi chú
+            </div>
+            <div class="col-12 col-md-7 text-blue-01">
+                {{dataDetail?.ghiChu}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 ctrl_label">
+                Trạng thái
+            </div>
+            <div class="col-12 col-md-7 font-weight-bolder">
+                <div class="symbol symbol-light-primary" [class.symbol-light-danger]="dataDetail?.tenTrangThai == 'Hết hiệu lực'">
+                    <span class="symbol-label w_150 text-center" style="height: auto">{{dataDetail?.tenTrangThai}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 w_130 mr-2" (click)="isVisible = false">Đóng</button>
+            <button class="btn btn-primary btn-14 py-3 w_150" *ngIf="dataDetail?.isAllowChangeDaChuyen" (click)="approveExpressDelivery.showModal(dataDetail, true)">Xác nhận đã chuyển</button>
+        </div>
+    </div>
+    <app-approve-parcel-modal #approveExpressDelivery (loadTimeLine)="loadDetail()"></app-approve-parcel-modal>
+</nz-modal>

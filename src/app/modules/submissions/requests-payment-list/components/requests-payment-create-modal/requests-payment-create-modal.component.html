@@ -1,0 +1,1032 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="1100" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="saveDraft()" nzTitle="{{ 'PAYMENT.CREATE.title' | translate }}">
+    <div class="card card-custom form_step">
+        <div class="card-body py-0">
+            <!--begin: Step -->
+            <div class="steps">
+                <div class="step" [title]="'PAYMENT.CREATE.step_1.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 1" [class.text-white]="step === 1"
+                        (click)="nextStep(1)">1</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 1"
+                        [translate]="'PAYMENT.CREATE.step_1.title'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'PAYMENT.CREATE.step_2.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 2" [class.text-white]="step === 2"
+                        (click)="nextStep(2)">2</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 2"
+                        [translate]="'PAYMENT.CREATE.step_2.title'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'PAYMENT.CREATE.step_3.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 3" [class.text-white]="step === 3"
+                        (click)="nextStep(3)">3</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 3"
+                        [translate]="'PAYMENT.CREATE.step_3.title'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'PAYMENT.CREATE.step_4.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 4" [class.text-white]="step === 4"
+                        (click)="nextStep(4)">4</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 4"
+                        [translate]="'PAYMENT.CREATE.step_4.title'"></div>
+                </div>
+            </div>
+            <!--end: Step -->
+        </div>
+
+        <!-- [1] -->
+        <div [ngClass]="{'d-block': step == 1, 'd-none': step != 1}" class="card-body scroll-gray-8 py-0 px-10"
+            style="max-height: calc(100vh - 280px);">
+            <form [formGroup]="formGroup1">
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{'PAYMENT.CREATE.step_1.form.propose.contractNumber' | translate }} 
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <input
+                            nz-input
+                            placeholder="{{'PAYMENT.CREATE.step_1.form.propose.contractNumber' | translate}}"
+                            formControlName="SoHopDong"
+                            [nzAutocomplete]="autoContractsId"
+                            class="form-control input_42"/>
+                        <nz-autocomplete #autoContractsId>
+                            <nz-auto-option [nzValue]="item?.value" *ngFor="let item of soHopDongOptionsFind">
+                                {{item?.value}}
+                            </nz-auto-option>
+                        </nz-autocomplete>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                      {{'PAYMENT.CREATE.step_1.form.propose.contractAnnex' | translate }} 
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <input type="text" formControlName="PhuLucHopDong" class="form-control input_42"
+                        placeholder="{{'PAYMENT.CREATE.step_1.form.propose.contractAnnex' | translate}}">
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{'PAYMENT.CREATE.step_1.form.propose.billNumber' | translate }} 
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <input type="text" formControlName="SoHoaDon" class="form-control input_42"
+                        placeholder="{{'PAYMENT.CREATE.step_1.form.propose.billNumber' | translate}}">
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label align-items-start">
+                        {{'PAYMENT.CREATE.step_1.form.propose.requestPurchaseNumber' | translate }} 
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select [nzOptions]="ycmhOptions" formControlName="YeuCauMuaHangKey" nzShowSearch nzAllowClear
+                            nzPlaceHolder="-- Chọn YCMH --" style="width: 100%;">
+                        </nz-select>
+                        <label nz-checkbox formControlName="IsThanhToanCuoi" class="mt-5">  {{'PAYMENT.CREATE.step_1.form.propose.completedPurchase' | translate }} </label>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{'PAYMENT.CREATE.step_1.form.propose.proposeNumber' | translate }} 
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select [nzOptions]="toTrinhOptions" formControlName="ToTrinhKey" nzShowSearch nzAllowClear
+                            nzPlaceHolder="{{'PAYMENT.CREATE.step_1.form.propose.proposeNumber' | translate }} " style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{'PAYMENT.CREATE.step_1.form.propose.taxCode' | translate }} 
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <input
+                            nz-input
+                            placeholder="{{'PAYMENT.CREATE.step_1.form.propose.taxCode' | translate }}"
+                            formControlName="MaSoThue"
+                            [nzAutocomplete]="autoTaxId"
+                            class="form-control input_42"/>
+                        <nz-autocomplete #autoTaxId>
+                            <nz-auto-option [nzValue]="item?.value" *ngFor="let item of maSoThueOptionsFind">
+                                {{item?.value}}
+                            </nz-auto-option>
+                        </nz-autocomplete>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                       {{'PAYMENT.CREATE.step_1.form.propose.supplier' | translate }}
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <input type="text" formControlName="NhaCungCapKey" class="form-control input_42" placeholder="{{'PAYMENT.CREATE.step_1.form.propose.supplier' | translate }}" disabled readonly>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label align-items-start">
+                        {{'PAYMENT.CREATE.step_1.form.propose.requestType' | translate }} <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select [nzOptions]="khuVucOptions" formControlName="KhuVucKey" [ngModel]="null" (ngModelChange)="getLoaiDeNghiKhuVucOptions()"
+                            nzShowSearch nzAllowClear nzPlaceHolder="-- Khu vực --" style="width: 100%;" class="mb-8">
+                        </nz-select>
+                        <nz-select [nzOptions]="loaiDeNghiKhuVucOptions" formControlName="LoaiDeNghiKhuVucKey" [ngModel]="null" (ngModelChange)="getLoaiDeNghiChiTietOptions()"
+                            nzShowSearch nzAllowClear nzPlaceHolder=" {{'PAYMENT.CREATE.step_1.form.propose.requestType' | translate }}" style="width: 100%;" class="mb-8">
+                        </nz-select>
+                        <nz-select [nzOptions]="loaiDeNghiChiTietOptions" formControlName="LoaiDeNghiKhuVucChiTietKey"
+                            nzShowSearch nzAllowClear nzPlaceHolder=" {{'PAYMENT.CREATE.step_1.form.propose.requestDetail' | translate }}" style="width: 100%;"
+                            class="mb-8">
+                        </nz-select>
+                        <nz-select [nzOptions]="loaiDeNghiThanhToanOptions" formControlName="LoaiHinhThanhToanKey"
+                            nzShowSearch nzAllowClear nzPlaceHolder=" {{'PAYMENT.CREATE.step_1.form.propose.paymentType' | translate }}" style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="(f1?.KhuVucKey?.errors && f1?.KhuVucKey?.touched)
+                                || (f1?.LoaiDeNghiKhuVucKey?.errors && f1?.LoaiDeNghiKhuVucKey?.touched)
+                                || (f1?.LoaiDeNghiKhuVucChiTietKey?.errors && f1?.LoaiDeNghiKhuVucChiTietKey?.touched)
+                                || (f1?.LoaiHinhThanhToanKey?.errors && f1?.LoaiHinhThanhToanKey?.touched)">
+                            <span>Loại đề nghị là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Đề nghị hoàn ứng -->
+                <ng-container *ngIf="isActiveByDataOptions('loaiDeNghiKhuVucOptions' , f1?.LoaiDeNghiKhuVucKey?.value)">
+                    <div class="row mb-8">
+                        <div class="col-12 col-md-5 ctrl_label">
+                            Chọn đề nghị tạm ứng 
+                        </div>
+                        <div class="col-12 col-md-7 select_42">
+                            <nz-select [nzOptions]="deNghiTamUngOptions" formControlName="DeNghiTamUngKey" nzShowSearch
+                                nzAllowClear nzPlaceHolder="-- Chọn DNTU --" style="width: 100%;">
+                            </nz-select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-8">
+                        <div class="col-12 col-md-5 ctrl_label">
+                            Tổng tiền tạm ứng
+                        </div>
+                        <div class="col-12 col-md-7 text-right">
+                            {{getObjByDataOptions('deNghiTamUngOptions', f1?.DeNghiTamUngKey?.value)?.tongTien || 0 | number: '1.0'}}
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- Chuyển Khoản -->
+                <ng-container *ngIf="isActiveByDataOptions('loaiDeNghiThanhToanOptions' , f1?.LoaiHinhThanhToanKey?.value)">
+                    <div class="row mb-8">
+                        <div class="col-12 col-md-5 ctrl_label">
+                            Số tài khoản <span class="text-danger" *ngIf="(this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">(*)</span>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <input type="text" formControlName="SoTaiKhoan" class="form-control input_42" placeholder="Số tài khoản">
+                            <div class="form-text text-danger" *ngIf="f1?.SoTaiKhoan?.errors && f1?.SoTaiKhoan?.touched && (this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">
+                                Số tài khoản là bắt buộc
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-8">
+                        <div class="col-12 col-md-5 ctrl_label">
+                            Tên tài khoản <span class="text-danger" *ngIf="(this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">(*)</span>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <input type="text" formControlName="TenTaiKhoan" class="form-control input_42" placeholder="Tên tài khoản">
+                            <div class="form-text text-danger" *ngIf="f1?.TenTaiKhoan?.errors && f1?.TenTaiKhoan?.touched && (this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">
+                                Tên tài khoản là bắt buộc
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-8">
+                        <div class="col-12 col-md-5 ctrl_label">
+                            Ngân hàng <span class="text-danger" *ngIf="(this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">(*)</span>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <input type="text" formControlName="TenNganHang" class="form-control input_42" placeholder="Ngân hàng">
+                            <div class="form-text text-danger" *ngIf="f1?.TenNganHang?.errors && f1?.TenNganHang?.touched && (this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">
+                                Ngân hàng là bắt buộc
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-8">
+                        <div class="col-12 col-md-5 ctrl_label">
+                            Chi nhánh <span class="text-danger" *ngIf="(this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">(*)</span>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <input type="text" formControlName="TenChiNhanh" class="form-control input_42" placeholder="Chi nhánh">
+                            <div class="form-text text-danger" *ngIf="f1?.TenChiNhanh?.errors && f1?.TenChiNhanh?.touched && (this.f1.LoaiDeNghiKhuVucKey.value != 1 && this.f1.LoaiDeNghiKhuVucKey.value != '4')">
+                                Chi nhánh là bắt buộc
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Nội dung đề nghị <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <textarea formControlName="NoiDungDeNghi" class="form-control input_42" placeholder="Nội dung đề nghị" rows="3"></textarea>
+                        <textarea *ngIf="f1?.NoiDungDeNghi?.value" formControlName="NoiDungDeNghiEng" class="form-control input_42" placeholder="Nội dung đề nghị tiếng anh" rows="3"></textarea>
+                        <div class="form-text text-danger" *ngIf="f1?.NoiDungDeNghiEng?.errors && (f1?.NoiDungDeNghi?.touched || f1?.NoiDungDeNghiEng?.touched)">
+                            Nội dung đề nghị là bắt buộc
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- [2] -->
+        <div [ngClass]="{'d-block': step == 2, 'd-none': step != 2}" class="card-body scroll-gray-8 py-0 px-10"
+            style="max-height: calc(100vh - 280px);">
+            <form [formGroup]="formGroup2">
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Thanh toán ngoại tệ
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <label nz-checkbox formControlName="IsNgoaiTe">Cho phép thanh toán ngoại tệ</label>
+                    </div>
+                </div>
+
+                <div class="row mb-8" *ngIf="f2?.IsNgoaiTe?.value">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Loại ngoại tệ
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select [nzOptions]="loaiNgoaiTeOptions" formControlName="NgoaiTeKey" nzShowSearch nzAllowClear
+                            nzPlaceHolder="-- Chọn ngoại tệ --" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Giá trị hợp đồng
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-input-number
+                            [nzMin]="0"
+                            [nzStep]="1"
+                            [nzFormatter]="formatter"
+                            [nzParser]="parser"
+                            nzPlaceHolder="Giá trị hợp đồng"
+                            formControlName="GiaTriHopDong" class="form-control input_42"
+                        ></nz-input-number>
+                    </div>
+                </div>
+
+                <div class="row mb-8" *ngIf="f2?.IsNgoaiTe?.value">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Giá trị ngoại tệ
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <nz-input-number
+                            [nzMin]="0"
+                            [nzStep]="1"
+                            [nzFormatter]="formatter"
+                            [nzParser]="parser"
+                            nzPlaceHolder="Giá trị ngoại tệ"
+                            formControlName="GiaTriNgoaiTe" class="form-control input_42"
+                        ></nz-input-number>
+                    </div>
+                </div>
+
+                <div class="row mb-8" *ngIf="f2?.IsNgoaiTe?.value">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Tỷ giá <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-input-number
+                            [nzMin]="0"
+                            [nzStep]="1"
+                            [nzFormatter]="formatter"
+                            [nzParser]="parser"
+                            nzPlaceHolder="Tỷ giá"
+                            formControlName="TyGia" class="form-control input_42"
+                        ></nz-input-number>
+                        <div class="form-text text-danger" *ngIf="f1?.TyGia?.errors && f1?.TyGia?.touched">
+                            Tỷ giá là bắt buộc
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Ghi chú
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <textarea formControlName="GhiChu" class="form-control input_42" placeholder="Ghi chú" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-8">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Tài liệu đính kèm <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <app-select-file 
+                            [reset]="false" 
+                            [multiple]="true" 
+                            [acceptKey]="'excel_word_pdf_rar_zip'" 
+                            [text]="'Tải lên văn bản'" 
+                            [(selectedFiles)]="selectedFiles">
+                        </app-select-file>
+                        <div class="form-text text-danger" *ngIf="selectedFiles?.length == 0">
+                            Tài liệu đính kèm là bắt buộc
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-12 ctrl_label mb-8">
+                    Lịch sử thanh toán
+                </div>
+                <div class="row mx-0 mb-8">
+                    <table class="table table_classic">
+                        <thead>
+                            <tr class="text-center">
+                                <th class="w_145">Số YC thanh toán</th>
+                                <th class="w_145">Phụ lục HD</th>
+                                <th class="w_130">Ngày thanh toán</th>
+                                <th class="w_145">Số tiền đề nghị thanh toán</th>
+                                <th class="w_145">Số tiền đề nghị thanh toán (ngoại tệ)</th>
+                                <th class="w_145">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="height: 40px;" *ngFor="let item of lichSus">
+                                <td [title]="item?.soChungTu">
+                                    <span class="truncate-2">
+                                        <a class="font-weight-bolder" target="_blank" [routerLink]="['/', 'submissions', 'payment-detail', item?.hoSoId]">{{item?.soChungTu || '-'}}</a>
+                                    </span>
+                                </td>
+                                <td [title]="item?.phuLucHopDong">
+                                    <span class="truncate-2">{{item?.phuLucHopDong || '-'}}</span>
+                                </td>
+                                <td>{{(item?.ngayThanhToan * 1000 | date: 'dd/MM/yyyy HH:mm') || '-'}}</td>
+                                <td class="text-right" [title]="item?.tongTien || 0 | number: '1.0'">{{item?.tongTien || 0 | number: '1.0'}}</td>
+                                <td class="text-right" [title]="item?.tongTienNgoaiTe || 0 | number: '1.2-2'">{{item?.tongTienNgoaiTe || 0 | number: '1.2-2'}}</td>
+                                <td [title]="item?.trangThaiThanhToan">
+                                    <span class="truncate-2">{{item?.trangThaiThanhToan || '-'}}</span>
+                                </td>
+                            </tr>
+                            <tr style="height: 40px;" *ngIf="lichSus && lichSus?.length == 0">
+                                <td colspan="6" class="text-center"><span>Chưa có lịch sử thanh toán</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+        <!-- [3] -->
+        <div [ngClass]="{'d-block': step == 3, 'd-none': step != 3}" class="card-body scroll-gray-8 py-0 px-10"
+            style="max-height: calc(100vh - 280px);">
+            <form [formGroup]='formGroup3'>
+                <table class="table table-bordered table_classic table_40 table_no mb-5">
+                    <thead>
+                        <tr class="text-center">
+                            <th rowspan="2">STT</th>
+                            <th rowspan="2" class="w_100">Nội dung chi tiết <span class="text-danger">(*)</span></th>
+                            <th rowspan="2" class="w_100">Mã CP</th>
+                            <th rowspan="2" class="w_100">Mã CT</th>
+                            <!-- <th rowspan="2" class="w_100">YCMS</th> -->
+                            <!-- <th rowspan="2" class="w_100">Năm</th> -->
+                            <!-- <th rowspan="2" class="w_100">Tháng</th> -->
+                            <th colspan="2" class="text-center">Số tiền có CT hợp lệ hợp lệ</th>
+                            <th colspan="2" class="text-center">Số tiền không đủ CT hợp lệ</th>
+                            <th rowspan="2" class="w_100">Ghi chú</th>
+                            <th rowspan="2"></th>
+                        </tr>
+                        <tr>
+                            <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                <th class="text-center" colspan="2">VND</th>
+                                <th class="text-center" colspan="2">VND</th>
+                            </ng-container>
+                            <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                <th class="text-center" colspan="0">VND</th>
+                                <th class="text-center" colspan="0">{{f2.NgoaiTeKey.value || '-'}}</th>
+                                <th class="text-center" colspan="0">VND</th>
+                                <th class="text-center" colspan="0">{{f2.NgoaiTeKey.value || '-'}}</th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr formArrayName="fArray" *ngFor="let item of f3A['controls']; let i = index;">
+                            <ng-container [formGroupName]="i">
+                                <td class="text-center">{{i + 1}}</td>
+                                <td>
+                                    <input formControlName="noiDungChiTiet" type="text" placeholder="Nội dung" class="form-control form-control-sm" [class.is-invalid]="item?.controls?.noiDungChiTiet?.errors && item?.controls?.noiDungChiTiet?.touched">
+                                </td>
+                                <td>
+                                    <nz-select [nzOptions]="maChiPhiOptions" formControlName="maChiPhiKey" nzShowSearch nzAllowClear nzPlaceHolder="Lựa chọn" class="w-100 max_w_120"></nz-select>
+                                </td>
+                                <td >
+                                    <nz-select [nzOptions]="maChiTieuOptions" formControlName="maChiTieuKey" nzShowSearch nzAllowClear nzPlaceHolder="Lựa chọn" class="w-100 max_w_120"></nz-select>
+                                </td>
+                                <!-- <td>
+                                    <nz-select [nzOptions]="ycmhOptions" formControlName="yeuCauMuaHangKey" nzShowSearch nzAllowClear nzPlaceHolder="Yêu cầu mua sắm" class="w-100 max_w_120"></nz-select>
+                                </td> -->
+                                <!-- <td>
+                                    <nz-select [nzOptions]="namOptions" formControlName="yearPay" nzShowSearch nzAllowClear nzPlaceHolder="Lựa chọn" class="w-100"></nz-select>
+                                </td> -->
+                                <!-- <td>
+                                    <nz-select [nzOptions]="thangOptions" formControlName="monthPay" nzShowSearch nzAllowClear nzPlaceHolder="Lựa chọn" class="w-100"></nz-select>
+                                </td> -->
+                                <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                    <td colspan="2" class="w_150 max_w_150">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="soTienCoCTVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="2" class="w_150 max_w_150">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="soTienKhongCTVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="soTienCoCTVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="soTienCoCTNT" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="soTienKhongCTVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="soTienKhongCTNT" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                </ng-container>
+                                <td colspan="0">
+                                    <input formControlName="ghiChu" type="text" class="form-control form-control-sm">
+                                </td>
+                                <td class="text-center w_50" style="vertical-align: middle;">
+                                    <button
+                                        nz-popconfirm
+                                        nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                        [nzIcon]="iconTpl"
+                                        [nzOkText]="'COMMON.btn.yes' | translate"
+                                        [nzCancelText]="'COMMON.btn.no' | translate"
+                                        class="btn btn-icon btn-hover btn-sm"
+                                        (nzOnConfirm)="removeRow(i)"
+                                        style="font-weight: 500; font-size: 14px">
+                                        <i class="fas fa-trash-alt icon-lg text-danger"></i></button>
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-center border_top" style="vertical-align: middle;" colspan="4"></td>
+                            <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                <td class="text-right border_top border_left w_150 max_w_150" colspan="2" [title]="totalSoTienCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                <td class="text-right border_top border_left w_150 max_w_150" colspan="2" [title]="totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                            </ng-container>
+                            <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienCoCT?.eur || 0 | number: '1.2-2'"><span>{{totalSoTienCoCT?.eur || 0 | number: '1.2-2'}}</span></td>
+                                <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienKhongCoCT?.eur || 0 | number: '1.2-2'"><span>{{totalSoTienKhongCoCT?.eur || 0 | number: '1.2-2'}}</span></td>
+                            </ng-container>
+                            <td colspan="3" class="border_top border_left">
+                                <div class="text-center">
+                                    <span class="table-remove">
+                                        <button type="button" (click)="addRow(null)" class="btn btn-sm btn-danger btn-rounded" style="height: 36px;">Thêm dòng mới</button>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center border_top" style="vertical-align: middle;" colspan="4">
+                                <span class="font-weight-bolder text-blue-01">Tổng tiền đề nghị thanh toán</span>
+                            </td>
+                            <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                <td class="text-right border_top" colspan="4" title="{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)</span></td>
+                            </ng-container>
+                            <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                <td class="text-right border_top w_150 max_w_150" colspan="2" title="{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)</span></td>
+                                <td class="text-right border_top w_150 max_w_150 border_left" colspan="2" title="{{totalSoTien?.eur || 0 | number: '1.2-2'}} ({{f2.NgoaiTeKey.value || '-'}})"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.eur || 0 | number: '1.2-2'}} ({{f2.NgoaiTeKey.value || '-'}})</span></td>
+                            </ng-container>
+                            <td class="text-right border_top border_left" colspan="2"><span class="font-weight-bold"></span></td>
+                        </tr>
+
+                        <!-- Đề nghị hoàn ứng -->
+                        <ng-container *ngIf="isActiveByDataOptions('loaiDeNghiKhuVucOptions' , f1?.LoaiDeNghiKhuVucKey?.value)">
+                            <tr class="border"><td colspan="10"></td></tr>
+                            <tr class="border">
+                                <td colspan="4"></td>
+                                <td colspan="2" class="text-center font-weight-bolder">Hoàn ứng</td>
+                                <td colspan="2" class="text-center font-weight-bolder">Chi thêm</td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr class="border">
+                                <td colspan="4"></td>
+                                <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                    <td colspan="2" class="text-center font-weight-bolder">VND</td>
+                                    <td colspan="2" class="text-center font-weight-bolder">VND</td>
+                                </ng-container>
+                                <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                    <td colspan="0" class="text-center font-weight-bolder">VND</td>
+                                    <td colspan="0" class="text-center font-weight-bolder">{{f2.NgoaiTeKey.value || '-'}}</td>
+                                    <td colspan="0" class="text-center font-weight-bolder">VND</td>
+                                    <td colspan="0" class="text-center font-weight-bolder">{{f2.NgoaiTeKey.value || '-'}}</td>
+                                </ng-container>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr class="border">
+                                <td colspan="4" class="text-center">
+                                    <span class="font-weight-bolder text-blue-01">Tổng tiền cần quyết toán</span>
+                                </td>
+                                <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                    <td colspan="2" class="text-right w_150 max_w_150">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="HoanUngVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="2" class="text-right w_150 max_w_150">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="ChiThemVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                </ng-container>
+                                <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="HoanUngVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="HoanUngNT" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="ChiThemVN" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                    <td colspan="0" class="text-right w_85 max_w_85">
+                                        <nz-input-number
+                                            [nzMin]="0"
+                                            [nzStep]="1"
+                                            [nzFormatter]="formatter"
+                                            [nzParser]="parser"
+                                            formControlName="ChiThemNT" class="w-100"
+                                        ></nz-input-number>
+                                    </td>
+                                </ng-container>
+                                <td colspan="2"></td>
+                            </tr>
+                        </ng-container>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+
+        <!-- [4] -->
+        <div [ngClass]="{'d-block': step == 4, 'd-none': step != 4}" class="card-body scroll-gray-8 py-0 px-10"
+            style="max-height: calc(100vh - 280px);">
+            <div class="pb-5">
+                <div class="header_a4">
+                    <div class="text-left">
+                        <div class="company"> CÔNG TY CỔ PHẦN LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM (HTV)</div>
+                        <!-- <div class="no">Số tờ trình: <b>3412MV921</b></div> -->
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240"></div>
+                        <div class="today">Hà Nội, Ngày {{today | date: 'dd'}} tháng {{today | date: 'MM'}} năm {{today
+                            | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">Đề Nghị Thanh Toán/ Tạm Ứng</div>
+                <!-- Thông tin yêu cầu -->
+                <div class="mb-5 text-blue-01 font_size_16 font-weight-bolder">
+                    Thông tin yêu cầu
+                </div>
+                <table class="table table_classic table_40 mb-8">
+                    <tr *ngIf="userInfo">
+                        <td class="w_200">Người tạo</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{userInfo?.hoTen}}</span></td>
+                        <td class="w_200">Bộ phận</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{userInfo?.phongBan}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Số hợp đồng</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.SoHopDong?.value || '-'}}</span></td>
+                        <td class="w_200">Phụ lục hợp đồng</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.PhuLucHopDong?.value || '-'}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Mã số thuế / Mã nhân viên</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.MaSoThue?.value || '-'}}</span></td>
+                        <td class="w_200">Nhà cung cấp</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.NhaCungCapKey?.value || '-'}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Số hóa đơn</td>
+                        <td colspan="3"><span class="truncate-2 font-weight-bolder">{{f1?.SoHoaDon?.value || '-'}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Tờ trình</td>
+                        <td class="w_220">
+                            <a class="truncate-2" target="_blank" [routerLink]="['/', 'submissions', 'detail', f1?.ToTrinhKey?.value]">{{getNameByDataOptions('toTrinhOptions', f1?.ToTrinhKey?.value ) || '-'}}</a>
+                        </td>
+                        <td class="w_200">Số Yêu cầu mua sắm</td>
+                        <td class="w_220">
+                            <a class="truncate-2 font-weight-bolder" target="_blank" [routerLink]="['/purchase/detail',f1?.YeuCauMuaHangKey?.value,getNameByDataOptions('ycmhOptions', f1?.YeuCauMuaHangKey?.value )]"> {{getNameByDataOptions('ycmhOptions', f1?.YeuCauMuaHangKey?.value ) || '-'}}</a>
+                            <!-- <a class="truncate-2" [routerLink]="['/', 'purchase', 'detail', f1?.YeuCauMuaHangKey?.value]">{{getNameByDataOptions('ycmhOptions', f1?.YeuCauMuaHangKey?.value ) || '-'}}</a> -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Loại đề nghị</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{getNameByDataOptions('loaiDeNghiKhuVucOptions', f1?.LoaiDeNghiKhuVucKey?.value ) || '-'}}</span></td>
+                        <td class="w_200">Loại thanh toán</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{getNameByDataOptions('loaiDeNghiThanhToanOptions', f1?.LoaiHinhThanhToanKey?.value ) || '-'}}</span></td>
+                    </tr>
+                    <!-- Đề nghị hoàn ứng -->
+                    <ng-container *ngIf="isActiveByDataOptions('loaiDeNghiKhuVucOptions' , f1?.LoaiDeNghiKhuVucKey?.value)">
+                        <tr>
+                            <td class="w_200">Đề nghị tạm ứng</td>
+                            <td class="w_220">
+                                <a class="truncate-2"  target="_blank" [routerLink]="['/', 'submissions', 'payment-detail', f1?.DeNghiTamUngKey?.value]">{{getNameByDataOptions('deNghiTamUngOptions', f1?.DeNghiTamUngKey?.value ) || '-'}}</a>
+                            </td>
+                            <td class="w_200">Tổng tiền tạm ứng</td>
+                            <td class="w_220"><span class="truncate-2 font-weight-bolder">{{getObjByDataOptions('deNghiTamUngOptions', f1?.DeNghiTamUngKey?.value)?.tongTien || 0 | number: '1.0'}}</span></td>
+                        </tr>
+                    </ng-container>
+                     <!-- Chuyển Khoản -->
+                     <ng-container *ngIf="isActiveByDataOptions('loaiDeNghiThanhToanOptions' , f1?.LoaiHinhThanhToanKey?.value)">
+                        <tr>
+                            <td class="w_200">Số tài khoản</td>
+                            <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.SoTaiKhoan?.value || '-'}}</span></td>
+                            <td class="w_200">Tên tài khoản</td>
+                            <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.TenTaiKhoan?.value || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="w_200">Tên ngân hàng</td>
+                            <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.TenNganHang?.value || '-'}}</span></td>
+                            <td class="w_200">Tên chi nhánh</td>
+                            <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.TenChiNhanh?.value || '-'}}</span></td>
+                        </tr>
+                    </ng-container>
+                    <tr>
+                        <td class="w_200">Giá trị hợp đồng</td>
+                        <td>
+                            <span class="truncate-2 font-weight-bolder">{{f2?.GiaTriHopDong?.value || 0 | number: '1.0'}} (VND)</span>
+                            <span class="truncate-2 font-weight-bolder" *ngIf="f2?.IsNgoaiTe?.value">{{f2?.GiaTriNgoaiTe?.value || 0 | number: '1.2-2'}} ({{f2.NgoaiTeKey.value || '-'}})</span>
+                        </td>
+                     
+                        <td class="w_200">Hoàn thành TT cho YCMS</td>
+                        <td class="w_220"><span class="truncate-2 font-weight-bolder">{{f1?.IsThanhToanCuoi?.value ? 'Có' : 'Không'}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Nội dung đề nghị</td>
+                        <td  colspan="3"><span class="font-weight-bolder">{{f1?.NoiDungDeNghi?.value || '-'}}</span></td>
+                    </tr>
+                    <tr>
+                        <td class="w_200">Ghi chú</td>
+                        <td  colspan="3"><span class="font-weight-bolder">{{f2?.GhiChu?.value || '-'}}</span></td>
+                        <!-- <td class="w_200">File đính kèm</td>
+                        <td class="w_220">
+                            <ng-container *ngFor="let item of selectedFiles">
+                                <a href="javascript:void(0)" [title]="item?.name" class="truncate-2" (click)="downloadFile(item?.base64, item?.name)"><i class="flaticon2-file icon-md mr-1" style="color: #FF8F1F;"></i> {{item?.name}}</a>
+                            </ng-container>
+                        </td> -->
+                    </tr>
+                </table>
+
+                <!-- Lịch sử thanh toán -->
+                <ng-container *ngIf="true">
+                    <div class="mb-3 text-blue-01 font_size_16 font-weight-bolder">
+                        Lịch sử thanh toán
+                    </div>
+                    <div class="mb-8">
+                        <table class="table table_classic table_40 table_blue">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="w_145">Số YC thanh toán</th>
+                                    <th class="w_145">Phụ lục HD</th>
+                                    <th class="w_130">Ngày thanh toán</th>
+                                    <th class="w_145">Số tiền đề nghị thanh toán</th>
+                                    <th class="w_145">Số tiền đề nghị thanh toán (ngoại tệ)</th>
+                                    <th class="w_145">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of lichSus">
+                                    <td [title]="item?.soChungTu">
+                                        <span class="truncate-2">
+                                            <a class="font-weight-bolder" target="_blank" [routerLink]="['/', 'submissions', 'payment-detail', item?.hoSoId]">{{item?.soChungTu || '-'}}</a>
+                                        </span>
+                                    </td>
+                                    <td [title]="item?.phuLucHopDong">
+                                        <span class="truncate-2">{{item?.phuLucHopDong || '-'}}</span>
+                                    </td>
+                                    <td>{{(item?.ngayThanhToan * 1000 | date: 'dd/MM/yyyy HH:mm') || '-'}}</td>
+                                    <td class="text-right">{{item?.tongTien || 0 | number: '1.0'}}</td>
+                                    <td class="text-right">{{item?.tongTienNgoaiTe || 0 | number: '1.2-2'}}</td>
+                                    <td [title]="item?.trangThaiThanhToan">
+                                        <span class="truncate-2">{{item?.trangThaiThanhToan || '-'}}</span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="lichSus && lichSus?.length == 0">
+                                    <td colspan="6" class="text-center"><span>Chưa có lịch sử thanh toán</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+
+                <!-- Chi tiết chỉ tiêu -->
+                <ng-container>
+                    <div class="mb-3 text-blue-01 font_size_16 font-weight-bolder">
+                        Tài liệu đính kèm   
+                    </div>
+                    <div class="mb-9">
+                        <ng-container *ngFor="let item of selectedFiles">
+                            <a href="javascript:void(0)" [title]="item?.name" class="truncate-2 d-inline mr-3" (click)="api.downloadURI(item?.base64, item?.name)">
+                                <i class="flaticon2-file icon-md mr-1" style="color: #FF8F1F;"></i>
+                                {{item?.name }}
+                            </a> <br>
+                        </ng-container>
+                    </div>
+                    <table class="table table_classic table_40 table_blue">
+                        <thead>
+                            <tr class="text-center">
+                                <th rowspan="2" style="width: 50px;">STT</th>
+                                <th rowspan="2" style="width: 100px;">Nội dung chi tiết</th>
+                                <th rowspan="2" style="width: 100px;">Mã CP</th>
+                                <th rowspan="2" style="width: 100px;">Mã CT</th>
+                                <th rowspan="2" style="width: 100px;display: none;">Năm</th>
+                                <th rowspan="2" style="width: 100px;display: none;">Tháng</th>
+                                <th colspan="2" class="text-center w_170">Số tiền có CT hợp lệ hợp lệ</th>
+                                <th colspan="2" class="text-center w_170">Số tiền không đủ CT hợp lệ</th>
+                                <th rowspan="2" style="width: 100px;">Ghi chú</th>
+                            </tr>
+                            <tr>
+                                <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                    <th class="text-center border-left-0" colspan="2">VND</th>
+                                    <th class="text-center" colspan="2">VND</th>
+                                </ng-container>
+                                <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                    <th class="text-center border-left-0" colspan="0">VND</th>
+                                    <th class="text-center" colspan="0">{{f2.NgoaiTeKey.value || '-'}}</th>
+                                    <th class="text-center" colspan="0">VND</th>
+                                    <th class="text-center" colspan="0">{{f2.NgoaiTeKey.value || '-'}}</th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of f3A?.value; let i = index;">
+                                <ng-container>
+                                    <td class="text-center" >{{i + 1}}</td>
+                                    <td>
+                                        {{item?.noiDungChiTiet || '-'}}
+                                    </td>
+                                    <td>
+                                        <span class="truncate-2" [title]="getNameByDataOptions('maChiPhiOptions', item?.maChiPhiKey )">
+                                            {{getNameByDataOptions('maChiPhiOptions', item?.maChiPhiKey ) || '-'}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="truncate-2" [title]="getNameByDataOptions('maChiTieuOptions', item?.maChiTieuKey )">
+                                            {{getNameByDataOptions('maChiTieuOptions', item?.maChiTieuKey ) || '-'}}
+                                        </span>
+                                    </td>
+                                    <td style="display: none;">
+                                        <span class="truncate-2" [title]="getNameByDataOptions('namOptions', item?.yearPay )">
+                                            {{getNameByDataOptions('namOptions', item?.yearPay ) || '-'}}
+                                        </span>
+                                    </td>
+                                    <td style="display: none;">
+                                        <span class="truncate-2" [title]="getNameByDataOptions('thangOptions', item?.monthPay )">
+                                            {{getNameByDataOptions('thangOptions', item?.monthPay ) || '-'}}
+                                        </span>
+                                    </td>
+                                    <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                        <td colspan="2" class="text-right w_150 max_w_150 truncate" [title]="item?.soTienCoCTVN || 0 | number: '1.0'">
+                                            {{item?.soTienCoCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="2" class="text-right w_150 max_w_150 truncate" [title]="item?.soTienKhongCTVN || 0 | number: '1.0'">
+                                            {{item?.soTienKhongCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                        <td colspan="0" class="text-right w_85 max_w_85 truncate" [title]="item?.soTienCoCTVN || 0 | number: '1.0'">
+                                            {{item?.soTienCoCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right w_85 max_w_85 truncate" [title]="item?.soTienCoCTNT || 0 | number: '1.2-2'">
+                                            {{item?.soTienCoCTNT || 0 | number: '1.2-2'}}
+                                        </td>
+                                        <td colspan="0" class="text-right w_85 max_w_85 truncate" [title]="item?.soTienKhongCTVN || 0 | number: '1.0'">
+                                            {{item?.soTienKhongCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right w_85 max_w_85 truncate" [title]="item?.soTienKhongCTNT || 0 | number: '1.2-2'">
+                                            {{item?.soTienKhongCTNT || 0 | number: '1.2-2'}}
+                                        </td>
+                                    </ng-container>
+                                    <td colspan="0">
+                                        {{item?.ghiChu || '-'}}
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-center border_top" style="vertical-align: middle;" colspan="4"></td>
+                                <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                    <td class="text-right border_top border_left w_150 max_w_150" colspan="2" [title]="totalSoTienCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left w_150 max_w_150" colspan="2" [title]="totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                </ng-container>
+                                <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                    <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienCoCT?.eur || 0 | number: '1.2-2'"><span>{{totalSoTienCoCT?.eur || 0 | number: '1.2-2'}}</span></td>
+                                    <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'"><span>{{totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left w_85 max_w_85" colspan="0" [title]="totalSoTienKhongCoCT?.eur || 0 | number: '1.2-2'"><span>{{totalSoTienKhongCoCT?.eur || 0 | number: '1.2-2'}}</span></td>
+                                </ng-container>
+                                <td colspan="2" class="border_top border_left"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center font-weight-bold border_top" style="vertical-align: middle;" colspan="4">
+                                    <span class="font-weight-bolder text-blue-01">Tổng tiền đề nghị thanh toán</span>
+                                </td>
+                                <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                    <td class="text-right border_top" colspan="4" title="{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)</span></td>
+                                </ng-container>
+                                <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                    <td class="text-right border_top w_150 max_w_150" colspan="2" title="{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)</span></td>
+                                    <td class="text-right border_top border_left w_150 max_w_150" colspan="2" title="{{totalSoTien?.eur || 0 | number: '1.2-2'}} ({{f2.NgoaiTeKey.value || '-'}})"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.eur || 0 | number: '1.2-2'}} ({{f2.NgoaiTeKey.value || '-'}})</span></td>
+                                </ng-container>
+                                <td class="text-right border_top border_left" colspan="1"></td>
+                            </tr>
+
+                            <!-- Đề nghị hoàn ứng -->
+                            <ng-container *ngIf="isActiveByDataOptions('loaiDeNghiKhuVucOptions' , f1?.LoaiDeNghiKhuVucKey?.value)">
+                                <tr class="border"><td colspan="10"></td></tr>
+                                <tr class="border bg_blue">
+                                    <td colspan="4"></td>
+                                    <td colspan="2" class="text-center font-weight-bolder">Hoàn ứng</td>
+                                    <td colspan="2" class="text-center font-weight-bolder">Chi thêm</td>
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr class="border bg_blue">
+                                    <td colspan="4" class="border-top-0"></td>
+                                    <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                        <td colspan="2" class="text-center font-weight-bolder">VND</td>
+                                        <td colspan="2" class="text-center font-weight-bolder">VND</td>
+                                    </ng-container>
+                                    <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                        <td colspan="0" class="text-center font-weight-bolder">VND</td>
+                                        <td colspan="0" class="text-center font-weight-bolder">{{f2.NgoaiTeKey.value || '-'}}</td>
+                                        <td colspan="0" class="text-center font-weight-bolder">VND</td>
+                                        <td colspan="0" class="text-center font-weight-bolder">{{f2.NgoaiTeKey.value || '-'}}</td>
+                                    </ng-container>
+                                    <td colspan="2" class="border-top-0"></td>
+                                </tr>
+                                <tr class="border">
+                                    <td colspan="4" class="text-center">
+                                        <span class="font-weight-bolder text-blue-01">Tổng tiền cần quyết toán</span>
+                                    </td>
+                                    <ng-container *ngIf="!f2?.IsNgoaiTe?.value">
+                                        <td colspan="2" class="text-right truncate" [title]="f3?.HoanUngVN?.value || 0 | number: '1.0'">
+                                            {{f3?.HoanUngVN?.value || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="2" class="text-right truncate" [title]="f3?.ChiThemVN?.value || 0 | number: '1.0'">
+                                            {{f3?.ChiThemVN?.value || 0 | number: '1.0'}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="f2?.IsNgoaiTe?.value">
+                                        <td colspan="0" class="text-right truncate" [title]="f3?.HoanUngVN?.value || 0 | number: '1.0'">
+                                            {{f3?.HoanUngVN?.value || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right truncate" [title]="f3?.HoanUngNT?.value || 0 | number: '1.2-2'">
+                                            {{f3?.HoanUngNT?.value || 0 | number: '1.2-2'}}
+                                        </td>
+                                        <td colspan="0" class="text-right truncate" [title]="f3?.ChiThemVN?.value || 0 | number: '1.0'">
+                                            {{f3?.ChiThemVN?.value || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right truncate" [title]="f3?.ChiThemNT?.value || 0 | number: '1.2-2'">
+                                            {{f3?.ChiThemNT?.value || 0 | number: '1.2-2'}}
+                                        </td>
+                                    </ng-container>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </ng-container>
+                        </tfoot>
+                    </table>
+                </ng-container>
+            </div>
+        </div>
+
+        <!-- [Action] -->
+        <div class="footer">
+            <div class="d-flex justify-content-between">
+                <div class="mr-2">
+                    <button *ngIf="step > 1" class="btn btn-light btn-14 py-3 w_130" (click)="prevStep()"
+                        [translate]="'COMMON.btn.before'">Trước</button>
+                </div>
+                <div>
+                    <div [ngSwitch]="step" class="d-flex">
+                        <div>
+                            <button 
+                                nz-popconfirm 
+                                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure_save_draft' | translate }}"
+                                [nzIcon]="iconTpl" 
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                                (nzOnCancel)="isVisible = false; removeDraft()" 
+                                (nzOnConfirm)="saveDraft()"
+                                [translate]="'COMMON.btn.cancel'">
+                            </button>
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </div>
+                        <div *ngSwitchCase="'1'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(2)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'2'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(3)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'3'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(4)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'4'">
+                            <button class="btn btn-primary btn-14 py-3 w_130 mr-2" (click)="onSubmit(false)" [translate]="'COMMON.btn.browser'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-modal>

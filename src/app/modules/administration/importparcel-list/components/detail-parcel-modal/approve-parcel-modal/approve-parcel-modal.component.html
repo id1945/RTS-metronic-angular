@@ -1,0 +1,24 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Xác nhận đã chuyển'"
+    (nzOnOk)="isVisible = false">
+
+    <form [formGroup]="formGroup">
+        <div class="form-group px-8 my-10">
+            <label>Ghi chú</label>
+            <textarea formControlName="ghiChu" placeholder="Nhập nội dung ghi chú" class="form-control" rows="3"></textarea>
+        </div>
+    </form>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 w_130 mr-2" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitApprove()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

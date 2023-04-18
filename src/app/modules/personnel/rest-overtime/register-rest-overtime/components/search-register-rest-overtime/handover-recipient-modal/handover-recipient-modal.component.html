@@ -1,0 +1,88 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="1025"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Chọn người nhận bàn giao'">
+
+    <div class="card card-custom" >
+        <div class="card-body scroll-gray-8 mt-7 py-0 px-10" style="max-height: calc(100vh - 230px);">
+            <div class="row mt-3 mb-5">
+                <div class="col-2 ctrl_label">Mã/Tên NV</div>
+                <div class="col-4">
+                    <div class="input-group-prepend position-relative">
+                        <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 10px; right: 15px;"></i>
+                        <input type="text" class="form-control input_42" placeholder="{{'SUBMISSIONS.DETAIL.searchHint' | translate }}" (input)="SearchText$.next($event.target.value)" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <!-- Table -->
+                    <nz-table
+                        [nzLoading]=""
+                        [nzSize]="'small'"
+                        [nzData]="dataTable.items"
+                        [nzShowPagination]="false"
+                        class="table table_classic table_40 table_no"
+                        [nzScroll]="{ x: '900px', y: 'calc(100vh - 360px)' }">
+                        <thead>
+                            <tr>
+                                <th class="text-center"></th>
+                                <ng-container *ngFor="let col of dataTable.columns">
+                                    <th
+                                        [nzAlign]="col?.align"
+                                        [nzWidth]="col?.width">
+                                        {{ col?.title }}
+                                    </th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let data of dataTable.items; let i = index">
+                                <tr>
+                                    <td class="text-center">
+                                        <label nz-checkbox [(ngModel)]="data.checkbox" (ngModelChange)="data?.checkbox ? onSelectRow(data) : onSelectRow(data, true)"></label>
+                                    </td>
+                                    <ng-container *ngFor="let col of dataTable.columns">
+                                        <td class="cursor-pointer" (click)="onSelectRow(data)">{{ data[col.field] }}</td>
+                                    </ng-container>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </nz-table>
+                    <!-- Paging -->
+                    <app-paginator style="zoom: 0.8" [paginator]="paginator" (paginate)="getList()"></app-paginator>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="d-flex justify-content-end">
+                <div class="d-flex">
+                    <div>
+                        <button 
+                            nz-popconfirm 
+                            nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                            [nzIcon]="iconTpl"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate"
+                            class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                            (nzOnCancel)="isVisible = true" 
+                            (nzOnConfirm)="isVisible = false">
+                            Hủy
+                        </button>
+                        <ng-template #iconTpl>
+                            <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                        </ng-template>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary btn-14 py-3 w_130" (click)="isVisible = false; selected.emit(recipientSelected)">Chọn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-modal>

@@ -1,0 +1,47 @@
+<!-- begin::Notifications Panel-->
+<div id="kt_quick_notifications" class="offcanvas pl-5 pt-10 pr-10 " [ngClass]="extrasNotificationsOffcanvasDirectionCSSClass">
+  <!--begin::Header-->
+  <div class="offcanvas-header d-flex align-items-center justify-content-between mb-10">
+    <h3 class="font-weight-bold m-0">
+      <span [translate]="'OFFCANVAS.NOTIFICATIONS.TITLE'"></span>
+      <small class="text-muted font-size-sm ml-2">{{(notification?.list$ | async)?.length}} Thông báo</small>
+    </h3>
+    <a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_notifications_close">
+      <i class="ki ki-close icon-xs text-muted"></i>
+    </a>
+  </div>
+  <!--end::Header-->
+
+  <!--begin::Content-->
+  <div class="offcanvas-content pr-5 mr-n5">
+    <!--begin::Nav-->
+    <div class="navi navi-icon-circle navi-spacer-x-0">
+      <!--begin::Item-->
+      <ng-container *ngFor="let item of notification?.list$ | async">
+        <a href="javascript:void(0)" (click)="notification?.onSee(item)" class="navi-item pl-5" [class.bg-light]="item?.isDaXem != true">
+          <div class="navi-link rounded">
+            <div class="symbol symbol-50 symbol-circle mr-3">
+              <div class="symbol-label">
+                <div class="symbol symbol-circle mr-3">
+                  <img alt="Notification" [src]="item?.anhDaiDienResize" onError="this.src='assets/media/svg/icons/General/Notifications1.svg'"/>
+                </div>
+              </div>
+            </div>
+            <div class="navi-text">
+              <div class="font-weight-bold font-size-lg">
+                {{item?.noiDung}}
+              </div>
+              <div class="text-muted">
+                {{(item?.ngayTao * 1000)| date: 'dd/MM/yyyy HH:mm:ss'}}
+              </div>
+            </div>
+          </div>
+        </a>
+      </ng-container>
+      <!--end::Item-->
+    </div>
+    <!--end::Nav-->
+  </div>
+  <!--end::Content-->
+</div>
+<!-- end::Notifications Panel-->

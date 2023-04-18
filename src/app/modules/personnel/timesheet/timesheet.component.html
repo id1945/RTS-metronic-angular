@@ -1,0 +1,118 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            Bảng công chi tiết
+        </div>
+    </div>
+    <div class="card-body py-0 px-5">
+        <div class="row w-100 py-0 m-0 search_table">
+            <!-- Search -->
+            <form [formGroup]="formGroup" class="d-none">
+                <div class="col-12 px-0 mb-2 input-group">
+                    <nz-date-picker formControlName="FROMDATE" nzFormat="dd/MM/yyyy" class="form-control input_42 w_200"></nz-date-picker>
+                    <nz-date-picker formControlName="TODATE" nzFormat="dd/MM/yyyy" class="form-control input_42 w_200"></nz-date-picker>
+                </div>
+            </form>
+        </div>
+        <div class="gutter-b">
+            <div class="mt-5">
+                <mwl-utils-calendar-header
+                    [(view)]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="viewDateChange($event)"
+                    [locale]="translate.currentLang">
+                </mwl-utils-calendar-header>
+            </div>
+            <div [ngSwitch]="view">
+                <mwl-calendar-month-view
+                    *ngSwitchCase="calendarView.Month" 
+                    [locale]="translate.currentLang"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [cellTemplate]="monthCellTemplate"
+                    [refresh]="refresh">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view
+                    *ngSwitchCase="calendarView.Week"
+                    [locale]="translate.currentLang"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [refresh]="refresh">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view
+                    *ngSwitchCase="calendarView.Day"
+                    [locale]="translate.currentLang"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [refresh]="refresh">
+                </mwl-calendar-day-view>
+            </div>
+        </div>
+        <div class="gutter-b">
+            <h4>Chú thích</h4>
+            <div class="d-flex align-content-center py-1">
+                <span class="label label-sm status-holiday mr-2"></span>Xin nghỉ
+            </div>
+            <div class="d-flex align-content-center py-1">
+                <span class="label label-sm status-wleo mr-2"></span>Xin nghỉ theo giờ
+            </div>
+            <div class="d-flex align-content-center py-1">
+                <span class="label label-sm status-explain mr-2"></span>Chấm công không hợp lệ
+            </div>
+            <div class="d-flex align-content-center py-1">
+                <span class="label label-sm status-success mr-2"></span>Chấm công hợp lệ
+            </div>
+            <div class="d-flex align-content-center py-1">
+                <span class="label label-sm status-pendding mr-2"></span>Chờ trưởng ban duyệt
+            </div>
+            <div class="d-flex align-content-center py-1">
+                <span class="label label-sm status-unexplained mr-2"></span>Chưa giải trình
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MenuContext -->
+<ng-template
+  #monthCellTemplate
+  let-day="day"
+  let-openDay="openDay"
+  let-locale="locale"
+  let-tooltipPlacement="tooltipPlacement"
+  let-highlightDay="highlightDay"
+  let-unhighlightDay="unhighlightDay"
+  let-eventClicked="eventClicked"
+  >
+  <div
+    class="fill-height"
+    [class.bg_select]="day.events?.length > 0"
+  >
+    <div class="cal-cell-top">
+      <!-- badge -->
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+        {{ day.badgeTotal }}
+      </span>
+      <!-- day number -->
+      <span class="cal-day-number">
+        {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+      </span>
+    </div>
+  </div>
+  <div
+    class="fill-height"
+    [class.bg_select]="day.events?.length > 0"
+  >
+    <!-- Content note on day! -->
+    <div 
+        *ngFor="let event of day.events" 
+        class="m-1"
+        nz-popover
+        nzPopoverPlacement="bottom"
+        [nzPopoverContent]="contentPopover">
+        <div [innerHTML]="event?.title | safe: 'html'" [class]="event?.cssClass || 'success'" class="p-1"></div>
+        <ng-template #contentPopover>
+            <div [innerHTML]="event?.note | safe: 'html'"></div>
+            <div *ngIf="event?.Info" class="mt-2">{{event?.Info}}</div>
+        </ng-template>
+    </div>
+  </div>
+</ng-template>

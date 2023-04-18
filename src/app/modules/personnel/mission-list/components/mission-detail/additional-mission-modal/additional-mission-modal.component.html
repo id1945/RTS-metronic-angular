@@ -1,0 +1,48 @@
+
+<nz-modal
+nzCentered
+[nzWidth]="900"
+[(nzVisible)]="isVisible"
+[nzFooter]="null"
+(nzOnCancel)="isVisible = false"
+[nzMaskClosable]="false"
+[nzTitle]="'Bổ sung thông tin'"
+(nzOnOk)="isVisible = false">
+
+<div class="p-8">
+    <form [formGroup]="formGroup">
+        <div class="row mb-5">
+            <div class="col">
+                <label class="ctrl_label" [translate]="'Thông tin đặt vé'"></label>
+                <div [ngxSummernote]="config" formControlName="ThongTinDatVe" class="position-relative"></div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <label class="ctrl_label" [translate]="'Thông tin khách sạn'"></label>
+                <div [ngxSummernote]="config" formControlName="ThongTinKhachSan" class="position-relative"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="footer">
+    <div class="d-flex justify-content-end">
+        <button
+            nz-popconfirm
+            nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+            [nzIcon]="iconTpl"
+            [nzOkText]="'COMMON.btn.yes' | translate"
+            [nzCancelText]="'COMMON.btn.no' | translate"
+            class="btn btn-light btn-14 w_130 py-3 mr-2"
+            (nzOnCancel)="isVisible = true"
+            (nzOnConfirm)="isVisible = false"
+            [translate]="'COMMON.btn.cancel'">
+        </button>
+        <ng-template #iconTpl>
+            <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+        </ng-template>
+        <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()" [translate]="'COMMON.btn.confirm'"></button>
+    </div>
+</div>
+</nz-modal>

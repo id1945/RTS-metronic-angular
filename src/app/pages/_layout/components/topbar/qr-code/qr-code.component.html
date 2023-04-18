@@ -1,0 +1,39 @@
+<div class="dropdown" ngbDropdown placement="bottom-right" [autoClose]="true">
+    <!--begin::Toggle-->
+    <div ngbDropdownToggle class="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
+        <div class="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary" (click)="getLinkQRcode()">
+            <i class="fas fa-qrcode text-primary icon-2x"></i>
+        </div>
+    </div>
+    <!--end::Toggle-->
+    <!--begin::Dropdown-->
+    <div ngbDropdownMenu class="w_180">
+        <div class="d-flex justify-content-center">
+            <nz-tabset>
+                <nz-tab nzTitle="IOS">
+                    <a *ngIf="code_data?.url_link_ios" [href]="code_data?.url_link_ios" target="_blank">
+                        <ngx-qrcode-styling
+                            [template]="'ocean'"
+                            [data]="code_data?.url_link_ios"
+                            [qrOptions]="{errorCorrectionLevel:'L'}"
+                            [width]="150"
+                            [height]="150">
+                        </ngx-qrcode-styling>
+                    </a>
+                </nz-tab>
+                <nz-tab nzTitle="Android">
+                    <a *ngIf="code_data?.url_link_android" [href]="code_data?.url_link_android" target="_blank">
+                        <ngx-qrcode-styling
+                            [template]="'ocean'"
+                            [data]="code_data?.url_link_android"
+                            [qrOptions]="{errorCorrectionLevel:'L'}"
+                            [width]="150"
+                            [height]="150">
+                        </ngx-qrcode-styling>
+                    </a>
+                </nz-tab>
+            </nz-tabset>
+        </div>
+    </div>
+    <!--end::Dropdown-->
+</div>

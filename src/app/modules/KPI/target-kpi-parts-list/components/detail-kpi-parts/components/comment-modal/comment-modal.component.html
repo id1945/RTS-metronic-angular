@@ -1,0 +1,118 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="1000"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Ý kiến người phê duyệt'"
+    (nzOnOk)="isVisible = false">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 250px);">
+        <!-- DS Ý kiến người phê duyệt -->
+        <h5 class="text-blue-01 my-2">Danh sách ý kiến người phê duyệt</h5>
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 460px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" class="px-5" [ngSwitch]="col.field" [nzAlign]="col?.align">
+                            <span *ngSwitchCase="'stt'">{{ i + 1 }}</span>
+                            <span *ngSwitchCase="'ngayTao'">{{ data[col.field] * 1000 | date: col?.pipe }}</span>
+                            <span *ngSwitchCase="'dinhKems'">
+                                <ul class="pl-6 mb-0 text-left"><li *ngFor="let file of data[col.field]" (click)="basicContentFileComment?.showModal({id: data?.kpiBinhLuanId, files: data[col.field]})">{{file?.tenFile}}</li></ul>
+                            </span>
+                            <span *ngSwitchCase="'thaoTac'">
+                                <i  *ngIf="data?.isAllowDelete"
+                                    nz-icon 
+                                    [nzType]="'delete'" 
+                                    [nzTheme]="'twotone'" 
+                                    [nzTwotoneColor]="'#F64E60'"
+                                    class="m-1 cursor-pointer"
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate" 
+                                    (nzOnConfirm)="onDelete(data?.kpiBinhLuanId)">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </i>
+                            </span>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <div class="row mt-5">
+            <div class="col-5 ctrl_label">
+                Nội dung
+            </div>
+            <div class="col-7 select_42">
+                <textarea rows="3" [(ngModel)]="noiDung" class="form-control input-42 pt-3"></textarea>
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-5 ctrl_label">
+                File đính kèm
+            </div>
+            <div class="col-7 select_42">
+                <app-select-file 
+                    [reset]="false" 
+                    [multiple]="true" 
+                    [acceptKey]="'excel_word_pdf_rar_zip'" 
+                    [text]="'Tải lên văn bản'" 
+                    [(selectedFiles)]="dinhKems">
+                </app-select-file>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = true"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+    <!-- File chi tiết -->
+    <app-basic-content-modal #basicContentFileComment="basic-content" [title]="'File tải lên'">
+        <ul *ngIf="basicContentFileComment?.data?.files?.length; else nullFile" class="pl-6 mb-0 text-left">
+            <li *ngFor="let file of basicContentFileComment?.data?.files">
+                <a [href]="file?.urlDownload" target="_blank">{{file?.tenFile || '-'}}</a>
+                <i nz-icon (click)="onDownloadFile(basicContentFileComment?.data?.id, file?.tenFile)" nzType="cloud-download" nzTheme="outline" class="m-1 icon-lg text-primary cursor-pointer"></i>
+            </li>
+        </ul>
+        <ng-template #nullFile>Bản ghi hiện chưa có file tải lên</ng-template>
+    </app-basic-content-modal>
+</nz-modal>

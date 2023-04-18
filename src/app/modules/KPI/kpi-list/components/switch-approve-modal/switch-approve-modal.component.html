@@ -1,0 +1,25 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="500"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Chọn quy trình duyệt cho KPI Quý'"
+    (nzOnOk)="isVisible = false">
+
+    <div class="px-8 my-10">
+        <form [formGroup]="formGroup">
+            <nz-radio-group formControlName="procedure">
+                <label nz-radio [nzValue]="item.value" *ngFor="let item of quyTrinhOptions">{{item?.label || '-'}}</label>
+            </nz-radio-group>
+        </form>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

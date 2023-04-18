@@ -1,0 +1,96 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách Thư viện KPI Bộ phận</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-6 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm.." (input)="search$.next($event.target.value)" />
+                </div>
+                <nz-select 
+                    ngModel="null"
+                    (ngModelChange)="paginator.PhongBanKey = $event; getList()"
+                    [nzOptions]="boPhanOptions" nzAllowClear
+                    nzPlaceHolder="Bộ phận"
+                    class="w_200">
+                </nz-select>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-6 px-0 text-lg-right">
+                <button type="button" class="btn btn-primary" (click)="libraryForm?.showModal()">Thêm mới</button>
+            </div>
+        </div>
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '1500px', y: 'calc(100vh - 380px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col.field" [nzAlign]="col?.align" class="px-5">
+                            <span *ngSwitchCase="'keHoachCongViec'">
+                                <ul class="pl-6 mb-0">
+                                    <li *ngFor="let khcv of data[col.field]?.items" class="text-primary cursor-pointer" (click)="basicContent.showModal(khcv)">
+                                        {{khcv?.soThuTu}}
+                                    </li>
+                                </ul>
+                            </span>
+                            <span *ngSwitchCase="'mucTieu'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                            <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                            <span *ngSwitchCase="'congThucTinhToan'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                            <span *ngSwitchCase="'ghiChu'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                            <span *ngSwitchCase="'ngayTao'" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">{{data[col.field] * 1000 | date: "dd/MM/yyyy"}}</span>
+                            <span *ngSwitchCase="'nguoiDeXuatDisplays'">
+                                <ul class="pl-6 mb-0"><li *ngFor="let n of data[col.field]">{{n}}</li></ul>
+                            </span>
+                            <span *ngSwitchCase="'thaoTac'">
+                                <i nz-icon title="Sửa" (click)="libraryForm.showModal(data?.kpiMucTieuId)" nzType="edit" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#ff9800'" class="m-1 cursor-pointer" ></i>
+                                <i 
+                                    *ngIf="data?.isAllowDelete || true" 
+                                    nz-icon nzType="delete" nzTheme="outline"
+                                    title="Xoá"
+                                    [nzTheme]="'twotone'" 
+                                    [nzTwotoneColor]="'#F64E60'"
+                                    class="mx-1 cursor-pointer"
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate" 
+                                    (nzOnConfirm)="onDelete(data?.kpiMucTieuId)">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </i>
+                            </span>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<!-- Popup Create/Edit -->
+<app-library-form-modal #libraryForm="library-form" (loadList)="getList()"></app-library-form-modal>
+<!-- Popup xem chi tiết nội dung kế hoạch công việc -->
+<app-basic-content-modal #basicContent="basic-content" [title]="'Nội dung kế hoạch công việc ' + basicContent?.data?.soThuTu">{{basicContent?.data?.noiDungMucTieuNho}}</app-basic-content-modal>

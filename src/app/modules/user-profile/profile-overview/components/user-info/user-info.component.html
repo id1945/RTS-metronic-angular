@@ -1,0 +1,65 @@
+<h4 class="text-blue-01 mb-8">{{ 'PERSONAL.GENERAL_INFO.TITLE' | translate }}</h4>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">Avatar</label>
+    <div class="col-12 col-md-8">
+        <!--begin::Pic-->
+        <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+            <div class="symbol symbol-circle symbol-lg-75">
+                <img [src]="infoNhanVien?.anhDaiDien" onError="this.src='assets/media/users/blank.png'" alt="image">
+            </div>
+            <div class="symbol symbol-lg-75 symbol-circle symbol-primary d-none">
+                <span class="font-size-h3 font-weight-boldest">JM</span>
+            </div>
+        </div>
+        <!--end::Pic-->
+    </div>
+</div>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">{{ 'PERSONAL.GENERAL_INFO.FULLNAME' | translate }}</label>
+    <div class="col-12 col-md-8">
+        <input nz-input nzSize="large" [value]="infoNhanVien?.hoTen || ''" [disabled]="true"/>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">{{ 'PERSONAL.GENERAL_INFO.POSITION' | translate }} </label>
+    <div class="col-12 col-md-8">
+        <input nz-input nzSize="large" [value]="infoNhanVien?.tenChucVu || ''" [disabled]="true"/>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">{{ 'PERSONAL.GENERAL_INFO.DEPARTMENT' | translate }}</label>
+    <div class="col-12 col-md-8">
+        <input nz-input nzSize="large" [value]="infoNhanVien?.tenPhongBan || ''" [disabled]="true"/>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12 col-md-8">
+        <h5 class="font-weight-bold">{{ 'PERSONAL.GENERAL_INFO.CONTACT_TITLE' | translate }}</h5>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">Email</label>
+    <div class="col-12 col-md-8">
+        <input nz-input nzSize="large" [value]="infoNhanVien?.emailCongTy || ''" [disabled]="true"/>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">{{ 'PERSONAL.GENERAL_INFO.PHONE' | translate }}</label>
+    <div class="col-12 col-md-8">
+        <input nz-input nzSize="large" [value]="infoNhanVien?.soDienThoai || ''" [disabled]="true"/>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <label class="col-12 col-md-4 ctrl_label">{{ 'PERSONAL.GENERAL_INFO.ADDRESS' | translate }}</label>
+    <div class="col-12 col-md-8">
+        <input nz-input nzSize="large" [value]="infoNhanVien?.diaChiCuTru || ''" [disabled]="true"/>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="825"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Tham vấn'"
+    (nzOnOk)="isVisible = false">
+
+    <form [formGroup]="formGroup" class="scroll-gray-8" style="max-height: calc(100vh - 250px);">
+        <div class="p-10">
+            <div class="row mb-5">
+                <div class="col-12 ctrl_label">
+                    Nội dung văn bản trình kí <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12">
+                    <div [ngxSummernote]="config" formControlName="noiDungTrinhKi"  class="position-relative"></div>
+                    <div class="form-text text-danger" *ngIf="f?.noiDungTrinhKi?.errors && f?.noiDungTrinhKi?.touched">
+                        <span>Nội dung văn bản trình kí là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 ctrl_label">
+                    Kiểm tra rà soát nội dung <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12">
+                    <div [ngxSummernote]="config" formControlName="noiDungKiemTra" class="position-relative"></div>
+                    <div class="form-text text-danger" *ngIf="f?.noiDungKiemTra?.errors && f?.noiDungKiemTra?.touched">
+                        <span>Kiểm tra rà soát nội dung là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5" formArrayName="noiDungThuKiThamVans">
+                <div class="col-12 ctrl_label">
+                    Tham vấn của thư kí TGĐ <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12" *ngFor="let item of f?.noiDungThuKiThamVans?.controls; let i = index">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="w-100" [formGroupName]="i">
+                            <textarea formControlName="noiDungThamVan" placeholder="Nhập thông tin tham vấn" class="form-control input_42 pt-3 mt-3" rows="2"></textarea>
+                            <div class="form-text text-danger" *ngIf="item?.controls?.noiDungThamVan?.errors && item?.controls?.noiDungThamVan?.touched">
+                                <span>Tham vấn của thư kí TGĐ là bắt buộc</span>
+                            </div>
+                        </div>
+                        <div class="w_80 px-2">
+                            <i nz-icon [title]="'Add'" (click)="addItem()" [nzType]="'plus-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" class="m-1 icon-lg cursor-pointer"></i>
+                            <!-- Delete -->
+                            <i
+                                nz-icon 
+                                [title]="'Delete'"
+                                [nzType]="'delete'" 
+                                [nzTheme]="'twotone'" 
+                                [nzTwotoneColor]="'#F64E60'"
+                                class="m-1 icon-lg cursor-pointer"
+                                nz-popconfirm
+                                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                [nzIcon]="iconTpl"
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate" 
+                                (nzOnConfirm)="removeItem(i)">
+                                <ng-template #iconTpl>
+                                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                </ng-template>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button 
+                nz-popconfirm 
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl" 
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 py-3 mr-2 w_130" 
+                (nzOnCancel)="isVisible = true" 
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()">Xác nhận</button>
+        </div>
+    </div>
+</nz-modal>

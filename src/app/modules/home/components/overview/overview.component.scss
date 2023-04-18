@@ -1,0 +1,90 @@
+:host {
+  .fa-file-word {
+    color: cadetblue;
+  }
+
+  .welcome_title {
+    background: url(https://thumbs.dreamstime.com/b/welcome-party-flags-banner-confetti-rain-white-background-welcome-party-flags-banner-confetti-rain-white-150793744.jpg)
+      repeat center 23%;
+    background-size: 80% 170%;
+  }
+
+  .happy_birthday_title {
+    background: url(https://happybirthdaytime.com/wp-content/uploads/2019/10/Happy-Birthday-Background-Images.png);
+    background-size: 100% 170%;
+  }
+
+  .h_325 {
+    min-height: 325px;
+    max-height: 325px;
+  }
+
+  .h_70 {
+    min-height: 70px !important;
+    max-height: 70px;
+  }
+
+  .bg-hover-op {
+    &:hover {
+      background: #0000000e;
+    }
+  }
+
+  .rounded-circle-10 {
+    width: 10px;
+    height: 10px;
+  }
+
+  .list_item {
+    display: list-item;
+    list-style-position: inside;
+    // color: #de8326;
+    background: unset;
+    font-size: 20px;
+  }
+
+  .border_bottom_dashed {
+    border-bottom: 2px dashed #ebedf3 !important;
+  }
+
+  .status {
+    &-phonghop {
+      color: #fff;
+      border-radius: 2px;
+      background: #5cb85c;
+      border: 0.5px solid #239e23;
+    }
+    &-congviec {
+      color: #fff;
+      border-radius: 2px;
+      background: #337ab7;
+      border: 0.5px solid #1f629c;
+    }
+  }
+}
+
+::ng-deep {
+  .home {
+    // ========= Calendar
+    .cal-day-view {
+      .cal-week-view {
+        .cal-time-events {
+          max-height: 480px !important;
+          overflow-y: auto;
+        }
+      }
+    }
+    &:not(.cal-day-view) {
+      .cal-week-view {
+        .cal-time-events {
+          max-height: 440px;
+          overflow-y: auto;
+        }
+      }
+    }
+    .cal-days {
+      max-height: 480px;
+      overflow-y: auto;
+    }
+  }
+}

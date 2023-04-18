@@ -1,0 +1,163 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="625"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Đánh giá chuyến đi'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    1. Thời gian đưa đón
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="thoiGianDuaDon" type="number" min="0" step="1" max="10" 
+                    class="ng-pristine ng-valid ng-valid-number ng-valid-max ng-valid-min" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                            *ngIf="(f?.thoiGianDuaDon?.errors?.min || f?.thoiGianDuaDon?.errors?.max)">
+                            <span>Bạn chỉ được chọn từ 1-10</span>
+                  </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    2. Trang phục
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="trangPhuc" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.trangPhuc?.errors?.min || f?.trangPhuc?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label text-right" >
+                    3. Kỹ năng lái xe
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="kyNangLaiXe" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.kyNangLaiXe?.errors?.min || f?.kyNangLaiXe?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    4. Lộ trình
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="loTrinh" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.loTrinh?.errors?.min || f?.loTrinh?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    5. Xử lý sự cố
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="xuLySuCo" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.xuLySuCo?.errors?.min || f?.xuLySuCo?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    6. Tuân thủ luật
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="tuanthuLuat" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.tuanthuLuat?.errors?.min || f?.tuanthuLuat?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    7. Hỗ trợ đóng mở cửa
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="hoTroDongMoCua" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.hoTroDongMoCua?.errors?.min || f?.hoTroDongMoCua?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    8. Giao Tiếp
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="GiaoTiep" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.GiaoTiep?.errors?.min || f?.GiaoTiep?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    9. Tiện ích xe
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="tienIchXe" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.tienIchXe?.errors?.min || f?.tienIchXe?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-6 ctrl_label" >
+                    10. Vệ sinh xe
+                </div>
+                <div class="col-12 col-md-6">
+                    <input formControlName="veSinhXe" type="number" min="0" step="1" max="10" style="max-width: 100px;" class="form-control input_42" />
+                    <div class="form-text text-danger"
+                    *ngIf="(f?.veSinhXe?.errors?.min || f?.veSinhXe?.errors?.max)">
+                    <span>Bạn chỉ được chọn từ 1-10</span>
+               </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" >
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

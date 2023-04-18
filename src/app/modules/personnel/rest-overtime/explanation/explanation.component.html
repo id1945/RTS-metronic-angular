@@ -1,0 +1,97 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            Giải trình công
+        </div>
+    </div>
+    <div class="card-body py-0 px-5">
+        <div class="row w-100 py-0 m-0 search_table">
+            <!-- Search -->
+            <ng-container>
+                <div class="col-12 px-0 mb-2 input-group select_42">
+                    <nz-select 
+                        [(ngModel)]="yearSelected"
+                        (ngModelChange)="getMonths($event)" 
+                        [nzOptions]="yearsOptions"
+                        nzShowSearch nzAllowClear 
+                        nzPlaceHolder="Năm"
+                        style="width: 150px">
+                    </nz-select>
+                    <nz-select 
+                        [(ngModel)]="monthSelected"
+                        (ngModelChange)="getFormToDate($event)" 
+                        [nzOptions]="monthsStepOptions" 
+                        nzShowSearch nzAllowClear
+                        nzPlaceHolder="Kỳ công"
+                        style="width: 230px">
+                    </nz-select>
+                    <nz-date-picker
+                        [ngModel]="paginator.FromDate"
+                        (ngModelChange)="paginator.FromDate = this.datepipe.transform($event, 'yyyy-MM-dd'); getList()"
+                        [nzPlaceHolder]="'Ngày bắt đầu'"
+                        nzFormat="dd/MM/yyyy"
+                        class="input_42"
+                        style="width: 170px;">
+                    </nz-date-picker>
+                    <nz-date-picker
+                        [ngModel]="paginator.ToDate"
+                        (ngModelChange)="paginator.ToDate = this.datepipe.transform($event, 'yyyy-MM-dd'); getList()"
+                        [nzPlaceHolder]="'Ngày kết thúc'"
+                        nzFormat="dd/MM/yyyy"
+                        class="input_42"
+                        style="width: 170px;">
+                    </nz-date-picker>
+                </div>
+            </ng-container>
+        </div>
+        <!-- Table  -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            class="table table_40"
+            [nzScroll]="{ y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let data of dataTable.items">
+                    <tr [class.cursor-pointer]="data?.STATUS_NAME == 'Chưa giải trình'" (dblclick)="data?.STATUS_NAME == 'Chưa giải trình' ? fromExplanation.showModal(data) : false">
+                        <ng-container *ngFor="let col of dataTable.columns">
+                            <td [nzAlign]="col?.align" [ngSwitch]="col.field">
+                                <span *ngSwitchCase="'STATUS_NAME'" [title]="data[col.field]">
+                                    <ng-container [ngSwitch]="true">
+                                        <span *ngSwitchCase="data[col.field] == 'Phê duyệt'" class="label label-light-primary label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchCase="data[col.field]?.includes('Chưa')" class="label label-light-danger label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchDefault class="label label-light-warning label-inline">{{ data[col.field] }}</span>
+                                    </ng-container>
+                                </span>
+                                <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]"> 
+                                    <span *ngIf="col?.pipe; else noPipe">{{ data[col.field] | date: col?.pipe }}</span>
+                                    <ng-template #noPipe>{{ data[col.field] }}</ng-template>
+                                </span>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </nz-table>
+
+        <!-- Paging -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-form-explanation-modal #fromExplanation="element" (loadList)="getList()"></app-form-explanation-modal>

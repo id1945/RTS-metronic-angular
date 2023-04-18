@@ -1,0 +1,289 @@
+<div class="w-100 box-shadow">
+    <!--begin::Content-->
+    <div class="card card-custom">
+        <div class="card-header border-0">
+            <div class="card-title">
+                <h3 class="card-label">Chi tiết KPI</h3>
+            </div>
+        </div>
+        <div class="card-body py-0 mb-8">
+            <app-table [data]="[0]" [maxHeight]="'600px'" [classNameContainer]="'my-5'">
+                <tr class="col-xxl-12">
+                    <td class="pl-5 min_w_150">Quý</td>
+                    <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.quyDisplay || '-'}}</span></td>
+                    <td class="pl-5 min_w_150">Năm</td>
+                    <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.namDisplay || '-'}}</span></td>
+                    <td class="pl-5 min_w_150">Loại quy trình duyệt</td>
+                    <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.quyTrinhDuyetDisplay || '-'}}</span></td>
+                </tr>
+                <tr class="col-xxl-12">
+                    <td class="pl-5">Tên bộ phận</td>
+                    <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.phongBanDisplay || '-'}}</span></td>
+                    <td class="pl-5">Người phụ trách</td>
+                    <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.nguoiPhuTrachDisplay || '-'}}</span></td>
+                    <td class="pl-5">Trưởng bộ phận</td>
+                    <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.truongBoPhanDisplay || '-'}}</span></td>
+                </tr>
+            </app-table>
+
+            <div class="row mb-5 align-content-center">
+                <h5 class="col-12 col-md-7">Chi Tiết Dữ Liệu Kết Quả Hoàn Thành Chỉ Tiêu KPI</h5>
+                <div class="col-12 col-md-5 text-right">
+                    <button type="button" *ngIf="dataDetail?.isAllowCapNhatKetQua" (click)="updateKpiConfirm()" class="btn btn-warning m-1">Cập nhật kết quả KPI</button>
+                    <button type="button" *ngIf="dataDetail?.isAllowXemKetQua" (click)="resultKpi.showModal(kpiQuyId)" class="btn btn-info m-1">Xem kết quả</button>
+                    <button type="button" (click)="settingColumn.showModal()" class="btn btn-primary m-1">Ẩn hiện cột</button>
+                </div>
+            </div>
+
+            <!-- begin:Table 1 -->
+            <ng-container *ngIf="dataTable.isActive">
+                <app-table [data]="dataTable.items" [maxHeight]="'calc(100vh - 300px)'" [minHeight]="'500px'">
+                    <thead>
+                        <tr>
+                            <ng-container *ngFor="let col of dataTable.columns; let i = index; let f = first; let l = last">
+                                <th
+                                    *ngIf="col?.isActive"
+                                    [class]="col?.className"
+                                    [class.stick]="col?.stickyL || col?.stickyR"
+                                    [nzAlign]="'center'"
+                                    [rowspan]="col?.rowspan"
+                                    [colspan]="col?.colspan"
+                                    [style.minWidth]="col?.width"
+                                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                                    {{ col?.title }}
+                                </th>
+                            </ng-container>
+                        </tr>
+                        <tr *ngIf="showHideColumnThucTeHoanThanhChiTieuQuy">
+                            <ng-container *ngFor="let col of dataTable.columns2">
+                                <th
+                                    [class]="col?.className"
+                                    [nzAlign]="col?.align"
+                                    [rowspan]="col?.rowspan"
+                                    [colspan]="col?.colspan"
+                                    [style.minWidth]="col?.width">
+                                    {{ col?.title }}
+                                </th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let data of dataTable.items; let index = index;">
+                            <ng-template [ngTemplateOutlet]="rowspanTemplate" [ngTemplateOutletContext]="{ data: data, index: index }"></ng-template>
+                        </ng-container>
+                    </tbody>
+                </app-table>
+            </ng-container>
+            
+            <!-- Lịch sử phê duyệt -->
+            <ng-container *ngIf="lichSuPheDuyet?.length">
+                <!-- Trạng thái hồ sơ hiện tại -->
+                <app-table *ngIf="dataDetail?.trangThaiHienTai" [data]="[0]" [maxHeight]="'600px'" [classNameContainer]="'my-5'">
+                    <tr>
+                        <td class="pl-5 min_w_150">Trạng thái hồ sơ hiện tại</td>
+                        <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.trangThaiHienTai?.tenTrangThai}}</span></td>
+                        <td class="pl-5 min_w_150">Người phê duyệt</td>
+                        <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.trangThaiHienTai?.nguoiPheDuyet}}</span></td>
+                    </tr>
+                </app-table>
+                
+                <h5>Lịch sử phê duyệt</h5>
+                <!-- begin:Table 2 -->
+                <app-table [data]="lichSuPheDuyet" [maxHeight]="'800px'" [classNameContainer]="'my-5'">
+                    <thead>
+                        <tr>
+                            <ng-container *ngFor="let col of dataTable2.columns; let i = index; let f = first; let l = last">
+                                <th
+                                    [class]="col?.className"
+                                    [class.stick]="col?.stickyL || col?.stickyR"
+                                    [nzAlign]="'center'"
+                                    [rowspan]="col?.rowspan"
+                                    [colspan]="col?.colspan"
+                                    [style.minWidth]="col?.width"
+                                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable2.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                                    {{ col?.title }}
+                                </th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of lichSuPheDuyet; let idx = index;">
+                            <ng-container *ngFor="let col of dataTable2.columns; let i = index; let f = first; let l = last">
+                                <td 
+                                    class="px-1" 
+                                    [ngSwitch]="col.field" 
+                                    [nzAlign]="col?.align"
+                                    [class]="col?.className"
+                                    [class.stick]="col?.stickyL || col?.stickyR"
+                                    [class.position-relative]="col?.field == 'ghiChu'"
+                                    [class.bg-success]="data?.isCheck === true && col?.field == 'stt'" 
+                                    [class.bg-danger]="data?.isCheck === false && col?.field == 'stt'" 
+                                    [style.minWidth]="col?.width"
+                                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable2.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                                    <span *ngSwitchCase="'stt'">{{ idx + 1 }}</span>
+                                    <span *ngSwitchCase="'ngayDuyet'">{{data[col.field] * 1000 | date: col?.pipe}}</span>
+                                    <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </app-table>
+            </ng-container>
+
+            <div *ngIf="dataDetail?.isAllowPheDuyet" class="row justify-content-end mx-0">
+                <button type="button" (click)="confirmInputFileKPIDetailReject?.showModal()" class="btn btn-danger w_130 m-1">Từ chối</button>
+                <button type="button" (click)="confirmInputFileKPIDetailApprove?.showModal()" class="btn btn-primary w_130 m-1">Phê duyệt</button>
+            </div>
+        </div>
+    </div>
+    <!--end::Content-->
+</div>
+
+<!-- Template table -->
+<ng-template #rowspanTemplate let-data="data" let-index="index">
+    <tr *ngFor="let thanhPhan of data?.thanhPhans; let indexTP=index; let firstTP = first">
+        <ng-container *ngFor="let col of dataTable.columns; let i = index; let f = first; let l = last" [ngSwitch]="col.field">
+            <!-- thanhPhans -->
+            <ng-container *ngSwitchCase="'thanhPhans'">
+                <td
+                    *ngIf="col.isActive"
+                    class="px-1" 
+                    [nzAlign]="col?.align"
+                    [class]="col?.className"
+                    [class.bg-light-success]="thanhPhan?.trangThaiThanhPhanChiTietKey == '1'"
+                    [class.bg-light-danger]="thanhPhan?.trangThaiThanhPhanChiTietKey == '2'"
+                    [class.bg-light-info]="thanhPhan?.trangThaiThanhPhanChiTietKey == '3'"
+                    [class.bg-light-primary]="thanhPhan?.trangThaiThanhPhanChiTietKey == '4'"
+                    [class.bg-light-warning]="thanhPhan?.trangThaiThanhPhanChiTietKey == '5'"
+                    [class.stick]="col?.stickyL || col?.stickyR"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="1"
+                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                    <span>{{ thanhPhan?.thanhPhanDisplay || '-' }}</span>
+                </td>
+            </ng-container>
+            <!-- thucTeHoanThanhChiTieuQuy -->
+            <ng-container *ngSwitchCase="'thucTeHoanThanhChiTieuQuy'">
+                <ng-container *ngFor="let col2 of dataTable.columns2" >
+                    <td
+                        *ngIf="col.isActive"
+                        class="px-1" 
+                        [nzAlign]="col?.align"
+                        [class]="col2?.field === 'thucTeHoanThanh' ? col?.className : ''"
+                        [style.minWidth]="col2?.width"
+                        [attr.rowspan]="1"
+                        [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                        <span>{{ thanhPhan[col2.field] | number:'1.0' }}</span>
+                    </td>
+                </ng-container>
+            </ng-container>
+            <!-- raSoat -->
+            <ng-container *ngSwitchCase="'raSoat'">
+                <td
+                    *ngIf="col.isActive"
+                    class="px-1" 
+                    [nzAlign]="col?.align"
+                    [class]="col?.className"
+                    [class.stick]="col?.stickyL || col?.stickyR"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="1"
+                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                    <ng-container *ngIf="dataDetail?.isAllowShowColumnRaSoat && thanhPhan?.isAllowRaSoat">
+                        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" (click)="confirmAccept.showModal('', thanhPhan)" class="mx-1 cursor-pointer"></i>
+                        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F64E60'" (click)="confirmReject.showModal('', thanhPhan)" class="mx-1 cursor-pointer"></i>
+                    </ng-container>
+                </td>
+            </ng-container>
+            <!-- yKienNguoiPheDuyet -->
+            <ng-container *ngSwitchCase="'yKienNguoiPheDuyet'">
+                <td
+                    *ngIf="col.isActive"
+                    class="px-1" 
+                    [nzAlign]="col?.align"
+                    [class]="col?.className"
+                    [class.stick]="col?.stickyL || col?.stickyR"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="1"
+                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                    <span *ngIf="dataDetail?.isAllowShowColumnYKienNguoiPheDuyet">{{ thanhPhan?.yKienNguoiPheDuyet || '-' }}</span>
+                </td>
+            </ng-container>
+            <!-- Default -->
+            <ng-container *ngSwitchDefault>
+                <td 
+                    *ngIf="col.isActive && firstTP"
+                    class="px-1" 
+                    [ngSwitch]="col.field"
+                    [nzAlign]="col?.align"
+                    [class]="col?.className"
+                    [class.stick]="col?.stickyL || col?.stickyR"
+                    [class.position-relative]="col?.field == 'ghiChu'"
+                    [class.bg-light-success]="col.field == 'stt' && getMin(data) == 1"
+                    [class.bg-light-danger]="col.field == 'stt' && getMin(data) == 2"
+                    [class.bg-light-info]="col.field == 'stt' && getMin(data) == 3"
+                    [class.bg-light-primary]="col.field == 'stt' && getMin(data) == 4"
+                    [class.bg-light-warning]="col.field == 'stt' && getMin(data) == 5"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="data?.thanhPhans?.length > 0 ? data?.thanhPhans?.length : 1"
+                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                    <span *ngSwitchCase="'stt'">{{ index + 1 }}</span>
+                    <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                    <span *ngSwitchCase="'noiDungCongThuc'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                    <span *ngSwitchCase="'nhanSuChiuTrachNhiemDisplays'">
+                        <ul class="pl-6 mb-0"><li *ngFor="let n of data[col.field]">{{n}}</li></ul>
+                    </span>
+                    <div *ngSwitchCase="'noiDungGiaiTrinh'" [style.maxWidth]="col?.width">
+                        <div>{{ data[col.field]?.noiDungGiaiTrinh }}</div>
+                        <div *ngFor="let file of data[col.field]?.dinhKems" class="row mx-0 mb-1 align-items-center">
+                            <div class="col-12 px-0 truncate" [title]="file?.tenFile">
+                                <i class="flaticon2-file-1 icon-lg text-warning mr-3"></i>
+                                <a href="javascript:void(0)" (click)="downloadFile(file?.urlDownload, file?.tenFile)">{{file?.tenFile}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                </td>
+            </ng-container>
+        </ng-container>
+    </tr>
+</ng-template>
+
+<!-- Show/Hide columns -->
+<app-setting-column-modal #settingColumn="setting" [dataTable]="dataTable" (change)="onChangeShowHideColumn($event)"></app-setting-column-modal>
+
+<!-- Result -->
+<app-result-kpi-modal #resultKpi="result-kpi"></app-result-kpi-modal>
+
+<!-- Ra soát - accept -->
+<app-confirm-input-basic 
+    #confirmAccept="confirm-input-basic" 
+    confirm="Xác nhận đồng ý duyệt?" 
+    title="Duyệt KPI bộ phận" 
+    label="Ý kiến" 
+    (submit)="onSubmitAccept($event)">
+</app-confirm-input-basic>
+
+<!-- Ra soát - reject -->
+<app-confirm-input-basic 
+    #confirmReject="confirm-input-basic" 
+    confirm="Xác nhận báo cáo lại số liệu này?" 
+    title="Báo cáo lại KPI bộ phận" 
+    label="Ý kiến" 
+    (submit)="onSubmitReject($event)">
+</app-confirm-input-basic>
+
+<!-- Phê duyệt KPI -->
+<app-confirm-input-file
+    #confirmInputFileKPIDetailApprove="confirm-input-file" 
+    title="Phê duyệt KPI quý" 
+    lableContent="Ý kiến" 
+    (submit)="onSubmitArroveKPI($event)">
+</app-confirm-input-file>
+
+<!-- Từ chối KPI -->
+<app-confirm-input-file
+    #confirmInputFileKPIDetailReject="confirm-input-file" 
+    title="Từ chối KPI quý" 
+    lableContent="Ý kiến" 
+    (submit)="onSubmitRejectKPI($event)">
+</app-confirm-input-file>

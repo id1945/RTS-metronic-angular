@@ -1,0 +1,66 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="625" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="isVisible = false" [nzTitle]="'Import file excel'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Chỉ mục trang <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-input-number
+                        [nzMin]="0"
+                        [nzStep]="1"
+                        [nzFormatter]="formatter"
+                        [nzParser]="parser"
+                        nzPlaceHolder="Chỉ mục trang bắt đầu từ 0"
+                        formControlName="SheetIndex" class="form-control input_42"
+                    ></nz-input-number>
+                    <div class="form-text text-danger" *ngIf="f?.SheetIndex?.errors && (f?.SheetIndex?.touched || isSubmit)">
+                        <span>Chỉ mục trang là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tài liệu đính kèm <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="false" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFiles">
+                    </app-select-file>
+                    <div class="form-text text-danger" *ngIf="selectedFiles?.length === 0 && isSubmit">
+                        <span>Tài liệu đính kèm là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2"
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

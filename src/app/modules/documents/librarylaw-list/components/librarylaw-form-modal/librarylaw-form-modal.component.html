@@ -1,0 +1,149 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="700"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="dataDetail ? 'Cập nhật Thư viện pháp luật' : 'Thêm mới Thư viện pháp luật'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.LAW.DETAIL.documentCode' | translate }} <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" formControlName="MaVanBan" placeholder="{{'DOCUMENT.LAW.DETAIL.documentCode' | translate }}" class="form-control input_42">
+                    <div class="form-text text-danger" *ngIf="f?.MaVanBan?.errors && f?.MaVanBan?.touched">
+                        <span>Mã văn bản là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.LAW.DETAIL.documentName' | translate }} <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" formControlName="TenVanBan" placeholder="{{'DOCUMENT.LAW.DETAIL.documentName' | translate }}" class="form-control input_42">
+                    <div class="form-text text-danger" *ngIf="f?.TenVanBan?.errors && f?.TenVanBan?.touched">
+                        <span>Tên văn bản là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.LAW.DETAIL.issuers' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" formControlName="ChuTheBanHanh" placeholder="{{'DOCUMENT.LAW.DETAIL.issuers' | translate }}" class="form-control input_42">
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.effectiveDateFrom' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="NgayHieuLuc" nzPlaceHolder=" {{'DOCUMENT.LAW.DETAIL.effectiveDateFrom' | translate }}" [nzFormat]="'dd-MM-yyyy'" class="form-control input_42" rows="1">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.effectiveDateTo' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="NgayHetHieuLuc" nzPlaceHolder=" {{'DOCUMENT.LAW.DETAIL.effectiveDateTo' | translate }}" [nzFormat]="'dd-MM-yyyy'" class="form-control input_42" rows="1" >
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">{{ 'DOCUMENT.LAW.DETAIL.documentGroup' | translate }}<span class="text-danger">(*)</span></div>
+
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="NhomPhapLuatKey" [nzOptions]="nhomPhapLuatOptions" nzShowSearch nzAllowClear nzPlaceHolder="{{ 'DOCUMENT.LAW.DETAIL.documentGroup' | translate }}" style="width: 100%;">
+                    </nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.NhomPhapLuatKey?.errors && f?.NhomPhapLuatKey?.touched">
+                        <span>Nhóm pháp luật là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label"> {{'DOCUMENT.LAW.DETAIL.scope' | translate }}</div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="PhamViApDungKeys" [nzOptions]="phamViApDungOptions" nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="{{ 'DOCUMENT.LAW.DETAIL.scope' | translate }}" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.link' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" formControlName="Link" placeholder="{{'DOCUMENT.LAW.DETAIL.link' | translate }}" class="form-control input_42">
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.atttachmentsVN' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [detailReadOnly]="detailReadOnlyVi" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFilesVi">
+                    </app-select-file>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.atttachmentsEN' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [detailReadOnly]="detailReadOnlyEn" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFilesEn">
+                    </app-select-file>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2"
+                    (nzOnCancel)="isVisible = true"
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="dataDetail ? onEdit() : onCreate()" >Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

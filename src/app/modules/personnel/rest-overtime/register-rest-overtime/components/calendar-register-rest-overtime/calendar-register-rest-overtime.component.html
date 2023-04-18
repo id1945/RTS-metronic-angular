@@ -1,0 +1,76 @@
+<div class="mt-5">
+  <mwl-utils-calendar-header
+    [(view)]="view"
+    [(viewDate)]="viewDate"
+    (viewDateChange)="viewDateChange($event)"
+    [locale]="translate.currentLang">
+  </mwl-utils-calendar-header>
+</div>
+
+<!-- context-menu delete -->
+<context-menu #basicMenuSimple>
+  <!-- <ng-template contextMenuItem let-event>
+    <a href *ngIf="event" class="dropdown-item" (click)="onRequestApprove([event])">Gửi duyệt</a>
+  </ng-template> -->
+  <ng-template contextMenuItem let-event>
+    <a href *ngIf="event" class="dropdown-item" (click)="onDeleteEvent([event])">Xoá</a>
+  </ng-template>
+</context-menu>
+
+<!-- MenuContext -->
+<ng-template
+  #monthCellTemplate
+  let-day="day"
+  let-openDay="openDay"
+  let-locale="locale"
+  let-tooltipPlacement="tooltipPlacement"
+  let-highlightDay="highlightDay"
+  let-unhighlightDay="unhighlightDay"
+  let-eventClicked="eventClicked"
+  >
+  <div
+    class="fill-height"
+    [class.bg_select]="day.events?.length > 0"
+  >
+    <div class="cal-cell-top">
+      <!-- badge -->
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+        {{ day.badgeTotal }}
+      </span>
+      <!-- day number -->
+      <span class="cal-day-number">
+        {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+      </span>
+    </div>
+  </div>
+  <div
+    class="fill-height"
+    [class.bg_select]="day.events?.length > 0"
+  >
+    <!-- Content note on day! -->
+    <div 
+      *ngFor="let event of day.events" 
+      class="m-1"
+      nz-popover
+      nzPopoverPlacement="bottom"
+      [nzPopoverContent]="contentPopover"
+      [contextMenu]="basicMenuSimple"
+      [contextMenuSubject]="event">
+      <div [innerHTML]="event?.title | safe: 'html'" [class]="event?.cssClass || 'success'" class="p-1"></div>
+      <ng-template #contentPopover>
+        <div [innerHTML]="event?.note | safe: 'html'"></div>
+        <div *ngIf="event?.Info" class="mt-2">{{event?.Info}}</div>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Calendar -->
+<mwl-calendar-month-view
+  [locale]="translate.currentLang"
+  [viewDate]="viewDate"
+  [events]="events"
+  [refresh]="refresh"
+  [cellTemplate]="monthCellTemplate"
+  (beforeViewRender)="beforeMonthViewRender($event)">
+</mwl-calendar-month-view>

@@ -1,0 +1,70 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="'95vw'"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Chi Tiết Dữ Liệu Kết Quả Hoàn Thành Chỉ Tiêu KPI'"
+    (nzOnOk)="isVisible = false">
+
+    <div class="m-5">
+        <h5 class="bg-info text-white p-2">III. Kết Quả Thực Hiện Chỉ Tiêu KPI Của Bộ Phận</h5>
+        <app-table [data]="dataTable.items" [maxHeight]="'calc(100vh - 250px)'" [minHeight]="'400px'">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            *ngIf="col?.isActive"
+                            [style.borderBottom]="'1px solid #e3ebf6'"
+                            [nzAlign]="col?.align"
+                            [rowspan]="col?.rowspan"
+                            [colspan]="col?.colspan"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="12" class="bg-warning text-dark">A. KPI Bộ phận</td>
+                </tr>
+                <tr *ngFor="let data of dataTable.items; let i = index" class="cursor-pointer">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.isActive" [ngSwitch]="col.field" [nzAlign]="col?.align" [style.minWidth]="col?.width" [class]="col?.className" class="px-5" [class.font-weight-bolder]="data?.isAllowPheDuyet || data?.isAllowThamVan">
+                            <span *ngSwitchCase="'stt'">{{ i + 1 }}</span>
+                            <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                            <span *ngSwitchCase="'noiDungCongThuc'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                            <span *ngSwitchCase="'nhanSuChiuTrachNhiemDisplays'">
+                                <ul class="pl-6 mb-0"><li *ngFor="let n of data[col.field]">{{n}}</li></ul>
+                            </span>
+                            <span *ngSwitchCase="'trongSo'">{{ data[col.field] || 0 }}%</span>
+                            <span *ngSwitchCase="'chiTieuHoanThanh'">{{ data[col.field] || 0 }}%</span>
+                            <span *ngSwitchCase="'thucTeHoanThanh'">{{ data[col.field] || 0 }}%</span>
+                            <span *ngSwitchCase="'tongDiem'">{{ data[col.field] || 0 }}%</span>
+                            <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+                <tr>
+                    <td colspan="12" class="bg-warning text-dark">B. KPI Bổ Sung</td>
+                </tr>
+                <tr>
+                    <td colspan="7"></td>
+                    <td class="text-center">Tổng</td>
+                    <td class="text-center">{{tongTrongSo || 0}}%</td>
+                    <td></td>
+                    <td class="text-center">Tổng</td>
+                    <td class="text-center">{{tongDiemQuy || 0}}%</td>
+                </tr>
+            </tbody>
+        </app-table>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.close'"></button>
+        </div>
+    </div>
+</nz-modal>

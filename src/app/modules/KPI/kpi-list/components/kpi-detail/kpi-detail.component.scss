@@ -1,0 +1,9 @@
+::ng-deep {
+  .ant-table-wrapper:not(.table_min_height_none) .ant-table-body {
+    min-height: 166px !important;
+  }
+}
+
+.bg-note {
+  background: lemonchiffon !important;
+}

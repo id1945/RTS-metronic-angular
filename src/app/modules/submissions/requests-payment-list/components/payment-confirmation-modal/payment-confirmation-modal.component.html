@@ -1,0 +1,53 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="625"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Xác nhận thanh toán'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ngày thanh toán
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="ngayThanhToan" class="form-control input_42"></nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Số chứng từ nội bộ
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="soChungTuNoiBo" placeholder="Số chứng từ nội bộ" class="form-control input_42" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2"
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

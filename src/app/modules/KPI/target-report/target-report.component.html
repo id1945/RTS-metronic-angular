@@ -1,0 +1,539 @@
+
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Báo cáo KPI</h3>
+        </div>
+    </div>
+    <div #table class="card-body py-0">
+        <div class="row justify-content-md-center">
+            <div *ngIf="paginator.LoaiBieuMau != '' && paginator.LoaiBieuMau != '4'" class="col-12 col-md-4 col-xl-3 col-xxl-2 mb-5 select_42">
+                <nz-select ngModel="null" #boPhan
+                    (ngModelChange)="paginator.PhongBanKey = $event" 
+                    [nzOptions]="phongBanOptions" 
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Phòng ban" 
+                    class="w-100">
+                </nz-select>
+            </div>
+            <div class="col-12 col-md-4 col-xl-3 col-xxl-2 mb-5 select_42">
+                <nz-select ngModel="null" 
+                    (ngModelChange)="paginator.LoaiBieuMau = $event" 
+                    [nzOptions]="loaiBieuMauOptions" 
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Loại biểu mẫu" 
+                    class="w-100">
+                </nz-select>
+            </div>
+            <div class="col-12 col-md-4 col-xl-3 col-xxl-2 mb-5 select_42">
+                <nz-select ngModel="null" 
+                    (ngModelChange)="paginator.NamKey = $event" 
+                    [nzOptions]="namOptions" 
+                    nzAllowClear
+                    nzShowSearch
+                    nzPlaceHolder="Báo cáo năm" 
+                    class="w-100">
+                </nz-select>
+            </div>
+            <div *ngIf="paginator.LoaiBieuMau != '' && paginator.LoaiBieuMau != '1' && paginator.LoaiBieuMau != '3' && paginator.LoaiBieuMau != '4'" class="col-12 col-md-4 col-xl-3 col-xxl-2 mb-5 select_42">
+                <nz-select ngModel="null" 
+                    (ngModelChange)="paginator.QuyKey = $event" 
+                    [nzOptions]="quyOptions" 
+                    nzAllowClear 
+                    nzShowSearch
+                    nzPlaceHolder="Báo cáo quý" 
+                    class="w-100">
+                </nz-select>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-5">
+            <button class="btn btn-primary m-1 px-10"
+                (click)="paginator.LoaiBieuMau == '1' ? getListMucTieuBoPhanDangKy() : (paginator.LoaiBieuMau == '2' ? getListDanhGiaHieuQuaHTCV() : getListTongHopKetQuaDanhGiaNam())">Xem báo cáo</button>
+            <button class="btn btn-primary m-1 px-10" (click)="export()">Xuất báo cáo</button>
+        </div>
+        <!-- 1. Mục tiêu bộ phận và đăng kí KPI -->
+        <ng-container *ngIf="paginator.LoaiBieuMau == '1'">
+             <!-- Company/Signature -->
+            <div class="row align-items-center my-10">
+                <div class="col-12 col-md-6">
+                    <div class="text-center">
+                        <h4 class="font-weight-bolder">TẬP ĐOÀN THÀNH CÔNG</h4>
+                        <h4 class="font-weight-bolder">CÔNG TY CỔ PHẦN HUYNDAI THÀNH CÔNG VIỆT NAM</h4>
+                        <img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="auto" width="350" class="mb-2">
+                        <h4>MỤC TIÊU BỘ PHÂN VÀ ĐĂNG KÝ API <span class="text-blue-01">{{paginator?.NamKey}}</span></h4>
+                        <h5>Bộ phận : {{getObjByKeyOptions('phongBanOptions', paginator.PhongBanKey)?.label}}</h5>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <app-table [data]="[1]" [maxHeight]="'auto'">
+                        <tr class="text-center">
+                            <th>Xây dựng và đề xuất</th>
+                            <th>Phê duyệt Phó Tổng giám đốc</th>
+                            <th>Phê duyệt Tổng giám đốc</th>
+                        </tr>
+                        <tr>
+                            <td class="h_120 w_150"></td>
+                            <td class="h_120 w_150"></td>
+                            <td class="h_120 w_150"></td>
+                        </tr>
+                        <tr class="text-left">
+                            <td>Ngày: </td>
+                            <td>Ngày: </td>
+                            <td>Ngày: </td>
+                        </tr>
+                    </app-table>
+                </div>
+            </div>
+            <!-- Table A -->
+            <app-table [data]="dataTable.items" [maxHeight]="'calc(100vh - 100px)'" [minHeight]="'500px'" [classNameContainer]="'mb-5'">
+                <thead>
+                    <tr>
+                        <th 
+                            *ngFor="let col of dataTable.columns"
+                            [class]="col?.className"
+                            [nzAlign]="col?.align"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataTable.items">
+                        <ng-container *ngFor="let col of dataTable.columns">
+                            <td 
+                                class="px-1" 
+                                [ngSwitch]="col.field" 
+                                [nzAlign]="col?.align"
+                                [style.minWidth]="col?.width">
+                                <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </app-table>
+            <!-- Table B -->
+            <app-table [data]="dataTable2.items" [maxHeight]="'calc(100vh - 100px)'" [minHeight]="'500px'" [classNameContainer]="'mb-5'">
+                <thead>
+                    <tr>
+                        <th
+                            *ngFor="let col of dataTable2.columns"
+                            [class]="col?.className"
+                            [nzAlign]="col?.align"
+                            [rowspan]="col?.rowspan"
+                            [colspan]="col?.colspan"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th
+                            *ngFor="let col of dataTable2.columns2"
+                            [class]="col?.className"
+                            [nzAlign]="col?.align"
+                            [rowspan]="col?.rowspan"
+                            [colspan]="col?.colspan"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th
+                            *ngFor="let col of dataTable2.columns3"
+                            [class]="col?.className"
+                            [nzAlign]="col?.align"
+                            [rowspan]="col?.rowspan"
+                            [colspan]="col?.colspan"
+                            [style.top]="col.top"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th
+                            *ngFor="let col of dataTable2.columns4"
+                            [class]="col?.className"
+                            [nzAlign]="col?.align"
+                            [rowspan]="col?.rowspan"
+                            [colspan]="col?.colspan"
+                            [style.top]="col.top"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let row of dataTable2.items">
+                        <tr>
+                            <td
+                                *ngFor="let col of dataTable2.columns"
+                                class="bg-y-1"
+                                [nzAlign]="col?.align"
+                                [attr.colspan]="col?.colspan"
+                                [style.minWidth]="col?.width">
+                                {{ row[col.field] }}
+                            </td>
+                        </tr>
+                        <tr *ngFor="let data of row?.chiTieuItems">
+                            <ng-container *ngFor="let col2 of dataTable2.columns2">
+                                <ng-container [ngSwitch]="col2.field">
+                                    <!-- Công việc chính -->
+                                    <ng-container *ngSwitchCase="'congViecChinh'">
+                                        <td class="px-1" [nzAlign]="col2?.align" [style.minWidth]="col2?.width">
+                                            <!-- TODO -->
+                                        </td>
+                                    </ng-container>
+                                    <!-- Đăng ký KPI năm --> 
+                                    <ng-container *ngSwitchCase="'dangKyKPINam'">
+                                        <ng-container *ngFor="let col3 of dataTable2.columns3 | slice: 0:6" [ngSwitch]="true">
+                                            <td *ngSwitchCase="col3?.field == 'tenKPI' || col3?.field == 'noiDungCongThuc'" class="px-1" [nzAlign]="col3?.align" [style.minWidth]="col3?.width">
+                                                <span [innerHTML]="(data[col3.field] || '-') | safe: 'html'"></span>
+                                            </td>
+                                            <td *ngSwitchDefault class="px-1" [nzAlign]="col3?.align" [style.minWidth]="col3?.width">
+                                                {{ data[col3.field] }}
+                                            </td>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- Đăng chỉ tiêu kế hoạch năm -->
+                                    <ng-container *ngSwitchCase="'dangChiTieuKeHoachNam'">
+                                        <ng-container *ngFor="let col4 of dataTable2.columns4" [ngSwitch]="true">
+                                            <td *ngSwitchCase="!!col4?.field" class="px-1" [nzAlign]="col4?.align" [style.minWidth]="col4?.width">
+                                                {{ data[col4.field] }}
+                                            </td>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- other -->
+                                    <ng-container *ngSwitchDefault>
+                                        <td 
+                                            class="px-1" 
+                                            [ngSwitch]="col2.field" 
+                                            [nzAlign]="col2?.align"
+                                            [class.text-center]="col2.field == 'stt'"
+                                            [style.minWidth]="col2?.width">
+                                            <span *ngSwitchDefault [title]="data[col2.field]">{{ data[col2.field] || '-' }}</span>
+                                        </td>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </app-table>
+        </ng-container>
+        <!-- 2. Báo cáo đánh giá hiệu quả hoàn thành công việc -->
+        <ng-container *ngIf="paginator.LoaiBieuMau == '2'">
+             <!-- Company/Signature -->
+            <div class="row align-items-center mt-10">
+                <div class="col">
+                    <app-table [data]="[1]" [maxHeight]="'auto'">
+                        <tr class="text-center">
+                            <td class="min_w_150 w-25" [attr.rowspan]="2" [style.verticalAlign]="'middle'">
+                                <div class="text-center">
+                                    <h4 class="font-weight-bolder">TẬP ĐOÀN THÀNH CÔNG</h4>
+                                    <h4 class="font-weight-bolder">CÔNG TY CỔ PHẦN HUYNDAI THÀNH CÔNG VIỆT NAM</h4>
+                                    <img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="auto" width="350" class="mb-2">
+                                </div>
+                            </td>
+                            <th class="min_w_150 w-25">Xây Dựng Và Đề Xuất</th>
+                            <th class="min_w_150 w-25">Phê Duyệt Của Trưởng Bộ Phận</th>
+                            <th class="min_w_150 w-25">Phê Duyệt Của Tổng Giám Đốc</th>
+                        </tr>
+                        <tr>
+                            <td class="h_120"></td>
+                            <td class="h_120"></td>
+                            <td class="h_120"></td>
+                        </tr>
+                    </app-table>
+                </div>
+            </div>
+            <h4 class="mb-10 mt-5 text-center">Quý : <span class="text-blue-01">{{paginator?.QuyKey}}</span> Năm : <span class="text-blue-01">{{paginator?.NamKey}}</span></h4>
+            <h2>Báo Cáo Đánh Giá Hiệu Quả Hoàn Thành Công Việc Cấp Bộ Phận</h2>
+            <!-- I. THÔNG TIN BAO QUÁT -->
+            <app-table [data]="[1]" [classNameContainer]="'mb-5'">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="bg-y">I. THÔNG TIN BAO QUÁT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="min_w_150">Tên bộ phận</td>
+                        <td class="min_w_150">{{dataTable3?.meta?.thongTinBaoQuat?.phongBanDisplay}}</td>
+                    </tr>
+                    <tr>
+                        <td>Họ & tên Trưởng Bộ Phận</td>
+                        <td>{{dataTable3?.meta?.thongTinBaoQuat?.hoTenTruongBoPhan}}</td>
+                    </tr>
+                    <tr>
+                        <td>Họ & tên Phó Bộ Phận</td>
+                        <td>{{dataTable3?.meta?.thongTinBaoQuat?.hoTenPhoBoPhan}}</td>
+                    </tr>
+                </tbody>
+            </app-table>
+            <!-- II. Ý KIẾN CỦA BỘ PHẬN KH-CL -->
+            <app-table [data]="[1]" [classNameContainer]="'mb-5'">
+                <thead>
+                    <tr><th class="bg-y">II. Ý KIẾN CỦA BỘ PHẬN KH-CL</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="min_w_150">- Tổng kết quả KPI bộ phận Tài chính kế toán quý III đạt {{dataTable3?.meta?.yKienKHCL?.tongDiem || 0}}%</td></tr>
+                    <tr>
+                        <td class="min_w_150">
+                            - Các KPI không đạt chỉ tiêu :
+                            <ul class="pl-6 m-0">
+                                <li *ngFor="let item of dataTable3?.meta?.yKienKHCL?.kpiKhongDats">{{item?.tenKPI}} {{item?.phanTramThucTeHoanThanh || 0}}%</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="min_w_150">
+                            - Các KPI vượt chỉ tiêu :
+                            <ul class="pl-6 m-0">
+                                <li *ngFor="let item of dataTable3?.meta?.yKienKHCL?.kpiVuotChiTieus">{{item?.tenKPI}} {{item?.phanTramThucTeHoanThanh || 0}}%</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </app-table>
+            <!-- III. KẾT QUẢ THỰC HIỆN CHỈ TIÊU KPI CỦA BỘ PHẬN -->
+            <app-table [data]="dataTable3.items" [maxHeight]="'calc(100vh - 100px)'" [minHeight]="'500px'" [classNameContainer]="'mb-5'">
+                <thead>
+                    <tr><th colspan="12" class="bg-y">III. Kết Quả Thực Hiện Chỉ Tiêu KPI Của Bộ Phận</th></tr>
+                    <tr>
+                        <th 
+                            *ngFor="let col of dataTable3.columns"
+                            [class]="col?.className"
+                            [nzAlign]="col?.align"
+                            [style.minWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-y-1"><td colspan="12">A. KPI Bộ phận</td></tr>
+                    <tr *ngFor="let data of dataTable3.items">
+                        <ng-container *ngFor="let col of dataTable3.columns">
+                            <td 
+                                class="px-1" 
+                                [ngSwitch]="col.field" 
+                                [nzAlign]="col?.align"
+                                [style.minWidth]="col?.width">
+                                <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr class="bg-y-1">
+                        <td colspan="7">B. KPI Bổ Sung</td>
+                        <td [nzAlign]="'center'">Tổng</td>
+                        <td [nzAlign]="'center'">{{dataTable3?.meta?.ketQuaThucHien?.tongTrongSo || 0}}</td>
+                        <td></td>
+                        <td [nzAlign]="'center'">Tổng</td>
+                        <td [nzAlign]="'center'">{{dataTable3?.meta?.ketQuaThucHien?.tongDiem || 0}}</td>
+                    </tr>
+                </tbody>
+            </app-table>
+            <!-- IV. CHI TIẾT DỮ LIỆU KẾT QUẢ HOÀN THÀNH CHỈ TIÊU KPI -->
+            <app-table [data]="dataTable4.items" [maxHeight]="'calc(100vh - 100px)'" [minHeight]="'500px'" [classNameContainer]="'my-5'">
+                <thead>
+                    <tr><th class="bg-y" colspan="16">IV. CHI TIẾT DỮ LIỆU KẾT QUẢ HOÀN THÀNH CHỈ TIÊU KPI</th></tr>
+                    <tr>
+                        <ng-container *ngFor="let col of dataTable4.columns">
+                            <th
+                                [class]="col?.className"
+                                [nzAlign]="col?.align"
+                                [rowspan]="col?.rowspan"
+                                [colspan]="col?.colspan"
+                                [style.minWidth]="col?.width">
+                                {{ col?.title }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <ng-container *ngFor="let col of dataTable4.columns2">
+                            <th
+                                [class]="col?.className"
+                                [nzAlign]="col?.align"
+                                [rowspan]="col?.rowspan"
+                                [colspan]="col?.colspan"
+                                [style.top]="col?.top"
+                                [style.minWidth]="col?.width">
+                                {{ col?.title }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let data of dataTable4.items; let index = index;">
+                        <ng-template [ngTemplateOutlet]="rowspanTemplate" [ngTemplateOutletContext]="{ data: data, index: index }"></ng-template>
+                    </ng-container>
+                </tbody>
+            </app-table>
+        </ng-container>
+        <!-- 3. Tổng hợp kết quả đánh giá cấp bộ phận năm -->
+        <!-- 4. Tổng hợp KQDG-HQHT công việc cấp bộ phận toàn công ty -->
+        <ng-container *ngIf="paginator.LoaiBieuMau == '3' || paginator.LoaiBieuMau == '4'">
+            <!-- Company -->
+            <div class="row align-items-center my-10">
+                <div class="col-12 col-md-6 mb-5 mb-md-0">
+                    <div class="text-center">
+                        <h4 class="font-weight-bolder">TẬP ĐOÀN THÀNH CÔNG</h4>
+                        <h4 class="font-weight-bolder">CÔNG TY CỔ PHẦN HUYNDAI THÀNH CÔNG VIỆT NAM</h4>
+                        <img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="auto" width="350" class="mb-2">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="text-center">
+                        <h4 class="font-weight-bolder">TỔNG HỢP KẾT QUẢ ĐÁNH GIÁ</h4>
+                        <h4 class="font-weight-bolder">HIỆU QUẢ HOÀN THÀNH CÔNG VIỆC CẤP BỘ PHẬN NĂM 2021</h4>
+                        <h5>Bộ phận : {{getObjByKeyOptions('phongBanOptions', paginator.PhongBanKey)?.label}}</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Signature -->
+            <app-table [data]="[1]" [classNameContainer]="'mb-5'">
+                <tr class="text-center">
+                    <th class="min_w_150">Người Soạn Thảo</th>
+                    <th class="min_w_150">Người Xem Xét</th>
+                    <th class="min_w_150">Người Phê Duyệt</th>
+                </tr>
+                <tr>
+                    <td class="h_120"></td>
+                    <td class="h_120"></td>
+                    <td class="h_120"></td>
+                </tr>
+            </app-table>
+            <!-- 3. Tổng hợp kết quả đánh giá cấp bộ phận năm -->
+            <!-- 4. Tổng hợp KQDG-HQHT công việc cấp bộ phận toàn công ty -->
+            <app-table [data]="dataTable5.items" [maxHeight]="'calc(100vh - 100px)'" [minHeight]="'500px'" [classNameContainer]="'my-5'">
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let col of dataTable5.columns">
+                            <th
+                                [class]="col?.className"
+                                [nzAlign]="col?.align"
+                                [rowspan]="col?.rowspan"
+                                [colspan]="col?.colspan"
+                                [style.minWidth]="col?.width">
+                                {{ col?.title }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <ng-container *ngFor="let col of dataTable5.columns2">
+                            <th
+                                [class]="col?.className"
+                                [nzAlign]="col?.align"
+                                [rowspan]="col?.rowspan"
+                                [colspan]="col?.colspan"
+                                [style.minWidth]="col?.width">
+                                {{ col?.title }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let data of dataTable5.items">
+                        <tr>
+                            <ng-container *ngFor="let col of dataTable5.columns">
+                                <ng-container *ngIf="col.field == 'chiTieuHoanThanhQuy' || col.field == 'tyLeHoanThanhQuy' || col.field == 'tongDiemQuy'">
+                                    <ng-container *ngFor="let col2 of dataTable5.columns2?.slice(0,4); let idx = index">
+                                        <td 
+                                            class="px-1" 
+                                            [class.bg-b-1]="col.field == 'tyLeHoanThanhQuy'"
+                                            [class.bg-g-1]="col.field == 'tongDiemQuy' || col.field == 'chiTieuHoanThanhQuy'"
+                                            [nzAlign]="col2?.align"
+                                            [style.minWidth]="col2?.width">
+                                            {{data[col.field + (idx + 1) || '0']}}%
+                                        </td>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="col.field != 'chiTieuHoanThanhQuy' && col.field != 'tyLeHoanThanhQuy' && col.field != 'tongDiemQuy'">
+                                    <td
+                                        class="px-1" 
+                                        [ngSwitch]="col.field"
+                                        [nzAlign]="col?.align"
+                                        [style.minWidth]="col?.width">
+                                        <!-- innerHTML -->
+                                        <span *ngSwitchCase="'mucTieu'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                                        <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                                        <span *ngSwitchCase="'trongSo'">{{ data[col.field] || '0' }}%</span>
+                                        <span *ngSwitchCase="'binhQuanKetQuaKPICaNam'">{{ data[col.field] || '0' }}%</span>
+                                        <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                                    </td>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </app-table>
+        </ng-container>
+    </div>
+</div>
+
+<!-- Template table -->
+<ng-template #rowspanTemplate let-data="data" let-index="index">
+    <tr *ngFor="let thanhPhan of data.thanhPhans; let i = index">
+        <ng-container *ngFor="let col of dataTable4.columns" [ngSwitch]="col.field">
+            <!-- thanhPhans -->
+            <ng-container *ngSwitchCase="'thanhPhans'">
+                <td
+                    class="px-1" 
+                    [nzAlign]="col?.align"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="1">
+                    {{ thanhPhan?.thanhPhanDisplay || '-' }}
+                </td>
+            </ng-container>
+            <!-- noiDungGiaiTrinh -->
+            <ng-container *ngSwitchCase="'noiDungGiaiTrinh'">
+                <td
+                    class="px-1" 
+                    [nzAlign]="col?.align"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="1">
+                    {{ thanhPhan?.noiDungGiaiTrinh || '-' }}
+                </td>
+            </ng-container>
+            <!-- yKienKHCL -->
+            <ng-container *ngSwitchCase="'yKienKHCL'">
+                <td
+                    class="px-1" 
+                    [nzAlign]="col?.align"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="1">
+                    {{ thanhPhan?.yKienKHCL || '-' }}
+                </td>
+            </ng-container>
+            <!-- thucTeHoanThanhChiTieuQuy -->
+            <ng-container *ngSwitchCase="'thucTeHoanThanhChiTieuQuy'">
+                <ng-container *ngFor="let col2 of dataTable4.columns2" >
+                    <td
+                        class="px-1" 
+                        [nzAlign]="col?.align"
+                        [style.minWidth]="col2?.width"
+                        [class.bg-b-1]="col2?.field == 'thucTeHoanThanh'"
+                        [attr.rowspan]="1">
+                        {{thanhPhan[col2.field] || '-'}}
+                    </td>
+                </ng-container>
+            </ng-container>
+            <!-- Default -->
+            <ng-container *ngSwitchDefault>
+                <td 
+                    *ngIf="i == 0"
+                    class="px-1" 
+                    [ngSwitch]="col.field"
+                    [nzAlign]="col?.align"
+                    [style.minWidth]="col?.width"
+                    [attr.rowspan]="data?.thanhPhans?.length > 0 ? data?.thanhPhans?.length : 1">
+                    <!-- Tên KPI -->
+                    <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                    <!-- Công thức -->
+                    <span *ngSwitchCase="'noiDungCongThuc'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                    <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                </td>
+            </ng-container>
+        </ng-container>
+    </tr>
+</ng-template>

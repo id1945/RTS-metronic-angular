@@ -1,0 +1,131 @@
+<div class="d-flex justify-content-between align-content-center">
+    <h5 class="h_42 mb-0 text-blue-01" style="line-height: 42px;">Chi tiết mục tiêu trọng tâm của bộ phận</h5>
+    <button type="button" (click)="settingColumn.showModal()" class="btn btn-primary d-block min_w_90">Ẩn hiện cột</button>
+</div>
+
+<nz-table
+    *ngIf="dataTable.isActive"
+    [nzLoading]=""
+    [nzSize]="'small'"
+    [nzData]="dataTable?.items"
+    [nzShowPagination]="false"
+    [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+    <thead>
+        <tr>
+            <ng-container *ngFor="let col of dataTable.columns">
+                <th
+                    *ngIf="col?.isActive"
+                    [nzAlign]="col?.align"
+                    [nzWidth]="col?.width">
+                    {{ col?.title }} 
+                    <span *ngIf="col?.isRequired" class="text-danger">(*)</span>
+                </th>
+            </ng-container>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of dataTable?.items; let i = index">
+            <ng-container *ngFor="let col of dataTable.columns">
+                <td 
+                    *ngIf="col?.field && col?.isActive"
+                    class="px-5" 
+                    [class.bg-success]="col?.field == 'stt' && data?.isCheck === true" 
+                    [class.bg-danger]="col?.field == 'stt' && data?.isCheck === false" 
+                    [class.bg-warning]="col?.field == 'stt' && data?.trangThaiSoSanhKey == 1" 
+                    [class.bg-secondary]="col?.field == 'stt' && data?.trangThaiSoSanhKey == 2" 
+                    [class.bg-info]="col?.field == 'stt' && data?.trangThaiSoSanhKey == 3"
+                    [ngSwitch]="col?.field"
+                    [nzAlign]="col?.align">
+                    <!-- trangThaiSoSanhKey: 0-Không sửa, 1-Có sửa, 2-Không thêm, 3-Có thêm -->
+                    <span *ngSwitchCase="'stt'">{{ i + 1 }}</span>
+                    <span *ngSwitchCase="'mucTieu'">
+                        <textarea rows="2" class="form-control input_42 pt-2" [(ngModel)]="data[col.field]" [class.is-invalid]="data[col.field] == ''" maxlength="500"></textarea>
+                    </span>
+                    <span *ngSwitchCase="'ghiChu'">
+                        <textarea rows="2" class="form-control input_42 pt-2" [(ngModel)]="data[col.field]" maxlength="500"></textarea>
+                    </span>
+                    <span *ngSwitchCase="'isAllowRaSoat'">
+                        <ng-container *ngIf="permission?.isAllowRaSoat">
+                            <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" (click)="confirmAccept.showModal('', data)" class="mx-1 cursor-pointer"></i>
+                            <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#F64E60'" (click)="confirmReject.showModal('', data)" class="mx-1 cursor-pointer"></i>
+                        </ng-container>
+                    </span>
+                    <div *ngSwitchCase="'yKienNguoiPheDuyet'" class="d-flex justify-content-center">
+                        <ng-container *ngIf="permission?.isAllowBinhLuan">
+                            <i nz-icon nzType="message" [nzTheme]="'twotone'" [nzTwotoneColor]="'#007bff'" class="mt-1 cursor-pointer"></i>
+                            <span class="ml-1 cursor-pointer" [style.color]="'#409CFF'" (click)="comment.showModal(data)">{{data[col.field]}}</span>
+                        </ng-container>
+                    </div>
+                    <div *ngSwitchCase="'thaoTac'" class="d-flex justify-content-center">
+                        <!-- Add/Save - isAllowEdit -->
+                        <i nz-icon *ngIf="permission?.isAllowEdit" [title]="'Add'" (click)="onAdd(i)" [nzType]="'plus-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" class="m-1 cursor-pointer"></i>
+                        <i nz-icon *ngIf="permission?.isAllowEdit" [title]="'Save'" (click)="onSave(data)" [nzType]="'save'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#0BB7AF'" class="m-1 cursor-pointer"></i>
+                        <!-- Lock/Unlock - isAllowTacVuLock -->
+                        <i 
+                            nz-icon 
+                            *ngIf="permission?.isAllowTacVuLock" 
+                            [title]="data?.isLock ? 'Lock' : 'Unlock'" 
+                            [nzType]="data?.isLock ? 'lock' : 'unlock'" 
+                            [nzTheme]="'twotone'" 
+                            [nzTwotoneColor]="data?.isLock ? '#F64E60' : '#52c41a'"
+                            class="m-1 cursor-pointer"
+                            nz-popconfirm
+                            [nzPopconfirmTitle]="data?.isLock ? 'Mở khoá bản ghi này?' : 'Khoá bản ghi này?'"
+                            [nzIcon]="iconTpl"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate" 
+                            (nzOnConfirm)="onLockUnlock(data)">
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </i>
+                        <!-- Delete - isAllowEdit -->
+                        <i
+                            *ngIf="permission?.isAllowEdit"
+                            nz-icon 
+                            [title]="'Delete'"
+                            [nzType]="'delete'" 
+                            [nzTheme]="'twotone'" 
+                            [nzTwotoneColor]="'#F64E60'"
+                            class="m-1 cursor-pointer"
+                            nz-popconfirm
+                            nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                            [nzIcon]="iconTpl"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate" 
+                            (nzOnConfirm)="onDelete(i, data)">
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </i>
+                    </div>
+                    <span *ngSwitchDefault class="truncate-2 cursor-pointer" [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                </td>
+            </ng-container>
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- show - hide - column -->
+<app-setting-column-modal #settingColumn="setting" [dataTable]="dataTable"></app-setting-column-modal>
+
+<!-- Ra soát - accept -->
+<app-confirm-input-basic 
+    #confirmAccept="confirm-input-basic" 
+    confirm="Xác nhận đồng ý duyệt?" 
+    title="Duyệt Mục tiêu - KHCV - KPI" 
+    label="Ý kiến" 
+    (submit)="onSubmitAccept($event)">
+</app-confirm-input-basic>
+
+<!-- Ra soát - reject -->
+<app-confirm-input-basic 
+    #confirmReject="confirm-input-basic" 
+    confirm="Xác nhận báo cáo lại số liệu này?" 
+    title="Báo cáo lại Mục tiêu - KHCV - KPI" 
+    label="Ý kiến" 
+    (submit)="onSubmitReject($event)">
+</app-confirm-input-basic>
+
+<!-- Comment -->
+<app-comment-modal #comment="comment" [KPIMucTieuId]="id" [screenKey]="0"></app-comment-modal>

@@ -1,0 +1,37 @@
+:host {
+  .aside {
+    height: 100%;
+
+    .aside-menu {
+      margin: 0;
+    }
+  }
+
+  // fixed text line break issue on minimized aside hover
+  .menu-text {
+    white-space: nowrap;
+  }
+
+  .menu-subnav {
+    background: #0000001f;
+  }
+}
+
+// ::ng-deep {
+//   .aside-minimize {
+//     .menu-item {
+//       &>:not(.active) {
+//         display: none !important;
+//       }
+//     }
+//   }
+// }
+
+.for_truncate {
+  display: flex !important;
+  align-items: center !important;
+  .truncate {
+    display: unset !important;
+    align-items: unset !important;
+  }
+}

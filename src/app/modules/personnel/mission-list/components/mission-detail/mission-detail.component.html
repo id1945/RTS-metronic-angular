@@ -1,0 +1,221 @@
+<div class="detail">
+    <div class="title d-flex justify-content-between my-3">
+        <div>{{ 'Chi tiết điều động công tác tháng' | translate }}</div>
+        <div>
+            <button class="btn btn-outline-info btn-14 py-3 mr-2 w_130" (click)="onExportExcel(dataDetail?.hoSoId)"><i class="fas fa-download"></i>{{'Export excel' | translate }}</button>
+        </div>
+    </div>
+    <div *ngIf="dataDetail" class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="pb-5">
+                    <div class="detail_header">
+                        <div class="text-left">
+                            <div class="company"> {{ 'PURCHASE.CREATE.step_4.companyName' | translate }}</div>
+                            <div class="no">Mã điều động công tác:  <b>{{dataDetail?.maDieuDongCongTac}}</b></div>
+                        </div>
+                        <div class="text-right">
+                            <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240"></div>
+                            <div class="today">Hà Nội, Ngày {{today | date: 'dd'}} tháng {{today | date: 'MM'}} năm {{today | date: 'yyyy'}}</div>
+                        </div>
+                    </div>
+                    <div class="detail_name">
+                        <p>Chi tiết kế hoạch điều động công tác tháng {{dataDetail?.keHoachCongTac?.thang}} năm {{dataDetail?.keHoachCongTac?.nam}}</p>
+                    </div>
+    
+                    <!-- Thông tin đề nghị -->
+                    <div class="row">
+                        <div class="col-12 mt-8 mb-5">
+                            <div class="mb-3 font_size_15 text-blue-01">Thông tin điều động</div>
+                            <table class="table table_classic table_40">
+                                <tr>
+                                    <td class="w_170 pl-6">Người đề nghị</td>
+                                    <td class="w_260"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.tenNguoiTao || '-'}}</span></td>
+                                    <td class="w_170 pl-6">Bộ phận</td>
+                                    <td class="w_260"><span class="text-blue-01 font-weight-bolder">{{dataDetail.tenPhongBanNguoiTao || '-'}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-7">Hinh thức công tác</td>
+                                    <td><span class="text-blue-01 font-weight-bolder">{{dataDetail?.hinhThucCongTac || '-'}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-7">Thông tin đặt vé</td>
+                                    <td colspan="3"><span class="text-blue-01 font-weight-bolder" [innerHTML]="(dataDetail?.thongTinDatVe || '-') | safe: 'html'"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-7">Thông tin khách sạn</td>
+                                    <td colspan="3"><span class="text-blue-01 font-weight-bolder" [innerHTML]="(dataDetail?.thongTinKhachSan || '-') | safe: 'html'" ></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+    
+                    <!-- Nội dung công tác -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3 font_size_15 text-blue-01">Nội dung the kế hoạch công tác</div>
+                            <table class="table table_classic table_40 table_blue mb-8">
+                                <ng-container *ngFor="let item of dataDetail?.noiDungCongTac?.items">
+                                    <tr>
+                                        <td class="w_170">Nội dung kế hoạch</td>
+                                        <td class="w_260"><span class="text-blue-01 font-weight-bolder">{{item?.noiDung || '-'}}</span></td>
+                                        <td class="w_170">Địa điểm công tác</td>
+                                        <td class="w_260"><span class="text-blue-01 font-weight-bolder">{{item?.diaDiem || '-'}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nghiệp vụ</td>
+                                        <td><span class="text-blue-01 font-weight-bolder">{{item?.nghiepVu || '-'}}</span></td>
+                                        <td>Ngày đi</td>
+                                        <td><span class="text-blue-01 font-weight-bolder">{{item?.ngayDi * 1000 | date: 'dd/MM/yyyy HH:ss'}}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số người đi</td>
+                                        <td><span class="text-blue-01 font-weight-bolder">{{item?.soNguoiDi || '-'}}</span></td>
+                                        <td>Ngày về</td>
+                                        <td><span class="text-blue-01 font-weight-bolder">{{item?.ngayVe * 1000 | date: 'dd/MM/yyyy HH:ss'}}</span></td>
+                                    </tr>
+                                </ng-container>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h5 class="text-blue-01">Danh sách người đi điều động</h5>
+                    <table class="col-lg-12" class="table table_classic table_no table_40 table_blue mb-8">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th class="min_w_80">Người đi</th>
+                                <th class="min_w_80">Ngày đi</th>
+                                <th class="min_w_80">Ngày về</th>
+                                <th class="min_w_80">Vé máy bay</th>
+                                <th class="min_w_80">Khách sạn</th>
+                                <th class="min_w_80">Gửi xe </th>
+                                <th class="min_w_100">Ghi chú</th>
+                                <th class="min_w_100">Lý do đổi ngày</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataDetail?.nguoiDi?.items; let i = index">
+                                <ng-container>
+                                    <td>{{i + 1}}</td>
+                                    <td [title]="item?.nguoiDiKey">
+                                        <span class="truncate-2">{{item?.hoTen || '-'}}</span>
+                                    </td>
+                                    <td [title]="item?.ngayDi">
+                                        <span class="truncate-2">{{item?.ngayDi * 1000 | date: 'dd/MM/yyyy HH:ss'}}</span>
+                                    </td>
+                                    <td [title]="item?.ngayVe">
+                                        <span class="truncate-2">{{item?.ngayVe * 1000 | date: 'dd/MM/yyyy HH:ss'}}</span>
+                                    </td>
+                                    <td>
+                                        {{item?.isDatMayBay ? 'Có' : 'Không'}}
+                                    </td>
+                                    <td>
+                                        {{item?.isDatKhachSan ? 'Có' : 'Không'}}
+                                    </td>
+                                    <td>
+                                        {{item?.isGuiXeTaiCongTy ? 'Có' : 'Không'}}
+                                    </td>
+                                    
+                                    <td [title]="item?.ghiChu">
+                                        <span class="truncate-2">{{item?.ghiChu || '-'}}</span>
+                                    </td>
+                                    <td [title]="item?.lyDoDoiNgay">
+                                        <span class="truncate-2">{{item?.lyDoDoiNgay || '-'}}</span>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                            <tr *ngIf="dataDetail?.nguoiDi?.items?.length == 0">
+                                <td colspan="6" class="text-center text-danger px-0">
+                                    <nz-alert nzType="warning" nzBanner nzMessage="Không có dữ liệu!"></nz-alert>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- <ng-container *ngFor="let item of dataDetail?.tamUng?.items">
+                        <h5 class="text-blue-01">Chi phí đề nghị tạm ứng: <b>{{item?.nguoiDiDisplay}}</b></h5>
+                        <table #targetScollEl class="col-lg-12" class="table table_classic table_no table_40 table_blue mb-8">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th class="min_w_80">Chi phí công tác</th>
+                                    <th class="min_w_80">Hạn mức</th>
+                                    <th class="min_w_80">Số lần tính</th>
+                                    <th class="min_w_100">Thành tiền (tạm tính để làm tạm ứng)</th>
+                                    <th class="min_w_100">Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let phi of chiPhiCongTacKey; let i = index">
+                                    <tr>
+                                        <td>{{i + 1}}</td>
+                                        <td>
+                                            <ng-container [ngSwitch]="phi">
+                                                <span *ngSwitchCase="chiPhiCongTacKey[0]" class="truncate-2">Phí ăn sáng</span>
+                                                <span *ngSwitchCase="chiPhiCongTacKey[1]" class="truncate-2">Phí ăn trưa</span>
+                                                <span *ngSwitchCase="chiPhiCongTacKey[2]" class="truncate-2">Phí ăn tối</span>
+                                                <span *ngSwitchCase="chiPhiCongTacKey[3]" class="truncate-2">Phí sinh hoạt</span>
+                                                <span *ngSwitchCase="chiPhiCongTacKey[4]" class="truncate-2">Phí khách sạn</span>
+                                                <span *ngSwitchCase="chiPhiCongTacKey[5]" class="truncate-2">Phí vận chuyển</span>
+                                            </ng-container>
+                                        </td>
+                                        <td [title]="item[phi].hanMuc" class="text-right">
+                                            <span class="truncate-2">{{item[phi]?.hanMuc || 0 | number: '1.2'}}</span>
+                                        </td>
+                                        <td [title]="item[phi]?.soLuong" class="text-right">
+                                            <span class="truncate-2">{{item[phi]?.soLuong || 0 | number }}</span>
+                                        </td>
+                                        <td [title]="item[phi]?.thanhTien" class="text-right">
+                                            <span class="truncate-2">{{item[phi]?.thanhTien || 0 | number: '1.2'}}</span>
+                                        </td>
+                                        <td [title]="item[phi]?.ghiChu" class="text-right">
+                                            <span class="truncate-2">{{item[phi]?.ghiChu || '-'}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <tr>
+                                    <td class="text-right border-top" colspan="4"><span class="text-blue-01">Tổng</span></td>
+                                    <td class="text-right border-top"><span class="text-blue-01">{{thanhTienTamTinh(item) || 0 | number: '1.2'}}</span></td>
+                                    <td class="text-right"><span class="text-blue-01">{{item.donViTinh | uppercase}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container> -->
+                </div>
+            </div>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button *ngIf="dataDetail?.isAllowBoSung" class="btn btn-primary btn-14 py-3 mr-2" (click)="additionalMission.showModal(dataDetail?.hoSoId)"><i class="fas fa-plus"></i>{{'Bổ sung thông tin' | translate }}</button>
+                    </div>
+                    <div>
+                        <button *ngIf="dataDetail?.isAllowPheDuyet==true" class="btn btn-danger btn-14 py-3 mr-2 w_150" (click)="appApproveModal?.showModal(dataDetail, false)" [translate]="'COMMON.btn.reject'"></button>
+                        <button *ngIf="dataDetail?.isAllowPheDuyet==true"  class="btn btn-primary btn-14 py-3 w_150" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button>
+                        <!-- <button *ngIf="dataDetail?.isBuocCuoi==true" class="btn btn-primary btn-14 py-3 w_150" (click)="appTicketsModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button> -->
+                        <div *ngIf="dataDetail?.isAllowTrinhDuyet==true">
+                            <button
+                                nz-popconfirm 
+                                nzPopconfirmTitle="Bạn có chắc chắn trình duyệt không ?"
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                class="btn btn-primary btn-14 mr-2 py-3 w_130" 
+                                (nzOnConfirm)="onSubmitApprove(dataDetail)">
+                                Trình duyệt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white" [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+<app-approve-mission-modal #appApproveModal (loadTimeLine)="getDetail()"></app-approve-mission-modal>
+<app-tickets-mission-modal #appTicketsModal (loadTimeLine)="getDetail()"></app-tickets-mission-modal>
+<!-- Bổ sung đặt vé / khách sạn -->
+<app-additional-mission-modal #additionalMission="additional-mission" (loadDetail)="getDetail()"></app-additional-mission-modal>

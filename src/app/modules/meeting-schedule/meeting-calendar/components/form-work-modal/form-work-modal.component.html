@@ -1,0 +1,168 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="800"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="mode == 'create' ? 'Thêm công việc khác' : mode == 'edit' ? 'Cập nhật công việc khác' : 'Thông tin chi tiết'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tiêu đề<span *ngIf="mode != 'detail'" class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="tieuDe" placeholder="Tiêu đề" [readonly]="mode == 'detail'" class="form-control input_42 pt-3 min_h_42"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.tieuDe?.errors && f?.tieuDe?.touched">
+                        Tiêu đề là bắt buộc
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thời gian bắt đầu
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker
+                        [class.readonly]="mode == 'detail'"
+                        [nzShowTime]="true"
+                        class="form-control input_42"
+                        formControlName="thoiGianBatDau"
+                        [nzDisabledDate]="disabledDate"
+                        [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                        nzFormat="dd/MM/yyyy HH:mm">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thời gian kết thúc
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker
+                        [class.readonly]="mode == 'detail'"
+                        [nzShowTime]="true"
+                        class="form-control input_42"
+                        formControlName="thoiGianKetThuc"
+                        [nzDisabledDate]="disabledDate"
+                        [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                        nzFormat="dd/MM/yyyy HH:mm">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <ng-container *ngIf="mode != 'detail'">
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Bộ phận
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="phongBanKey" [nzOptions]="phongBanOptions"
+                            nzShowSearch nzAllowClear nzPlaceHolder="Bộ phận" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+            
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Họ và tên
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="nhanVienKey" [nzOptions]="nhanVienOptions"
+                            nzShowSearch nzAllowClear nzPlaceHolder="Họ và tên" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="row">
+                <table class="table table_classic table_40 table_no mx-3 mb-0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Bộ phận</th>
+                            <th *ngIf="mode != 'detail'" class="w_50 text-center">Xoá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of nhanVienTable; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{item?.nhanVienDisplay}}</td>
+                            <td>{{item?.phongBanDisplay}}</td>
+                            <td *ngIf="mode != 'detail'" class="w_50 text-center">
+                                <div class="d-flex justify-content-around align-items-center">
+                                    <button 
+                                        nz-popconfirm 
+                                        nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                                        [nzIcon]="iconTpl"
+                                        [nzOkText]="'COMMON.btn.yes' | translate"
+                                        [nzCancelText]="'COMMON.btn.no' | translate"
+                                        class="btn btn-icon btn-hover" 
+                                        (nzOnConfirm)="removeNhanVien(i)">
+                                        <i class="fas fa-trash-alt icon-lg text-danger"></i>
+                                    </button>
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="nhanVienTable?.length == 0">
+                            <td colspan="6" class="text-center text-danger">
+                                <nz-alert
+                                    nzType="warning"
+                                    nzBanner
+                                    nzMessage="Không có dữ liệu!"
+                                ></nz-alert>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <ng-container *ngIf="mode != 'detail'; else isDetail">
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                    (nzOnCancel)="isVisible = true" 
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+                <button
+                    *ngIf="mode == 'edit'"
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-danger btn-14 py-3 w_130 mr-2" 
+                    (nzOnCancel)="isVisible = true" 
+                    (nzOnConfirm)="onDelete()">
+                    Huỷ công việc
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="mode == 'edit' ? onEdit() : onCreate()">Ghi lại</button>
+            </ng-container>
+            <ng-template #isDetail>
+                <button class="btn btn-light btn-14 py-3 w_130" (click)="isVisible = false">Huỷ</button>
+            </ng-template>
+        </div>
+    </div>
+</nz-modal>

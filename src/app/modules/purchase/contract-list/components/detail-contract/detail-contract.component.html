@@ -1,0 +1,256 @@
+<div class="detail">
+    <div class="d-flex flex-column-fluid title my-3">
+        {{'CONTRACT.CREATE.step_4.titlePurchaseDetail' | translate}}
+    </div>
+    <div class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="detail_header">
+                    <div class="text-left">
+                        <div class="company"> {{'CONTRACT.CREATE.step_4.companyName' | translate}}</div>
+                        <div class="no"> {{'CONTRACT.CREATE.step_4.referenceCodeLabel' | translate}}: <b>{{dataDetail?.soDeNghi}}</b></div>
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240">
+                        </div>
+                        <div class="today">Hà Nội, Ngày {{dataDetail?.ngayTao * 1000 | date: 'dd'}} tháng {{dataDetail?.ngayTao * 1000 | date: 'MM'}} năm {{dataDetail?.ngayTao * 1000 | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">
+                    <p>{{'CONTRACT.CREATE.step_4.titlePurchaseDetail' | translate}}</p> 
+                    <p class="i"> V/v : {{dataDetail?.noiDung}}</p>
+                </div>
+                <div *ngIf="dataDetail?.isAllowPheDuyet || dataDetail?.isAllowThamVan">Kính gửi : Ông/bà : <b>{{tenNguoiPheDuyet}}</b></div>
+                <div>
+                    <table class="table table_classic table_40 mt-5">   
+                        <tr>
+                            <td class="pl-8">{{'CONTRACT.CREATE.step_4.referenceCodeLabel' | translate}}</td>
+                            <td class="font-weight-bolder">{{dataDetail?.soDeNghi || '-'}}</td>
+                            <td>{{'CONTRACT.CREATE.step_4.typeContractLabel' | translate}}</td>
+                            <td class="font-weight-bolder">{{dataDetail?.tenLoaiHopDong || '-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-8">{{'CONTRACT.CREATE.step_4.purchaseNumberLabel' | translate}}</td>
+                            <td class="font-weight-bolder">
+                                <div *ngFor="let item of dataDetail?.ycmHs">
+                                    <a target="_blank" [routerLink]="['/purchase','detail',item?.idYCMH,item?.maYCMH]">{{item?.maYCMH || '-'}}</a>
+                                </div>
+                            </td>
+                            <td>{{'CONTRACT.CREATE.step_4.paymentLabel' | translate}}</td>
+                            <td class="font-weight-bolder">{{dataDetail?.tenDieuKienThanhToan || '-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-8">{{'CONTRACT.CREATE.step_4.proposeNumberLabel' | translate}}</td>
+                            <td class="font-weight-bolder"> <a target="_blank" [routerLink]="['/submissions','detail',dataDetail?.idToTrinh]">{{dataDetail?.soToTrinh || '-'}}</a></td>
+                            <td>{{'CONTRACT.CREATE.step_4.insuranceLabel' | translate}}</td>
+                            <td class="font-weight-bolder">{{dataDetail?.baoHanh || '-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-8">{{'CONTRACT.CREATE.step_4.supplierNumberLabel' | translate}}</td>
+                            <td class="font-weight-bolder">
+                                <div *ngFor="let item of dataDetail?.deXuatNCCs">
+                                    {{item?.soDeXuat}}
+                                </div>
+                            </td>
+                            <td>{{'CONTRACT.CREATE.step_4.guaranteeLabel' | translate}}</td>
+                            <td class="font-weight-bolder">{{dataDetail?.baoLanh || '-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-8">{{'CONTRACT.CREATE.step_4.contractPartnerLabel' | translate}}</td>
+                            <td colspan="3" class="font-weight-bolder">{{dataDetail?.tenDoiTacKyHopDong || '-'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-8">{{'CONTRACT.CREATE.step_4.table.cphh.note'| translate}}</td>
+                            <td colspan="3" class="font-weight-bolder">{{dataDetail?.ghiChu || '-'}}</td>
+                        </tr>
+                        
+                    </table>
+                </div>
+
+                <div *ngIf="dataDetail?.thongTinHangHoaDichVu?.items?.length > 0">
+                    <div class="my-2 title_top"  [translate]="'CONTRACT.CREATE.step_4.table.cphh.title'"></div>
+                    <table class="table table_classic table_40 table_no table_blue">
+                        <tr>
+                            <th [translate]="'CONTRACT.CREATE.step_4.table.cphh.no'"></th>
+                            <th [translate]="'CONTRACT.CREATE.step_4.table.cphh.goods_services'"></th>
+                            <th [translate]="'CONTRACT.CREATE.step_4.table.cphh.specification'"></th>
+                            <th [translate]="'CONTRACT.CREATE.step_4.table.cphh.unit'"></th>
+                            <th class="text-right" [translate]="'CONTRACT.CREATE.step_4.table.cphh.amount'"></th>
+                            <th class="text-right" [translate]="'CONTRACT.CREATE.step_4.table.cphh.unit_price'"></th>
+                            <th class="text-right" [translate]="'CONTRACT.CREATE.step_4.table.cphh.into_money'"></th>
+                            <th [translate]="'CONTRACT.CREATE.step_4.table.cphh.note'">Ghi chú</th>
+                        </tr>
+                        <ng-container *ngFor="let item of dataDetail?.thongTinHangHoaDichVu?.items; let i = index">
+                            <tr (click)="contractFullTable.showModal(dataDetail)">
+                                <td>{{i + 1}}</td>
+                                <td>{{item?.tenHangHoaDichVu || '-'}}</td>
+                                <td>{{item?.quyCach || '-'}}</td>
+                                <td>{{item?.tenDVT || '-'}}</td>
+                                <td class="text-right">{{item?.soLuong || 0}}</td>
+                                <td class="text-right">{{item?.donGiaChuaVAT || 0 | number: '1.0'}}</td>
+                                <td class="text-right">{{item?.donGiaChuaVAT*item?.soLuong || 0 | number: '1.0'}}</td>
+                                <td>{{item?.ghiChu || '-'}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr>
+                            <td colspan="4" style="border-top: 1px solid #e3ebf6;">
+                                <!-- <div class="text-blue-01 d-flex justify-content-start">
+                                    <div style="min-width: 80px;">{{'CONTRACT.CREATE.step_4.table.cphh.note'| translate}}: </div>
+                                    <div class="text-left">{{dataDetail?.ghiChu}}</div>
+                                </div> -->
+                            </td>
+                            <td colspan="4" style="border-top: 1px solid #e3ebf6;">
+                                <table class="w-100">
+                                    <tr>
+                                        <td class="text-right w-50">
+                                            <b>{{'CONTRACT.CREATE.step_4.table.cphh.into_money'| translate}}:</b>
+                                        </td>
+                                        <td>
+                                            <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.tongTienChuaVAT || 0 | number: '1.0'}}</b></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right w-50">
+                                            <b>{{'CONTRACT.CREATE.step_4.table.cphh.discount'| translate}}:</b>
+                                        </td>
+                                        <td>
+                                            <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.tongTienGiamGia || 0 | number: '1.0'}}</b></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right w-50">
+                                            <b>VAT:</b>
+                                        </td>
+                                        <td>
+                                            <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.vat || 0 | number: '1.0'}}</b></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right w-50">
+                                            <span class="text-blue-01"><b>{{'CONTRACT.CREATE.step_4.table.cphh.total'| translate}}:</b></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.tongTienCoVAT || 0 | number: '1.0'}}</b></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div *ngIf="dataDetail?.duThaoHopDong?.items?.length > 0">
+                    <div class="my-2 title_top" [translate]="'CONTRACT.CREATE.step_4.table.contract.title'"></div>
+                    <table class="table table_classic table_40 table_no table_blue">
+                        <tr>
+                            <th [translate]="'CONTRACT.CREATE.step_4.table.contract.no'">STT</th>
+                            <th style="width:500px;" [translate]="'CONTRACT.CREATE.step_4.table.contract.contractService'"></th>
+                            <th class="w_400" [translate]="'CONTRACT.CREATE.step_4.table.contract.note'"></th>
+                        </tr>
+                        <ng-container *ngFor="let item of dataDetail?.duThaoHopDong?.items; let i = index">
+                            <tr>
+                                <td>{{i + 1}}</td>
+                                <td>
+                                    <div *ngFor="let iFile of item?.fileDinhKems">
+                                        <app-link-file [href]="iFile?.url" [name]="iFile.tenFile"></app-link-file>
+                                    </div>
+                                </td>
+                                <td>{{item.ghiChu || '-'}}</td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </div>
+             
+
+                <div *ngIf="dataDetail?.taiLieuDinhKem?.items?.length > 0">
+                    <div class="my-2 title_top">Tài liệu đính kèm</div>
+                    <table class="table table_classic table_40 table_no table_blue">
+                        <tr>
+                            <th>STT</th>
+                            <th style="width:200px;">Loại hồ sơ</th>
+                            <th style="width:300px;">Tài liệu</th>
+                            <th >Ghi chú</th>
+                        </tr>
+                        <ng-container *ngFor="let item of dataDetail?.taiLieuDinhKem?.items; let i = index">
+                            <tr>
+                                <td>{{i + 1}}</td>
+                                <td>{{item.loaiHoSo}}</td>
+                                <td>
+                                    <span *ngFor="let iFile of item?.fileDinhKems">
+                                        <app-link-file [href]="iFile?.url" [name]="iFile.tenFile"></app-link-file>
+                                    </span>
+                                </td>
+                                <td>{{item.ghiChu || '-'}}</td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Phản hồi tham vấn -->
+            <ng-container *ngIf="dataDetail?.thamVan?.noiDungThuKiThamVans?.length">
+                <div class="d-flex flex-column-fluid title my-3">Tham vấn</div>
+                <div class="d-flex flex-column-fluid tham_van">
+                    <div class="card card-custom w-100 box-shadow">
+                        <div class="card-body">
+                            <div class="mb-5">
+                                <p class="tham_van_title">Nội dung văn bản trình kí</p>
+                                <div class="tham_van_content" [innerHTML]="dataDetail?.thamVan?.noiDungTrinhKi | safe: 'html'"></div>
+                            </div>
+    
+                            <div class="mb-5">
+                                <p class="tham_van_title">Kiểm tra rà soát nội dung</p>
+                                <div class="tham_van_content" [innerHTML]="dataDetail?.thamVan?.noiDungKiemTra | safe: 'html'"></div>
+                            </div>
+    
+                            <div class="mb-5 tham_van_thu_ky">
+                                <p class="tham_van_title">Tham vấn của thư ký TGĐ</p>
+                                <ng-container *ngFor="let item of dataDetail?.thamVan?.noiDungThuKiThamVans; let i = index">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="tham_van_content">
+                                            <b class="mr-2">{{i + 1}}. Tham vấn {{i+1}}:</b>{{item?.noiDungThamVan}}
+                                        </div>
+                                        <div >
+                                            <label nz-checkbox [(ngModel)]="item.isDaPheDuyet" [nzDisabled]="dataDetail?.isAllowResponseThamVan == false">BLĐ chấp thuận</label>
+                                        </div>
+                                    </div>
+                                    <div class="tham_van_phan_hoi_box">
+                                        <div class="tham_van_phan_hoi">Phản hồi tham vấn</div>
+                                        <textarea *ngIf="dataDetail?.isAllowResponseThamVan; else showText" [(ngModel)]="item.noiDungPhanHoi" class="tham_van_content tham_van_border form-control" rows="2"></textarea>
+                                        <ng-template #showText>
+                                            <p>{{item?.noiDungPhanHoi}}</p>
+                                        </ng-template>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-end">
+                    <div *ngIf="dataDetail?.isAllowTuChoi==true">
+                        <button class="btn btn-danger btn-14 py-3 w_130 mr-2" (click)="appApproveModal?.showModal(dataDetail, false)" [translate]="'COMMON.btn.reject'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowThamVan==true">
+                        <button class="btn btn-primary btn-14 py-3 w_130 mr-2" (click)="appConsultationModal?.showModal(dataDetail)" [translate]="'COMMON.btn.consultation'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet==true &&  dataDetail?.isAllowTuChoi==false">
+                        <button class="btn btn-primary btn-14 py-3 w_130" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.consultation'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet==true &&  dataDetail?.isAllowTuChoi==true">
+                        <button class="btn btn-primary btn-14 py-3 w_130" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white" [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+<app-approve-contract-modal #appApproveModal (loadTimeLine)="getDetail()"></app-approve-contract-modal>
+<app-consultation-contract-modal #appConsultationModal (loadTimeLine)="getDetail()"></app-consultation-contract-modal>
+<app-contract-full-table-modal #contractFullTable></app-contract-full-table-modal>

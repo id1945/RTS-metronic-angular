@@ -1,0 +1,122 @@
+<div class="card card-custom">
+    <!--begin::Header-->
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách phiếu cắt cơm trưa</h3>
+        </div>
+        <div class="card-toolbar">
+            <button class="btn btn-primary mr-2" (click)="isCollapsedGuide = !isCollapsedGuide" [attr.aria-expanded]="!isCollapsedGuide">
+                <i class="ki ki-arrow-down icon-nm"></i>Hướng dẫn thực hiện
+            </button>
+        </div>
+    </div>
+    <!--end::Header-->
+
+    <!-- <pre>
+        {{events | json}}
+    </pre> -->
+
+    <!-- context-menu delete -->
+    <context-menu #menuDelete>
+        <ng-template contextMenuItem let-event>
+            <a href *ngIf="event" class="dropdown-item" (click)="onDeleteEvent([event])">Xoá</a>
+        </ng-template>
+    </context-menu>
+
+    <!-- context-menu register -->
+    <context-menu #menuRegister>
+        <ng-template contextMenuItem let-day>
+            <a href *ngIf="dateSelected?.length" class="dropdown-item" (click)="register?.showModal(dateSelected)">Đăng ký</a>
+        </ng-template>
+    </context-menu>
+
+    <!-- MenuContext -->
+    <ng-template
+        #cellTemplate
+        let-day="day"
+        let-openDay="openDay"
+        let-locale="locale"
+        let-tooltipPlacement="tooltipPlacement"
+        let-highlightDay="highlightDay"
+        let-unhighlightDay="unhighlightDay"
+        let-eventClicked="eventClicked">
+        <div
+            class="fill-height"
+            [contextMenu]="menuRegister"
+            [contextMenuSubject]="day"
+            [class.bg_select]="day?.events?.length > 0">
+            <div class="cal-cell-top">
+                <!-- badge -->
+                <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+                    {{ day.badgeTotal }}
+                </span>
+                <!-- day number -->
+                <span class="cal-day-number">
+                    {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+                </span>
+            </div>
+        </div>
+        <div
+            class="fill-height"
+            [class.bg_select]="day?.events?.length > 0">
+            <!-- Content note on day! -->
+            <div 
+                *ngFor="let event of day.events" 
+                class="m-1"
+                nz-popover
+                nzPopoverPlacement="bottom"
+                [nzPopoverContent]="contentPopover"
+                [contextMenu]="menuDelete"
+                [contextMenuSubject]="event">
+                <div [innerHTML]="event?.title | safe: 'html'" [class]="event?.cssClass || 'success'" class="p-1"></div>
+                <ng-template #contentPopover>
+                    <div [innerHTML]="event?.note | safe: 'html'"></div>
+                    <div *ngIf="event?.Info" class="mt-2">{{event?.Info}}</div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+
+    <!--begin::Calendar-->
+    <div class="card-body">
+        <div class="gutter-b" id="collapseGuide" [ngbCollapse]="isCollapsedGuide">
+            <div class="card-title">
+                <h4 class="card-label text-blue-01"><i class="fas fa-book-reader icon-lg mr-2 text-blue-01"></i> Hướng dẫn thực hiện</h4>
+            </div>
+            <h6 class="text-blue-01">Đăng ký:</h6>
+            <p><b>Bước 1:</b> Click chọn 1 ngày hoặc chọn nhiều ngày</p>
+            <p><b>Bước 2:</b> Click chuột phải chọn "Đăng ký"</p>
+            <p><b>Bước 3:</b> Điền lý do đăng ký cắt cơm</p>
+            <p><b>Bước 4:</b> Click "Lưu lại" để hoàn tất Đăng ký cắt cơm trưa</p>
+            <h6 class="text-blue-01">Xoá:</h6>
+            <p><b>Bước 1:</b> Đưa con trỏ tới nội dung đã đăng ký</p>
+            <p><b>Bước 2:</b> Click chuột phải chọn "Xoá"</p>
+            <p><b>Bước 3:</b> Chọn "Ok" để hoàn tất xác nhận xoá</p>
+            <hr>
+        </div>
+        <div class="gutter-b">
+            <div class="mt-5">
+                <mwl-utils-calendar-header-date-picker
+                    [(view)]="view"
+                    [(viewDate)]="viewDate"
+                    (viewDateChange)="onFetchCalendar($event)"
+                    [locale]="translate.currentLang">
+                </mwl-utils-calendar-header-date-picker>
+            </div>
+            <div>
+                <mwl-calendar-month-view
+                    [locale]="translate.currentLang"
+                    [viewDate]="viewDate"
+                    [events]="events"
+                    [refresh]="refresh"
+                    [cellTemplate]="cellTemplate"
+                    (dayClicked)="dayClicked($event?.day)">
+                </mwl-calendar-month-view>
+            </div>
+        </div>
+    </div>
+    <!--end::Calendar-->
+</div>
+
+<!-- Modal -->
+<app-register-modal #register="register" (loadList)="onFetchCalendar()"></app-register-modal>

@@ -1,0 +1,131 @@
+<div class="row danh_ba">
+    <div class="col-12">
+        <!--begin::Header-->
+        <h5 class="card-title font-weight-bolder text-primary-gray my-5">
+            {{'COMPANY_INFO.STAFFS.LIST.title' | translate }}
+        </h5>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="row">
+            <div class="mb-4 col-md-6 col-xl-4 col-xxl-7">
+                <input type="text" class="form-control box-shadow" placeholder="{{'COMPANY_INFO.STAFFS.LIST.hintSearch' | translate}}"
+                    (input)="search$.next($event.target.value)" />
+            </div>
+            <div class="mb-4 col-md-6 col-xl-4 col-xxl-3">
+                <nz-select class="form-control box-shadow" ngModel="selectphongBan"
+                    (ngModelChange)="paginator.phongBanKey = $event; getList()" [nzOptions]="phongBan" nzShowSearch nzAllowClear
+                    nzPlaceHolder="{{'COMPANY_INFO.STAFFS.LIST.hintDepartment' | translate}}" style="width: 100%;">
+                </nz-select>
+            </div>
+            <div class="mb-4 col-md-6 col-xl-4 col-xxl-2">
+                <button class="form-control box-shadow btn btn-facebook mr-2" (click)="getList()"><i
+                        class="fa fa-search text-white"></i>{{'COMPANY_INFO.STAFFS.LIST.btnSearch' | translate}}</button>
+            </div>
+        </div>
+        <!--end::Body-->
+    </div>
+</div>
+
+<div class="card card-custom box-shadow gutter-b">
+    <!-- <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label text-primary-gray">
+            </h3>
+        </div>
+    </div> -->
+
+    <div class="card-body p-4">
+        <!--begin::Row-->
+        <div class="d-flex justify-content-center flex-wrap">
+            <ng-container *ngFor="let row of dataTable">
+                <!--begin::Col-->
+                <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-6 my-3">
+                    <!--begin::Card-->
+                    <div class="card card-custom card-stretch">
+                        <!--begin::Body-->
+                        <div class="card-body pt-4 employee_box px-2">
+                            <!--begin::User-->
+                            <div class="d-flex align-items-end">
+                                <!--begin::Pic-->
+                                <div class="avatar_box text-center w-100 py-8">
+                                    <!--begin::Pic-->
+                                    <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                        <div class="symbol symbol-circle symbol-lg-100">
+                                            <img [src]="row?.anhDaiDienResize" onError="this.src='assets/media/users/blank.png'" alt="image" class="w_100 h_100">
+                                        </div>
+                                        <div class="symbol symbol-lg-75 symbol-circle symbol-primary d-none">
+                                            <span class="font-size-h3 font-weight-boldest">JM</span>
+                                        </div>
+                                    </div>
+                                    <!--end::Pic-->
+                                    <!--begin::Title-->
+                                    <div class="d-flex flex-column">
+                                        <a routerLink="" (click)="showPersonal(row?.nguoiDungId)"
+                                            class="text-primary-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{row?.hoTen}}</a>
+                                        <span class="text-primary-dark-5 font-weight-bold">{{row?.tenChucVu}}</span>
+                                    </div>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Title-->
+                            </div>
+                            <!--end::User-->
+
+                            <!--begin::Info-->
+                            <div class="mb-7 px-5">
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <span class="bg-light mx-2">
+                                        <i class="la la-vcard-o text-primary-dark p-2"></i>
+                                    </span>
+                                    <span
+                                        class="text-dark text-hover-primary font-weight-bold">{{row?.maNhanVien}}</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <span class="bg-light mx-2">
+                                        <i class="flaticon-home-2 text-primary-dark p-2"></i>
+                                    </span>
+                                    <span
+                                        class="text-dark text-hover-primary font-weight-bold">{{row?.tenPhongBan}}</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <span class="bg-light mx-2">
+                                        <i class="la la-envelope-open-text text-primary-dark p-2"></i>
+                                    </span>
+                                    <span class="text-dark text-hover-primary font-weight-bold"><a
+                                            href="mailto: {{row?.emailCongTy}}">{{row?.emailCongTy}}</a></span>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <span class="bg-light mx-2">
+                                        <i class="la la-phone text-primary-dark p-2"></i>
+                                    </span>
+                                    <span class="text-dark text-hover-primary font-weight-bold"><a
+                                            href="tel:{{row?.soDienThoai}}">{{row?.soDienThoai}}</a> (ext:
+                                        {{row?.soMayLe}})</span>
+                                </div>
+                                <div class="d-flex justify-content-start align-items-center my-2">
+                                    <span class="bg-light mx-2">
+                                        <i class="flaticon2-calendar-9 text-primary-dark p-2"></i>
+                                    </span>
+                                    <span *ngIf="row?.ngaySinh" class="text-dark text-hover-primary font-weight-bold"><a> {{ row?.ngaySinh * 1000 | date: 'dd/MM/yyyy'}}</a> </span>
+                                </div>
+                            </div>
+                            <!--end::Info-->
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Col-->
+            </ng-container>
+        </div>
+        <!--end::Row-->
+    </div>
+</div>
+
+<!--start::Paginator-->
+<div class="card card-custom box-shadow">
+    <div class="card-header">
+        <app-paginator class="d-flex justify-content-between align-items-center flex-wrap" [pageSizes]="[12,24,48,96]"
+            [paginator]="paginator" (paginate)="this.getList()"></app-paginator>
+    </div>
+</div>
+<!--end::Paginator-->

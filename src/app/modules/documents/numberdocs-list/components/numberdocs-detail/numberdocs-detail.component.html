@@ -1,0 +1,89 @@
+<div class="row">
+    <!--begin::Content-->
+    <div class="col-xxl-12 order-1 order-xxl-1">
+        <div class="card card-custom card-stretch-half gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label font-weight-bold text-hover-primary"
+                        style="font-size: 22px;font-weight: bold;margin-top: 10px;text-align: center;color:#003469;">
+                        {{dataDetail?.tenVanBan}}</h3>
+                </div>
+                <div class="card-title" style="margin-top: 20px;">
+                    <span style="font-size: 13px">
+                        <i class="flaticon2-chronometer text-primary"></i>
+                        {{convertDate(dataDetail?.ngayTao) | date: "dd/MM/yyyy"}} : {{convertDate(dataDetail?.ngayTao) | date: "hh:ss"}}
+                    </span>
+                    <span style="font-size: 13px;margin-left: 10px;">
+                        <i class="flaticon2-user text-primary"></i>
+                        {{dataDetail?.tenNguoiTao}}
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12  box-shadow" style="height: 800px;;">
+                    <!--begin::Content-->
+                    <div class="col-xxl-12 order-1 order-xxl-1">
+                        <div class="scroll-gray-box-7">
+                            <ngx-extended-pdf-viewer *ngIf="urlPdf" [src]="urlPdf" [useBrowserLocale]="true"
+                                [textLayer]="true" [showHandToolButton]="true" height="800px">
+                            </ngx-extended-pdf-viewer>
+                        </div>
+                    </div>
+                    <!--end::Content-->
+                </div>
+            </div>
+        </div>
+        <div class="card card-custom card-stretch-half">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label font-weight-bold text-hover-primary"
+                        style="font-size: 22px;font-weight: bold;margin-top: 10px;text-align: center;color:#003469;">
+                        THÔNG TIN CHI TIẾT VĂN BẢN</h3>s
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12  box-shadow" style="padding-top: 20px;padding-bottom: 20px;;">
+                    <div class="row py-3">
+                        <div class="col-xxl-2 font-weight-bolder">Mã văn bản :</div>
+                        <div class="col-xxl-4">{{dataDetail?.soVanBan}}{{dataDetail?.kiHieuVanBan}}</div>
+                        <div class="col-xxl-2 font-weight-bolder">Đơn vị nhận :</div>
+                        <div class="col-xxl-4">{{dataDetail?.donViNhan}}</div>
+                    </div>
+                    <div class="row py-3">
+                        <div class="col-xxl-2 font-weight-bolder">Tài liệu đính kèm :</div>
+                        <div class="col-xxl-10">
+                            <ng-container *ngFor="let item of dataDetail?.attachment?.items;">
+                                <div class="cursor-pointer">
+                                    <i class="flaticon2-file-1 icon-lg mr-3" style="color: #FF8F1F;"></i>
+                                    <span title="Click để xem" (click)="previewPdf(item)" class="text-hover-primary">{{item?.tenFile | truncate : 30}}</span>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" *ngIf="dataDetail?.isAllowPheDuyet"> 
+                <div class="col-md-12  box-shadow" style="padding-top: 20px;padding-bottom: 20px;;">
+                    <div class="d-flex text-right">                     
+                        <button *ngIf="dataDetail?.isAllowPheDuyet" class="btn btn-danger btn-14 py-3 mr-2 w_130" (click)="onApprove(0)" [translate]="'COMMON.btn.reject'"></button>
+                        <button *ngIf="dataDetail?.isAllowPheDuyet" class="btn btn-primary btn-14 py-3 mr-2 w_130" (click)="onApprove(1)" [translate]="'COMMON.btn.approve'"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- footer  -->
+         <div class="footer mt-5">
+            <div class="d-flex justify-content-end">
+                <div>
+                    <button *ngIf="dataDetail?.isAllowPheDuyet==true" class="btn btn-danger btn-14 py-3 mr-2 w_150" (click)="appApproveModal?.showModal(dataDetail, false)" [translate]="'COMMON.btn.reject'"></button>
+                    <button *ngIf="dataDetail?.isAllowPheDuyet==true" class="btn btn-primary btn-14 py-3 w_150" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button>
+                    <!-- <button *ngIf="dataDetail?.isBuocCuoi==true" class="btn btn-primary btn-14 py-3 w_150" (click)="appTicketsModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button> -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Content-->
+</div>
+<app-approve-numberdocs-modal #appApproveModal (loadTimeLine)="getDetail(dataDetail?.laySoVanBanId)"></app-approve-numberdocs-modal>

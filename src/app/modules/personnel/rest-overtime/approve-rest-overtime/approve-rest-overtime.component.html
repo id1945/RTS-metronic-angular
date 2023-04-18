@@ -1,0 +1,54 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <ng-container [ngSwitch]="params?.screen || '' | lowercase">
+            <ng-container *ngSwitchCase="'holiday'">
+                <h3 class="card-title">Phê duyệt nghỉ</h3>
+            </ng-container>
+            <ng-container *ngSwitchCase="'overtime'">
+                <h3 class="card-title">Phê duyệt làm thêm</h3>
+            </ng-container>
+            <ng-container *ngSwitchCase="'wleo'">
+                <h3 class="card-title">Phê duyệt nghỉ không lương dưới nửa ngày</h3>
+            </ng-container>
+            <ng-container *ngSwitchCase="'work-explanation'">
+                <h3 class="card-title">Phê duyệt giải trình công</h3>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="card-body py-0">
+        <!-- Search -->
+        <app-search-approve-rest-overtime
+            #searchApproveRest
+            [params]="params"
+            (search)="selectedIndex == 0 ? tableNotYetApprove?.fetchList($event, 0) : selectedIndex == 1 ? tableHasBeenApprove?.fetchList($event, 1) : tableNotApprove?.fetchList($event, 2)">
+        </app-search-approve-rest-overtime>
+        <!-- tab -->
+        <nz-tabset [nzSelectedIndex]="selectedIndex" (nzSelectedIndexChange)="selectedIndex = $event; searchApproveRest?.emit()">
+            <nz-tab nzTitle="Đăng ký chưa duyệt">
+                <app-table-approve-rest-overtime
+                    #tableNotYetApprove="element"
+                    (loadList)="searchApproveRest?.emit()"
+                    [params]="params"
+                    [status]="'1'"
+                    [isSearchAdvance]="searchApproveRest?.isSearchAdvance">
+                </app-table-approve-rest-overtime>
+            </nz-tab>
+            <nz-tab nzTitle="Đăng ký đã duyệt">
+                <app-table-approve-rest-overtime
+                    #tableHasBeenApprove="element"
+                    [params]="params"
+                    [status]="'2'"
+                    [isSearchAdvance]="searchApproveRest?.isSearchAdvance">
+                </app-table-approve-rest-overtime>
+            </nz-tab>
+            <nz-tab nzTitle="Đăng ký không duyệt">
+                <app-table-approve-rest-overtime 
+                    #tableNotApprove="element"
+                    [params]="params"
+                    [status]="'3'"
+                    [isSearchAdvance]="searchApproveRest?.isSearchAdvance">
+                </app-table-approve-rest-overtime>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>

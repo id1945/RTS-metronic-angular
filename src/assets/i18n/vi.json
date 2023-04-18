@@ -1,0 +1,1140 @@
+{
+   "lang":"vi",
+   "data":{
+      "COMMON":{
+         "read_only":"Chỉ đọc",
+         "btn":{
+            "ok":"OK",
+            "no":"Không",
+            "yes":"Có",
+            "save":"Lưu lại",
+            "next":"Tiếp theo",
+            "cancel":"Huỷ",
+            "close":"Đóng",
+            "before":"Trước",
+            "browser":"Trình duyệt",
+            "record":"Ghi lại",
+            "approve":"Phê duyệt",
+            "reject":"Từ chối",
+            "consultation":"Tham vấn",
+            "add_new":"Thêm mới",
+            "confirm":"Xác nhận",
+            "print": "In",
+            "prints": "In nhiều",
+            "change_password": "Thay đổi mật khẩu",
+            "add_new_info":"Thêm mới thông tin",
+            "are_you_sure":"Bạn có chắc không?",
+            "are_you_sure_delete":"Bạn có thực sự muốn xóa không?",
+            "are_you_sure_save_draft":"Bạn có muốn lưu bản nháp không?"
+         },
+         "msg":{
+            "error":"Đã có lỗi xảy ra!",
+            "try_again_later":"Vui lòng thử lại sau.",
+            "expires":"Phiên hết hạn. \n Vui lòng đăng nhập lại!"
+         },
+         "file":{
+            "excel_word_pdf_rar_zip_jpg_jpeg_png_gif_svg":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx, pdf, rar, zip, jpg, jpeg, png, gif, svg",
+            "type_excel_word_pdf_rar_zip":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx, pdf, rar, zip",
+            "type_excel_word_pdf":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx, pdf",
+            "type_excel_word":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+            "type_excel":"Chỉ được các tệp như xls, xlsx, xlsm.",
+            "type_images":"Only files like png, jpg, jpeg, gif are allowed.",
+            "size_20":"Kích thước tệp không được vượt quá 20 MB."
+         }
+      },
+      "TRANSLATOR":{
+         "SELECT":"Chọn ngôn ngữ của bạn"
+      },
+      "MENU":{
+         "HOME":"Trang Chủ",
+         "USER_INFOR":"Thông Tin Cá Nhân",
+         "USER_MANUAL":"Hướng dẫn sử dụng",
+         "HEALTH_DECLARATION" : "Khai báo y tế",
+         "HTC":{
+            "INFOR":"Thông Tin HTV",
+            "INTRODUCE":"Giới thiệu",
+            "CONTACTS":"Danh Bạ Người Dùng"
+         },
+         "DOCUMENT":{
+            "DOCUMENT":"Văn bản, báo cáo",
+            "INSTITUTIONAL_DOCUMENTS":"Văn Bản Định Chế",
+            "INSTITUTIONAL_PROPOSE":"Trình duyệt văn bản định chế",
+            "LAW_LIBRARY":"Thư viện pháp luật"
+         },
+         "USER_PERSONNEL":{
+            "USER_PERSONNEL":"Nhân sự",
+            "MONTH_PLAN":"Kế hoạch công tác",
+            "MISION_PLAN":"Điều động công tác"
+         },
+         "REPORT":{
+            "REPORT":"Tờ Trình",
+            "EXPENSE_REPORT":"Tờ Trình",
+            "PROMULGATE":"Ban hành",
+            "REQUESTS_PAYMENT":"Đề nghị thanh toán/tạm ứng",
+            "SUPPLIER_SELECTION":"Đề xuất lựa chọn NCC",
+            "SIGN_CONTRACT":"Đề nghị ký hợp đồng"
+         },
+         "PURCHASE":{
+            "PURCHASE":"Mua Hàng",
+            "REQUEST":"Yêu cầu mua sắm"
+         },
+         "ADMINISTRATION":{
+            "ADMINISTRATION":"Hành chính",
+            "MYPARCEL":"Bưu phẩm của tôi",
+            "IMPORTPARCEL":"Cập nhật bưu phẩm",
+            "DELIVEREXPRESS":"Chuyển phát nhanh",
+            "REGISTERVEHICLE":"Xe đưa đón",
+            "STATIONERY":"Văn phòng phẩm"
+         },
+         "CALENDAR":{
+            "CALENDAR":"Lịch Làm Việc",
+            "WORK":"Lịch Làm Việc",
+            "SCHEDULING_MEETINGS":"Đặt Phòng Họp"
+         },
+         "MANAGEMENT":{
+            "MANAGEMENT":"Quản trị",
+            "NEWS":"Bài viết"
+         }
+      },
+      "AUTH":{
+         "GENERAL":{
+            "OR":"Or",
+            "SUBMIT_BUTTON":"Đăng nhập",
+            "NO_ACCOUNT":"Don\\'t have an account?",
+            "SIGNUP_BUTTON":"Sign Up",
+            "FORGOT_BUTTON":"Forgot Password",
+            "BACK_BUTTON":"Back",
+            "PRIVACY":"Privacy",
+            "LEGAL":"Legal",
+            "CONTACT":"Contact"
+         },
+         "LOGIN":{
+            "TITLE":"Đăng nhập Cổng thông tin điện tử HTV Portal",
+            "USER_LABEL":"Tài khoản đăng nhập",
+            "USER_PASS":"Mật khẩu",
+            "BUTTON":"Đăng nhập",
+            "BUTTON_SSO":"Đăng nhập SSO"
+         },
+         "LOGOUT":{
+            "TITLE":"Logout Account",
+            "BUTTON":"Đăng xuất",
+            "USER_INFOR":"Thông tin cá nhân",
+            "NOTIFICATION":"{{value}} thông báo"
+         },
+         "FORGOT":{
+            "TITLE":"Forgotten Password?",
+            "DESC":"Enter your email to reset your password",
+            "SUCCESS":"Your account has been successfully reset."
+         },
+         "REGISTER":{
+            "TITLE":"Sign Up",
+            "DESC":"Enter your details to create your account",
+            "SUCCESS":"Your account has been successfuly registered."
+         },
+         "INPUT":{
+            "EMAIL":"Email",
+            "FULLNAME":"Fullname",
+            "PASSWORD":"Password",
+            "CONFIRM_PASSWORD":"Confirm Password",
+            "USERNAME":"Username"
+         },
+         "VALIDATION":{
+            "INVALID":"{{name}} is not valid",
+            "REQUIRED":"{{name}} is required",
+            "MIN_LENGTH":"{{name}} minimum length is {{min}}",
+            "AGREEMENT_REQUIRED":"Accepting terms & conditions are required",
+            "NOT_FOUND":"The requested {{name}} is not found",
+            "INVALID_LOGIN":"The login detail is incorrect",
+            "REQUIRED_FIELD":"Required field",
+            "MIN_LENGTH_FIELD":"Minimum field length:",
+            "MAX_LENGTH_FIELD":"Maximum field length:",
+            "INVALID_FIELD":"Field is not valid"
+         }
+      },
+      "OFFCANVAS":{
+         "NOTIFICATIONS":{
+            "TITLE":"Thông báo"
+         }
+      },
+      "HOME":{
+         "WORK":{
+            "JOB":"Công việc của tôi",
+            "REQUEST_PAYMENT":"Thanh toán, tạm ứng",
+            "PROPOSE_DOCUMENT":"Tờ trình",
+            "PURCHASE":"Mua hàng",
+            "Staffing":"Nhân sự",
+            "OTHER":"Phê duyệt khác",
+            "SCHEDULE":"Công việc"
+         },
+         "OTHER":{
+            "NEWS":"Tin tức",
+            "REQUEST_PAYMENT":"Thanh toán, tạm ứng",
+            "NEW_MEMBER":"Nhân viên mới",
+            "NEW_DOCUMENT":"Văn bản, quy định mới",
+            "HAPPY_BIRTHDAY":"Chúc mừng sinh nhật",
+            "WORKING_SCHEDULE":"Lịch làm việc",
+            "BOOK_ROOM":"Tạo cuộc họp"
+         }
+      },
+      "PERSONAL":{
+         "Title":"Thông tin cá nhân",
+         "WORK":{
+            "JOB":"Công việc của tôi",
+            "REQUEST_PAYMENT":"Thanh toán, tạm ứng",
+            "PROPOSE_DOCUMENT":"Tờ trình",
+            "PURCHASE":"Mua hàng",
+            "Staffing":"Nhân sự",
+            "OTHER":"Phê duyệt khác",
+            "SCHEDULE":"Công việc",
+            "KPI_MONTH":"KPI Tháng",
+            "KPI_QUARTERLY":"KPI Tháng",
+            "KPI_YEAR":"KPI Năm"
+         },
+         "PERSONAL_INFO":{
+            "MY_PURCHASE":"Mua hàng của tôi",
+            "MY_PAYMENT":"Thanh toán/tạm ứng của tôi",
+            "MY_PROPOSE":"Tờ trình/phê duyệt của tôi",
+            "MY_Timekeeping":"Chấm công của tôi",
+            "MY_VEHICLE":"Xe đưa đón của tôi",
+            "MY_DELIVER":"Chuyển phát nhanh của tôi",
+            "MY_PARCEL":"Bưu phẩm của tôi",
+            "MY_IMAGE":"Hình ảnh của tôi"
+         },
+         "GENERAL_INFO":{
+            "TITLE":"Thông tin chung",
+            "FULLNAME":"Họ và tên",
+            "POSITION":"Chức vụ",
+            "DEPARTMENT":"Phòng ban",
+            "CONTACT_TITLE":"Thông tin liên lạc",
+            "PHONE":"Số điện thoại",
+            "ADDRESS":"Địa chỉ"
+         }
+      },
+      "COMPANY_INFO":{
+         "INTRODUCE":{
+            "imageLibrary":"Thư viện ảnh công ty",
+            "videoLibrary":"Thư viện phim công ty",
+            "companyDocument":"Tài liệu công ty"
+         },
+         "STAFFS":{
+            "LIST":{
+               "title":"Danh bạ",
+               "hintSearch":"Từ khóa tìm kiếm",
+               "hintDepartment":"--Lựa chọn phòng ban--",
+               "btnSearch":"Tìm kiếm"
+            },
+            "DETAIL":{
+               "title":"Thông tin cá nhân",
+               "fullName":"Họ và tên",
+               "position":"Chức vụ",
+               "department":"Phòng ban",
+               "phoneNumber":"Số điện thoại",
+               "phoneCompany":"Số máy lẻ",
+               "work_history":"Lịch sử công tác",
+               "comment":"Ghi chú, nhận xét",
+               "schedule":"Lịch họp",
+               "image":"Hình ảnh"
+            }
+         }
+      },
+      "DOCUMENT":{
+         "INSTITUTION":{
+            "LIST":{
+               "title":"Danh sách Văn bản định chế",
+               "hintSearch":"Từ khóa tìm kiếm",
+               "hintChoose":"Bộ lọc",
+               "newDocument":"Văn bản vừa ban hành",
+               "expiredDocument":"Văn ban hết hiệu lực"
+            },
+            "DETAIL":{
+               "addDocument":"Thêm mới văn bản định chế",
+               "documentCode":"Mã văn bản",
+               "documentName":"Tên văn bản",
+               "scope":"Phạm vi áp dụng",
+               "accessRights":"Quyền truy cập",
+               "effectiveDateFrom":"Ngày hiệu lực",
+               "effectiveDateTo":"Ngày hết hiệu lực",
+               "atttachments":"Văn bản đính kèm"
+            }
+         },
+         "LAW":{
+            "LIST":{
+               "title":"Danh sách Thư viện pháp luật",
+               "hintSearch":"Từ khóa tìm kiếm",
+               "hintChoose":"Bộ lọc",
+               "hintDepartment":"--Lựa chọn phòng ban--",
+               "btnSearch":"Tìm kiếm"
+            },
+            "DETAIL":{
+               "addDocument":"Thêm mới văn bản định chế",
+               "documentCode":"Mã văn bản",
+               "documentName":"Tên văn bản",
+               "issuers":"Chủ thể phát hành",
+               "documentGroup":"Nhóm pháp luật",
+               "link":"Link tới tài liệu",
+               "scope":"Phạm vi áp dụng",
+               "accessRights":"Quyền truy cập",
+               "effectiveDateFrom":"Ngày hiệu lực từ",
+               "effectiveDateTo":"Ngày hiệu lực đến",
+               "atttachmentsVN":"Tài liệu đính kèm tiếng Việt",
+               "atttachmentsEN":"Tài liệu đính kèm tiếng Anh"
+            }
+         }
+      },
+      "PURCHASE":{
+         "CREATE":{
+            "title":"Thêm mới Yêu cầu mua sắm",
+            "step_1":{
+               "title":"Thông tin yêu cầu",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "title":{
+                     "label":"Tiêu đề",
+                     "placeholderVN":"Tiêu đề tiếng Việt",
+                     "placeholderEN":"Tiêu đề tiếng Anh",
+                     "required":"Tiêu đề là bắt buộc nhập."
+                  },
+                  "internal_report":{
+                     "label":"Tờ trình nội bộ",
+                     "placeholder":"Lựa chọn tờ trình nội bộ"
+                  },
+                  "item_type":{
+                     "label":"Loại mặt hàng",
+                     "placeholder":"Lựa chọn loại mặt hàng",
+                     "required":"Loại mặt hàng là bắt buộc."
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Lựa chọn loại hồ sơ",
+                     "button":"Tải lên văn bản",
+                     "required":"Vui lòng lựa chọn loại hồ sơ!"
+                  },
+                  "explain":{
+                     "label":"Diễn giải"
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Hàng hoá, dịch vụ",
+               "sub_title":"Danh sách thông tin",
+               "form":{
+                  "date":{
+                     "label":"Ngày cần hàng mong muốn",
+                     "placeholder":"Lựa chọn ngày",
+                     "required":"Giao hàng ngày muốn là bắt buộc."
+                  },
+                  "supplier":{
+                     "label":"Chỉ định nhà cung cấp",
+                     "yes":"Có",
+                     "no":"Không"
+                  },
+                  "goods_services":{
+                     "label":"Hàng hóa/dịch vụ",
+                     "placeholder":"Lựa chọn Hàng hóa, dịch vụ",
+                     "required":"Hàng hóa, dịch vụ là bắt buộc."
+                  },
+                  "budget_code":{
+                     "label":"Mã ngân sách",
+                     "placeholder":"Lựa chọn mã ngân sách",
+                     "required":"Mã ngân sách là bắt buộc."
+                  },
+                  "amount":{
+                     "label":"Số lượng",
+                     "required":"Số lượng là bắt buộc nhập."
+                  },
+                  "estimated_price":{
+                     "label":"Giá dự toán",
+                     "required":"Giá dự toán là bắt buộc nhập."
+                  },
+                  "total_estimate":{
+                     "label":"Tổng dự toán",
+                     "required":"Vượt quá ngân sách cả năm"
+                  },
+                  "note":{
+                     "label":"Chú thích",
+                     "placeholderVN":"Chú thích tiếng Việt",
+                     "placeholderEN":"Chú thích tiếng Anh"
+                  },
+                  "specifications":{
+                     "label":"Quy cách",
+                     "placeholderVN":"Quy cách tiếng Việt",
+                     "placeholderEN":"Quy cách tiếng Anh"
+                  },
+                  "recommended_supplier":{
+                     "label":"Nhà cung cấp đề xuất",
+                     "placeholder":"Lựa chọn nhà cung cấp đề xuất",
+                     "required":"Nhà cung cấp đề xuất là bắt buộc",
+                     "requiredQuantity":"Nhà cung cấp bắt buộc tối thiểu là {{value}}"
+                  }
+               },
+               "table":{
+                  "no":"STT",
+                  "goods_services":"Hàng hóa, dịch vụ",
+                  "amount":"Số lượng",
+                  "estimated_price":"Dự toán đơn giá (chưa VAT)",
+                  "total_estimate":"Dự toán Thành tiền (chưa VAT)",
+                  "total":"Tổng dự toán"
+               }
+            },
+            "step_3":{
+               "title":"Bộ phận liên quan",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found"
+               }
+            },
+            "step_4":{
+               "title":"Hoàn thành",
+               "titlePurchaseDetail":"Yêu cầu mua sắm",
+               "titleProgess":"TIẾN ĐỘ",
+               "titleApprove":"Duyệt",
+               "titleNotApprove":"Không duyệt",
+               "titleRequestApprove":"Yêu cầu",
+               "titleApprovePurchaseRequest":"Phê duyệt/Từ chối Yêu cầu mua sắm",
+               "companyName":"CÔNG TY CP LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM",
+               "dearLabel":"Kính gửi",
+               "dearPerson":"Ông/bà",
+               "basedOn":"Căn cứ theo",
+               "attachDocs":"Văn bản đính kèm",
+               "departmentLabel":"Bộ phận",
+               "andLabel":"và",
+               "suggestionsLabel":"xin đề xuất các nội dung như sau",
+               "submitForApproveLabel":"kính trình ông/bà",
+               "approvalLabel":"phê duyệt",
+               "typePurchaseLabel":"Kiểu mua sắm",
+               "table":{
+                  "cphh":{
+                     "title":"Với danh mục hàng hoá và chi phí dự kiến như sau:",
+                     "no":"STT",
+                     "goods_services":"Hàng hóa, dịch vụ",
+                     "estimated_unit_price" : "Dự toán đơn giá (Chưa VAT)",
+                     "recommended_supplier":"Nhà cung cấp đề xuất",
+                     "unit":"Đơn vị",
+                     "amount":"Số lượng",
+                     "unit_price":"Đơn giá",
+                     "into_money":"Thành tiền",
+                     "spending_code":"Mã ngân sách",
+                     "total":"Tổng dự toán"
+                  },
+                  "bpcm":{
+                     "title":"Bộ phân chuyên môn liên quan",
+                     "no":"STT",
+                     "department":"Bộ phận",
+                     "fullname":"Họ tên"
+                  }
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã tạo Yêu cầu mua sắm thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Danh sách Yêu cầu mua sắm",
+            "searchHint":"Tìm kiếm",
+            "statusHint":"Bộ lọc",
+            "fastHint":"Tìm kiếm nhanh",
+            "table":{
+               "detail":{
+                  "referenceCodeLabel":"Mã tham chiếu",
+                  "proponentLabel":"Người đề nghị",
+                  "contentLabel":"Nội dung",
+                  "departmentLabel":"Bộ phận",
+                  "totalAmountLabel":"Tổng tiền",
+                  "requestDateLabel":"Ngày đề nghị",
+                  "statusLabel":"Trạng thái",
+                  "manipulationLabel":"Thao tác"
+               }
+            }
+         }
+      },
+      "CONTRACT":{
+         "CREATE":{
+            "title":"Thêm mới Yêu cầu mua sắm",
+            "step_1":{
+               "title":"Thông tin yêu cầu",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "title":{
+                     "label":"Tiêu đề",
+                     "placeholderVN":"Tiêu đề tiếng Việt",
+                     "placeholderEN":"Tiêu đề tiếng Anh",
+                     "required":"Tiêu đề là bắt buộc nhập."
+                  },
+                  "internal_report":{
+                     "label":"Tờ trình nội bộ",
+                     "placeholder":"Lựa chọn tờ trình nội bộ"
+                  },
+                  "item_type":{
+                     "label":"Loại mặt hàng",
+                     "placeholder":"Lựa chọn loại mặt hàng",
+                     "required":"Loại mặt hàng là bắt buộc."
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Lựa chọn loại hồ sơ",
+                     "button":"Tải lên văn bản",
+                     "required":"Vui lòng lựa chọn loại hồ sơ!"
+                  },
+                  "explain":{
+                     "label":"Diễn giải"
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Hàng hoá, dịch vụ",
+               "sub_title":"Danh sách thông tin",
+               "form":{
+                  "date":{
+                     "label":"Ngày cần hàng mong muốn",
+                     "placeholder":"Lựa chọn ngày",
+                     "required":"Giao hàng ngày muốn là bắt buộc."
+                  },
+                  "supplier":{
+                     "label":"Chỉ định nhà cung cấp",
+                     "yes":"Có",
+                     "no":"Không"
+                  },
+                  "goods_services":{
+                     "label":"Hàng hóa/dịch vụ",
+                     "placeholder":"Lựa chọn Hàng hóa, dịch vụ",
+                     "required":"Hàng hóa, dịch vụ là bắt buộc."
+                  },
+                  "budget_code":{
+                     "label":"Mã ngân sách",
+                     "placeholder":"Lựa chọn mã ngân sách",
+                     "required":"Mã ngân sách là bắt buộc."
+                  },
+                  "amount":{
+                     "label":"Số lượng",
+                     "required":"Số lượng là bắt buộc nhập."
+                  },
+                  "estimated_price":{
+                     "label":"Giá dự toán",
+                     "required":"Giá dự toán là bắt buộc nhập."
+                  },
+                  "total_estimate":{
+                     "label":"Tổng dự toán",
+                     "required":"Vượt quá ngân sách cả năm"
+                  },
+                  "note":{
+                     "label":"Chú thích",
+                     "placeholderVN":"Chú thích tiếng Việt",
+                     "placeholderEN":"Chú thích tiếng Anh"
+                  },
+                  "specifications":{
+                     "label":"Quy cách",
+                     "placeholderVN":"Quy cách tiếng Việt",
+                     "placeholderEN":"Quy cách tiếng Anh"
+                  },
+                  "recommended_supplier":{
+                     "label":"Nhà cung cấp đề xuất",
+                     "placeholder":"Lựa chọn nhà cung cấp đề xuất",
+                     "required":"Nhà cung cấp đề xuất là bắt buộc",
+                     "requiredQuantity":"Nhà cung cấp bắt buộc tối thiểu là {{value}}"
+                  }
+               },
+               "table":{
+                  "no":"STT",
+                  "goods_services":"Hàng hóa, dịch vụ",
+                  "amount":"Số lượng",
+                  "estimated_price":"Dự toán đơn giá (chưa VAT)",
+                  "total_estimate":"Dự toán Thành tiền (chưa VAT)",
+                  "total":"Tổng dự toán"
+               }
+            },
+            "step_3":{
+               "title":"Bộ phận liên quan",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found"
+               }
+            },
+            "step_4":{
+               "title":"Hoàn thành",
+               "titlePurchaseDetail":"ĐỀ NGHỊ KÝ HỢP ĐỒNG",
+               "titleProgess":"TIẾN ĐỘ",
+               "titleApprove":"Duyệt",
+               "titleNotApprove":"Không duyệt",
+               "titleRequestApprove":"Yêu cầu",
+               "titleApprovePurchaseRequest":"Phê duyệt/Từ chối Yêu cầu mua sắm",
+               "companyName":"CÔNG TY CP LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM",
+               "dearLabel":"Kính gửi",
+               "dearPerson":"Ông/bà",
+               "basedOn":"Căn cứ theo",
+               "attachDocs":"Văn bản đính kèm",
+               "andLabel":"và",
+               "suggestionsLabel":"xin đề xuất các nội dung như sau",
+               "submitForApproveLabel":"kính trình ông/bà",
+               "approvalLabel":"phê duyệt",
+               "referenceCodeLabel":"Số phiếu ĐNKHĐ",
+               "purchaseNumberLabel":"Số YCMS",
+               "proposeNumberLabel":"Số tờ trình",
+               "typeContractLabel":"Loại hợp đồng",
+               "paymentLabel":"Điều kiện thanh toán",
+               "supplierNumberLabel":"Số lựa chọn nhà cc",
+               "insuranceLabel":"Bảo hành",
+               "guaranteeLabel":"Bảo lãnh",
+               "contractPartnerLabel":"Đối tác ký HĐ",
+               "proponentLabel":"Người tạo",
+               "contentLabel":"Nội dung",
+               "departmentLabel":"Bộ phận YCMS",
+               "table":{
+                  "cphh":{
+                     "title":"Thông tin hàng hóa",
+                     "no":"STT",
+                     "goods_services":"Hàng hóa, dịch vụ",
+                     "specification": "Quy cách",
+                     "estimated_unit_price" : "Dự toán đơn giá (Chưa VAT)",
+                     "recommended_supplier":"Nhà cung cấp đề xuất",
+                     "unit":"ĐVT",
+                     "amount":"Số lượng",
+                     "unit_price":"Đơn giá (Chưa VAT)",
+                     "into_money":"Thành tiền (Chưa VAT)",
+                     "note":"Ghi chú",
+                     "total":"Tổng tiền (Đã VAT)",
+                     "discount":"Giảm giá"
+                  },
+                  "bpcm":{
+                     "title":"Bộ phân chuyên môn liên quan",
+                     "no":"STT",
+                     "department":"Bộ phận",
+                     "fullname":"Họ tên"
+                  },
+                  "contract": {
+                     "title": "Dự thảo hợp đồng",
+                     "no": "STT",
+                     "note": "Ghi chú",
+                     "contractService": "Hợp đồng dịch vụ"
+                  }
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã tạo Yêu cầu mua sắm thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Đề nghị ký hợp đồng",
+            "searchHint":"Tìm kiếm",
+            "statusHint":"Bộ lọc",
+            "fastHint":"Tìm kiếm nhanh",
+            "table":{
+               "detail":{
+                  "referenceCodeLabel":"Số phiếu ĐNKHĐ",
+                  "purchaseNumberLabel":"Số YCMS",
+                  "proponentLabel":"Người tạo",
+                  "contentLabel":"Nội dung",
+                  "departmentLabel":"Bộ phận YCMS",
+                  "requestDateLabel":"Ngày tạo ĐNKHĐ",
+                  "supplierLabel":"Nhà cc được chọn",
+                  "statusLabel":"Trạng thái",
+                  "manipulationLabel":"Thao tác"
+               }
+            }
+         }
+      },
+      "SUPPLIER":{
+         "CREATE":{
+            "title":"Thêm mới Yêu cầu mua sắm",
+            "step_1":{
+               "title":"Thông tin yêu cầu",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "title":{
+                     "label":"Tiêu đề",
+                     "placeholderVN":"Tiêu đề tiếng Việt",
+                     "placeholderEN":"Tiêu đề tiếng Anh",
+                     "required":"Tiêu đề là bắt buộc nhập."
+                  },
+                  "internal_report":{
+                     "label":"Tờ trình nội bộ",
+                     "placeholder":"Lựa chọn tờ trình nội bộ"
+                  },
+                  "item_type":{
+                     "label":"Loại mặt hàng",
+                     "placeholder":"Lựa chọn loại mặt hàng",
+                     "required":"Loại mặt hàng là bắt buộc."
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Lựa chọn loại hồ sơ",
+                     "button":"Tải lên văn bản",
+                     "required":"Vui lòng lựa chọn loại hồ sơ!"
+                  },
+                  "explain":{
+                     "label":"Diễn giải"
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Hàng hoá, dịch vụ",
+               "sub_title":"Danh sách thông tin",
+               "form":{
+                  "date":{
+                     "label":"Ngày cần hàng mong muốn",
+                     "placeholder":"Lựa chọn ngày",
+                     "required":"Giao hàng ngày muốn là bắt buộc."
+                  },
+                  "supplier":{
+                     "label":"Chỉ định nhà cung cấp",
+                     "yes":"Có",
+                     "no":"Không"
+                  },
+                  "goods_services":{
+                     "label":"Hàng hóa/dịch vụ",
+                     "placeholder":"Lựa chọn Hàng hóa, dịch vụ",
+                     "required":"Hàng hóa, dịch vụ là bắt buộc."
+                  },
+                  "budget_code":{
+                     "label":"Mã ngân sách",
+                     "placeholder":"Lựa chọn mã ngân sách",
+                     "required":"Mã ngân sách là bắt buộc."
+                  },
+                  "amount":{
+                     "label":"Số lượng",
+                     "required":"Số lượng là bắt buộc nhập."
+                  },
+                  "estimated_price":{
+                     "label":"Giá dự toán",
+                     "required":"Giá dự toán là bắt buộc nhập."
+                  },
+                  "total_estimate":{
+                     "label":"Tổng dự toán",
+                     "required":"Vượt quá ngân sách cả năm"
+                  },
+                  "note":{
+                     "label":"Chú thích",
+                     "placeholderVN":"Chú thích tiếng Việt",
+                     "placeholderEN":"Chú thích tiếng Anh"
+                  },
+                  "specifications":{
+                     "label":"Quy cách",
+                     "placeholderVN":"Quy cách tiếng Việt",
+                     "placeholderEN":"Quy cách tiếng Anh"
+                  },
+                  "recommended_supplier":{
+                     "label":"Nhà cung cấp đề xuất",
+                     "placeholder":"Lựa chọn nhà cung cấp đề xuất",
+                     "required":"Nhà cung cấp đề xuất là bắt buộc",
+                     "requiredQuantity":"Nhà cung cấp bắt buộc tối thiểu là {{value}}"
+                  }
+               },
+               "table":{
+                  "no":"STT",
+                  "goods_services":"Hàng hóa, dịch vụ",
+                  "amount":"Số lượng",
+                  "estimated_price":"Dự toán đơn giá (chưa VAT)",
+                  "total_estimate":"Dự toán Thành tiền (chưa VAT)",
+                  "total":"Tổng dự toán"
+               }
+            },
+            "step_3":{
+               "title":"Bộ phận liên quan",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found"
+               }
+            },
+            "step_4":{
+               "title":"Hoàn thành",
+               "titlePurchaseDetail":"ĐỀ XUẤT LỰA CHỌN NHÀ CUNG CẤP",
+               "titleProgess":"TIẾN ĐỘ",
+               "titleApprove":"Duyệt",
+               "titleNotApprove":"Không duyệt",
+               "titleRequestApprove":"Yêu cầu",
+               "titleApprovePurchaseRequest":"Phê duyệt/Từ chối Yêu cầu mua sắm",
+               "companyName":"CÔNG TY CP LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM",
+               "dearLabel":"Kính gửi",
+               "dearPerson":"Ông/bà",
+               "basedOn":"Căn cứ theo",
+               "attachDocs":"Văn bản đính kèm",
+               "andLabel":"và",
+               "suggestionsLabel":"xin đề xuất các nội dung như sau",
+               "submitForApproveLabel":"kính trình ông/bà",
+               "approvalLabel":"phê duyệt",
+               "referenceCodeLabel":"Số ĐXLCNCC",
+               "purchaseNumberLabel":"Tham chiếu YCMS",
+               "proposeNumberLabel":"Tờ trình tham chiếu",
+               "formalityLabel":"Hình thức",
+               "paymentLabel":"Điều kiện thanh toán",
+               "supplierNumberLabel":"Số lựa chọn nhà cc",
+               "insuranceLabel":"Bảo hành",
+               "guaranteeLabel":"Bảo lãnh",
+               "contractPartnerLabel":"Đối tác ký HĐ",
+               "proponentLabel":"Người tạo",
+               "contentLabel":"Nội dung",
+               "departmentLabel":"Bộ phận YCMS",
+               "createDateLabel":"Ngày lập",
+               "table":{
+                  "cphh":{
+                     "title":"Thông tin hàng hóa",
+                     "no":"STT",
+                     "goods_services":"Hàng hóa, dịch vụ",
+                     "specification": "Quy cách",
+                     "estimated_unit_price" : "Dự toán đơn giá (Chưa VAT)",
+                     "recommended_supplier":"Nhà cung cấp đề xuất",
+                     "unit":"ĐVT",
+                     "amount":"Số lượng",
+                     "unit_price":"Đơn giá (Chưa VAT)",
+                     "into_money":"Thành tiền (Chưa VAT)",
+                     "note":"Ghi chú",
+                     "total":"Tổng tiền (Đã VAT)",
+                     "discount":"Giảm giá"
+                  },
+                  "bpcm":{
+                     "title":"Bộ phân chuyên môn liên quan",
+                     "no":"STT",
+                     "department":"Bộ phận",
+                     "fullname":"Họ tên"
+                  },
+                  "contract": {
+                     "title": "Đề xuất lựa chọn nhà cung cấp",
+                     "no": "STT",
+                     "supplier": "Nhà cung cấp"
+                  }
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã tạo Yêu cầu mua sắm thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Đề xuất lựa chọn nhà cung cấp",
+            "searchHint":"Tìm kiếm",
+            "statusHint":"Bộ lọc",
+            "fastHint":"Tìm kiếm nhanh",
+            "table":{
+               "detail":{
+                  "referenceCodeLabel":"Số ĐX lựa chọn NCC",
+                  "purchaseNumberLabel":"Số YCMS",
+                  "proponentLabel":"Người YCMS",
+                  "contentLabel":"Nội dung",
+                  "departmentLabel":"Bộ phận YCMS",
+                  "requestDateLabel":"Ngày tạo ĐNKHĐ",
+                  "supplierLabel":"Nhà cc được chọn",
+                  "statusLabel":"Trạng thái",
+                  "manipulationLabel":"Thao tác"
+               }
+            }
+         }
+      },
+      "SUBMISSIONS":{
+         "CREATE":{
+            "title":"Thêm mới tờ trình",
+            "step_1":{
+               "title":"Thông tin tờ trình",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "propose":{
+                     "code":"Mã tờ trình",
+                     "name":"Tên tờ trình",
+                     "level":"Mức độ trình ký",
+                     "budget":"Ngân sách",
+                     "placeholderVN":"Tên tờ trình tiếng Việt",
+                     "placeholderEN":"Tên tờ trình tiếng Anh",
+                     "required":"Tên tờ trình là bắt buộc"
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Select a profile type",
+                     "button":"Tải tài liệu",
+                     "required":"Tài liệu đính kèm là bắt buộc."
+                  },
+                  "explain":{
+                     "label":"Nội dung",
+                     "required":"Nội dung là bắt buộc."
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Chi phí, ngân sách",
+               "costTitle":"Tờ trình có hạn mức chi phí",
+               "form":{
+                  "table":{
+                     "no":"STT",
+                     "Expenses":"Khoản chi",
+                     "amount":"Số lượng",
+                     "estimated_price":"Đơn giá dự kiến",
+                     "total_estimate":"Thành tiền dự kiến",
+                     "code":"Mã chi tiêu"
+                  }
+               }
+            },
+            "step_3":{
+               "title":"Bộ phận đồng trình",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found",
+                  "content":"Nội dung",
+                  "status":"Trạng thái",
+                  "date":"Ngày xác nhận"
+               }
+            },
+            "step_4":{
+               "title":"Hoàn thành",
+               "titleDetail":"Chi tiết tờ trình",
+               "titleHeader":"TỜ TRÌNH",
+               "titleProgess":"TIẾN ĐỘ",
+               "titleApprove":"Duyệt",
+               "titleCost":"Với danh mục hàng hoá và chi phí dự kiến như sau",
+               "titleNotApprove":"Không duyệt",
+               "titleRequestApprove":"Chờ xử lý",
+               "titleApprovePurchaseRequest":"Phê duyệt/Từ chối Yêu cầu mua sắm",
+               "numberPropose":"Số tờ trình",
+               "companyName":"CÔNG TY CP LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM",
+               "dearLabel":"Kính gửi",
+               "dearPerson":"Ông/bà",
+               "basedOn":"Căn cứ theo",
+               "attachDocs":"Văn bản đính kèm",
+               "departmentLabel":"Bộ phận",
+               "andLabel":"và",
+               "suggestionsLabel":"xin đề xuất các nội dung như sau",
+               "submitForApproveLabel":"kính trình ông/bà",
+               "approvalLabel":"phê duyệt",
+               "table":{
+                  "no":"STT",
+                  "Expenses":"Khoản chi",
+                  "amount":"Số lượng",
+                  "estimated_price":"Đơn giá dự kiến",
+                  "total_estimate":"Thành tiền dự kiến",
+                  "code":"Mã chi phí",
+                  "totalMoney":"Tổng dự toán"
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã thêm mới tờ trình thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Danh sách tờ trình",
+            "searchHint":"Tìm kiếm",
+            "statusHint":"Bộ lọc",
+            "fastHint":"Tìm kiếm nhanh",
+            "table":{
+               "detail":{
+                  "referenceCodeLabel":"Mã tham chiếu",
+                  "proponentLabel":"Người đề nghị",
+                  "contentLabel":"Nội dung",
+                  "totalAmountLabel":"Tổng tiền",
+                  "requestDateLabel":"Ngày đề nghị",
+                  "statusLabel":"Trạng thái",
+                  "manipulationLabel":"Thao tác"
+               }
+            }
+         }
+      },
+      "PAYMENT":{
+         "LIST": {
+            "table": {
+               "internalNumberLabel": "Số chứng từ nội bộ"
+            }
+         },
+         "CREATE":{
+            "title":"Thêm mới đề nghị thanh toán/tạm ứng",
+            "step_1":{
+               "title":"Thông tin thanh toán/tạm ứng",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "propose":{
+                     "contractNumber":"Số hợp đồng",
+                     "contractAnnex":"Phụ lục hợp đồng",
+                     "billNumber":"Số hóa đơn",
+                     "requestPurchaseNumber":"Số Yêu cầu mua sắm",
+                     "completedPurchase":"Hoàn thành TT cho YCMS",
+                     "proposeNumber":"Tờ trình",
+                     "taxCode":"Mã số thuế/ Mã nhân viên",
+                     "supplier":"Nhà cung cấp",
+                     "requestType":"Loại đề nghị",
+                     "requestDetail":"Đề nghị chi tiết",
+                     "paymentType":"Loại đề nghị",
+                     "requestContent":"Nội dung đề nghị"
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Select a profile type",
+                     "button":"Tải tài liệu",
+                     "required":"Tài liệu đính kèm là bắt buộc."
+                  },
+                  "explain":{
+                     "label":"Nội dung",
+                     "required":"Nội dung là bắt buộc."
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Tài liệu đính kèm",
+               "costTitle":"Tờ trình có hạn mức chi phí",
+               "form":{
+                  "table":{
+                     "no":"STT",
+                     "Expenses":"Khoản chi",
+                     "amount":"Số lượng",
+                     "estimated_price":"Đơn giá dự kiến",
+                     "total_estimate":"Thành tiền dự kiến",
+                     "code":"Mã chi phí"
+                  }
+               }
+            },
+            "step_3":{
+               "title":"Chi tiết thanh toán",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found",
+                  "content":"Nội dung",
+                  "status":"Trạng thái",
+                  "date":"Ngày xác nhận"
+               }
+            },
+            "step_4":{
+               "title":"Hoàn thành",
+               "titleDetail":"Chi tiết đề nghị thanh toán/tạm ứng",
+               "titleHeader":"ĐỀ NGHỊ THANH TOÁN/TẠM ỨNG",
+               "titleProgess":"TIẾN ĐỘ",
+               "titleApprove":"Duyệt",
+               "titleCost":"Với danh mục hàng hoá và chi phí dự kiến như sau",
+               "titleNotApprove":"Không duyệt",
+               "titleRequestApprove":"Chờ xử lý",
+               "titleApprovePurchaseRequest":"Phê duyệt/Từ chối Yêu cầu mua sắm",
+               "numberPropose":"Số tờ trình",
+               "companyName":"CÔNG TY CP LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM",
+               "dearLabel":"Kính gửi",
+               "dearPerson":"Ông/bà",
+               "basedOn":"Căn cứ theo",
+               "attachDocs":"Văn bản đính kèm",
+               "departmentLabel":"Bộ phận",
+               "andLabel":"và",
+               "suggestionsLabel":"xin đề xuất các nội dung như sau",
+               "submitForApproveLabel":"kính trình ông/bà",
+               "approvalLabel":"phê duyệt",
+               "table":{
+                  "no":"STT",
+                  "Expenses":"Khoản chi",
+                  "amount":"Số lượng",
+                  "estimated_price":"Đơn giá dự kiến",
+                  "total_estimate":"Thành tiền dự kiến",
+                  "code":"Mã chi phí",
+                  "totalMoney":"Tổng dự toán"
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã thêm mới tờ trình thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Danh sách đề nghị thanh toán/tạm ứng",
+            "searchHint":"Tìm kiếm",
+            "statusHint":"Bộ lọc",
+            "fastHint":"Tìm kiếm nhanh",
+            "table":{
+               "detail":{
+                  "voucherNumberLabel":"Số chứng từ",
+                  "referenceCodeLabel":"Mã tham chiếu",
+                  "proponentLabel":"Người đề nghị",
+                  "contentLabel":"Nội dung",
+                  "totalAmountLabel":"Tổng tiền",
+                  "totalForeignLabel":"Tổng tiền ngoại tệ",
+                  "supplier":"Nhà cung cấp",
+                  "departmentLabel":"Bộ phận",
+                  "requestDateLabel":"Ngày yêu cầu",
+                  "attachmentFiles":"File đính kèm",
+                  "endDateLabel":"Ngày kết thúc",
+                  "paymentType":"Loại thanh toán",
+                  "internalNumberLabel ":"Số chứng từ nội bộ",
+                  "statusLabel":"Trạng thái",
+                  "paymentDate":"Ngày thanh toán",
+                  "manipulationLabel":"Thao tác"
+               }
+            }
+         }
+      }
+   }
+}

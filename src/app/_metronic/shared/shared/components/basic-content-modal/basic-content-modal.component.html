@@ -1,0 +1,18 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="width"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="title"
+    (nzOnOk)="isVisible = false">
+    <div class="p-8">
+        <ng-content></ng-content>
+    </div>
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3" style="width: 150px" (click)="isVisible = false" [translate]="'COMMON.btn.close'"></button>
+        </div>
+    </div>
+</nz-modal>

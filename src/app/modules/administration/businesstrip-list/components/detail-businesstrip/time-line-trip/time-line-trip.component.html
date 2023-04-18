@@ -1,0 +1,45 @@
+<div class="title">Lịch sử chuyến đi</div>
+<div class="timeline">
+    <ng-container *ngFor="let item of data; let last = last">
+        <div class="phase_block" [class]="last ? 'border_blank' : ''">
+            <div class="time">{{ item?.thoiGian * 1000 | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+            <div class="name" style="font-size: 10px;color: gray;">{{ item.trangThai}}</div>
+            <div class="action">
+                {{ item?.nguoiCapNhat }}
+            </div>
+            <div class="action" [ngSwitch]="item.trangThai | lowercase">
+                <span *ngSwitchCase="'đã lên xe'" class="label label-lg label-light-primary label-inline">Lên xe
+                </span>
+                <span *ngSwitchCase="'đã kết thúc'" class="label label-lg label-light-primary label-inline">Kết thúc
+                </span>
+                <span *ngSwitchCase="'đã hủy'" class="label label-lg label-light-danger label-inline">Đã hủy
+                </span>
+                <!-- <span *ngSwitchDefault class="label label-lg label-inline">Chờ xác nhận</span> -->
+            </div>
+            <div class="description" [ngSwitch]="item?.trangThai | lowercase">
+                <span *ngSwitchCase="'đã lên xe'">
+                    <span *ngIf="item?.kmStart">
+                        Km start : {{item?.kmStart}}
+                    </span>
+                </span>
+                <span *ngSwitchCase="'đã kết thúc'">
+                    <span *ngIf="item?.kmEnd">
+                        Km end : {{item?.kmEnd}}
+                    </span>
+                </span>
+                <br>
+                <span *ngSwitchCase="'đã kết thúc'">
+                    <span *ngIf="item?.kmEnd">
+                        Vé gửi xe : {{item?.veGuiXe}}
+                    </span>
+                </span>
+                <span *ngSwitchCase="'đã hủy'">
+                    <span *ngIf="item?.lyDoHuy">
+                        Lý do : {{item?.lyDoHuy}}
+                    </span>
+                </span>
+            </div>
+            <div class="icon_dot icon_dot_{{item?.tinhTrangKey | lowercase}}"></div>
+        </div>
+    </ng-container>
+</div>

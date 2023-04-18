@@ -1,0 +1,81 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="700"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="(mode == 0) ? 'Thêm Mới Mục Tiêu Năm Bộ Phận' : (mode == 2) ? 'Cập nhật Mục Tiêu Năm Bộ Phận' : 'Thêm Mới Kpi Bổ Sung'"
+    (nzOnOk)="isVisible = false">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 180px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Bộ phận <span class="text-danger" *ngIf="mode != 2">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="phongBanKey" nzShowSearch nzAllowClear [nzOptions]="boPhanOptions" [nzDisabled]="mode == 2" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.phongBanKey?.errors && f?.phongBanKey?.touched">
+                        <span>Bộ phận là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">Năm <span class="text-danger" *ngIf="mode != 2">(*)</span></div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="namKey" nzShowSearch nzAllowClear [nzOptions]="namOptions" [nzDisabled]="mode == 2" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.namKey?.errors && f?.namKey?.touched">
+                        <span>Năm là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">Tên bộ KPI</div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="tenBoKPI" class="form-control input_42 pt-3" [attr.disabled]="true"></textarea>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">Người phụ trách <span class="text-danger">(*)</span></div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="nguoiPhuTrachKeys" nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="Người phụ trách" [nzOptions]="nguoiPhuTrachOptions" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.nguoiPhuTrachKeys?.errors && f?.nguoiPhuTrachKeys?.touched">
+                        <span>Người phụ trách là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">Ngày hiệu lực</div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="ngayHieuLuc" nzPlaceHolder="Ngày hiệu lực" [nzFormat]="'dd/MM/yyyy'" class="form-control pt-1 input_42"></nz-date-picker>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">Hiệu lực</div>
+                <div class="col-12 col-md-7">
+                    <label nz-checkbox formControlName="expired">Hiệu lực</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = true"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="(mode == 2) ? onEdit() : onCreate()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

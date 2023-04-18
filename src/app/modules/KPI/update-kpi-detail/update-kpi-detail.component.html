@@ -1,0 +1,311 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Chi tiết KPI <span class="text-danger" *ngIf="dataDetail?.isChuaKhoiTao">(Chưa khởi tạo KPI)</span></h3>
+        </div>
+    </div>
+    <div class="card-body py-0 pb-8">
+        <app-table [data]="[0]" [maxHeight]="'600px'" [classNameContainer]="'my-5'">
+            <tr class="col-xxl-12">
+                <td class="pl-5 min_w_150">Quý</td>
+                <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.quyDisplay || '-'}}</span></td>
+                <td class="pl-5 min_w_150">Năm</td>
+                <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.namDisplay || '-'}}</span></td>
+                <td class="pl-5 min_w_150">Loại quy trình duyệt</td>
+                <td class="pl-5 min_w_150"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.quyTrinhDuyetDisplay || '-'}}</span></td>
+            </tr>
+            <tr class="col-xxl-12">
+                <td class="pl-5">Tên bộ phận</td>
+                <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.phongBanDisplay || '-'}}</span></td>
+                <td class="pl-5">Người phụ trách</td>
+                <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.nguoiPhuTrachDisplay || '-'}}</span></td>
+                <td class="pl-5">Trưởng bộ phận</td>
+                <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{dataDetail?.truongBoPhanDisplay || '-'}}</span></td>
+            </tr>
+        </app-table>
+
+        <div class="row mb-5 align-content-center">
+            <h5 class="col-12 col-md-7">Chi Tiết Dữ Liệu Kết Quả Hoàn Thành Chỉ Tiêu KPI</h5>
+            <div class="col-12 col-md-5 text-right">
+                <button type="button" (click)="updateKpiConfirm()" class="btn btn-info h_42 mr-2">Thêm KPI bổ sung</button>
+                <button type="button" (click)="settingColumn.showModal()" class="btn btn-primary h_42">Ẩn hiện cột</button>
+            </div>
+        </div>
+        <!-- begin: table -->
+        <ng-container *ngIf="dataTable.isActive">
+            <app-table [data]="dataTable.items" [maxHeight]="'calc(100vh - 300px)'" [minHeight]="'500px'" [classNameContainer]="'my-5'">
+                <thead>
+                    <tr>
+                        <ng-container *ngFor="let col of dataTable.columns; let i = index; let f = first; let l = last">
+                            <th
+                                *ngIf="col?.isActive"
+                                [class]="col?.className"
+                                [class.stick]="col?.stickyL || col?.stickyR"
+                                [nzAlign]="'center'"
+                                [rowspan]="col?.rowspan"
+                                [colspan]="col?.colspan"
+                                [style.minWidth]="col?.width"
+                                [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                                {{ col?.title }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                    <tr *ngIf="showHideColumnThucTeHoanThanhChiTieuQuy">
+                        <ng-container *ngFor="let col of dataTable.columns2">
+                            <th
+                                [class]="col?.className"
+                                [nzAlign]="'center'"
+                                [rowspan]="col?.rowspan"
+                                [colspan]="col?.colspan"
+                                [style.minWidth]="col?.width">
+                                {{ col?.title }}
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let data of dataTable.items; let index = index; trackBy:trackByFn">
+                        <ng-template [ngTemplateOutlet]="rowspanTemplate" [ngTemplateOutletContext]="{ data: data, index: index }"></ng-template>
+                    </ng-container>
+                </tbody>
+            </app-table>
+            
+            <div class="row justify-content-end mx-0">
+                <button *ngIf="dataDetail?.isAllowDeXuat" (click)="onDeXuat()" class="btn btn-primary m-1 w_130">Đề xuất</button>
+                <button *ngIf="dataDetail?.isAllowKhoiTao" (click)="onKhoiTao()" class="btn btn-primary m-1 w_130">Khởi tạo API</button>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- Template table -->
+<ng-template #rowspanTemplate let-data="data" let-index="index">
+    <ng-container *ngIf="data?.thanhPhans?.length">
+        <tr *ngFor="let thanhPhan of data?.thanhPhans; let indexTP=index; let firstTP = first">
+            <ng-container *ngFor="let col of dataTable.columns; let i = index; let f = first; let l = last; trackBy:trackByFn">
+                <!-- thanhPhans -->
+                <ng-container *ngIf="col.field == 'thanhPhans'">
+                    <td
+                        *ngIf="col.isActive"
+                        class="px-1" 
+                        [nzAlign]="col?.align"
+                        [class]="col?.className"
+                        [class.bg-light-success]="thanhPhan?.trangThaiThanhPhanChiTietKey == '1'"
+                        [class.bg-light-danger]="thanhPhan?.trangThaiThanhPhanChiTietKey == '2'"
+                        [class.bg-light-info]="thanhPhan?.trangThaiThanhPhanChiTietKey == '3'"
+                        [class.bg-light-primary]="thanhPhan?.trangThaiThanhPhanChiTietKey == '4'"
+                        [class.bg-light-warning]="thanhPhan?.trangThaiThanhPhanChiTietKey == '5'"
+                        [class.stick]="col?.stickyL || col?.stickyR"
+                        [style.minWidth]="col?.width"
+                        [attr.rowspan]="1"
+                        [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                        <span>{{ thanhPhan?.thanhPhanDisplay || '-' }}</span>
+                    </td>
+                </ng-container>
+                <!-- thucTeHoanThanhChiTieuQuy -->
+                <ng-container *ngIf="col.field == 'thucTeHoanThanhChiTieuQuy'">
+                    <ng-container *ngFor="let col2 of dataTable.columns2" >
+                        <td
+                            *ngIf="col.isActive"
+                            class="px-1" 
+                            [nzAlign]="col?.align"
+                            [class]="col2?.field == 'thucTeHoanThanh' ? col2?.className : ''"
+                            [style.minWidth]="col2?.width"
+                            [attr.rowspan]="1"
+                            [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                            <!-- trangThaiThanhPhanChiTietKey 1: duyệt, 2: không duyệt, 3: khóa, 4: không khóa -->
+                            <nz-input-number
+                                *ngIf="(col2.field != 'thucTeHoanThanh' && thanhPhan?.trangThaiThanhPhanChiTietKey != 3); else showTTHT"
+                                [nzMin]="0"
+                                [nzStep]="1"
+                                [nzFormatter]="formatter"
+                                [nzParser]="parser"
+                                [ngModel]="thanhPhan[col2.field] >= 0 ? thanhPhan[col2.field] : ''"
+                                (ngModelChange)="thanhPhan[col2.field] = $event; onAddAndEditThucTeHoanThanh$.next({kpiQuyChiTietId: data?.kpiQuyChiTietId, e: thanhPhan})"
+                                class="form-control input_42"
+                            ></nz-input-number>
+                            <ng-template #showTTHT>{{thanhPhan[col2.field] | number}}</ng-template> 
+                        </td>
+                    </ng-container>
+                </ng-container>
+                <!-- thaoTac -->
+                <ng-container *ngIf="col.field == 'thaoTac'">
+                    <td
+                        *ngIf="col.isActive"
+                        class="px-1" 
+                        [nzAlign]="col?.align"
+                        [class]="col?.className"
+                        [class.stick]="col?.stickyL || col?.stickyR"
+                        [style.minWidth]="col?.width"
+                        [attr.rowspan]="1"
+                        [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                        <!-- Message -->
+                        <i nz-icon nzType="message" nzTheme="outline" class="m-1"></i>
+                        <!-- Approve -->
+                        <i 
+                            *ngIf="thanhPhan?.isAllowDuyet"
+                            nz-icon 
+                            class="m-1 cursor-pointer"
+                            [title]="'Duyệt'" 
+                            [nzType]="'check-circle'" 
+                            [nzTheme]="'twotone'" 
+                            [nzTwotoneColor]="thanhPhan?.trangThaiThanhPhanChiTietKey == 3 ? '#F64E60' : '#52c41a'" 
+                            nz-popconfirm
+                            [nzPopconfirmTitle]="'Duyệt bản ghi này?'"
+                            [nzIcon]="iconTpl"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate" 
+                            (nzOnConfirm)="onDuyetThanhPhan(thanhPhan)">
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" class="text-warning"></i>
+                            </ng-template>
+                        </i>
+                        <!-- Lock/Unlock -->
+                        <i 
+                            nz-icon 
+                            class="m-1 cursor-pointer"
+                            [title]="thanhPhan?.trangThaiThanhPhanChiTietKey == 3 ? 'Khoá' : 'Mở khoá'" 
+                            [nzType]="thanhPhan?.trangThaiThanhPhanChiTietKey == 3 ? 'lock' : 'unlock'" 
+                            [nzTheme]="'twotone'" 
+                            [nzTwotoneColor]="thanhPhan?.trangThaiThanhPhanChiTietKey == 3 ? '#F64E60' : '#52c41a'" 
+                            nz-popconfirm
+                            [nzPopconfirmTitle]="thanhPhan?.trangThaiThanhPhanChiTietKey == 3 ? 'Mở khoá bản ghi này?' : 'Khoá bản ghi này?'"
+                            [nzIcon]="iconTpl"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate" 
+                            (nzOnConfirm)="onLockUnlock(thanhPhan)">
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" class="text-danger"></i>
+                            </ng-template>
+                        </i>
+                    </td>
+                </ng-container>
+                <!-- Default -->
+                <ng-container *ngIf="firstTP && col.field != 'thanhPhans' && col.field != 'thucTeHoanThanhChiTieuQuy' && col.field != 'thaoTac'">
+                    <td 
+                        *ngIf="col.isActive"
+                        class="px-1" 
+                        [ngSwitch]="col.field"
+                        [nzAlign]="col?.align"
+                        [class]="col?.className"
+                        [class.stick]="col?.stickyL || col?.stickyR"
+                        [class.position-relative]="col?.field == 'ghiChu'"
+                        [class.bg-light-success]="col.field == 'stt' && getMin(data) == 1"
+                        [class.bg-light-danger]="col.field == 'stt' && getMin(data) == 2"
+                        [class.bg-light-info]="col.field == 'stt' && getMin(data) == 3"
+                        [class.bg-light-primary]="col.field == 'stt' && getMin(data) == 4"
+                        [class.bg-light-warning]="col.field == 'stt' && getMin(data) == 5"
+                        [style.minWidth]="col?.width"
+                        [attr.rowspan]="data?.thanhPhans?.length > 0 ? data?.thanhPhans?.length : 1"
+                        [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                        <span *ngSwitchCase="'stt'">{{ index + 1 }}</span>
+                        <!-- Tên KPI -->
+                        <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                        <!-- Công thức -->
+                        <span *ngSwitchCase="'noiDungCongThuc'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                        <!-- Nhân sự chịu tránh nhiệm -->
+                        <span *ngSwitchCase="'nhanSuChiuTrachNhiemDisplays'">
+                            <ul class="pl-6 mb-0"><li *ngFor="let n of data[col.field]">{{n}}</li></ul>
+                        </span>
+                        <!-- Nội dung giải trình -->
+                        <div *ngSwitchCase="'noiDungGiaiTrinh'" [style.maxWidth]="col?.width">
+                            <!-- Show file -->
+                            <textarea rows="3" [(ngModel)]="data[col.field].noiDungGiaiTrinh" (change)="onAddAndEditGiaiTrinhBoPhan(data?.kpiQuyChiTietId, data[col.field])" [disabled]="thanhPhan?.trangThaiThanhPhanChiTietKey == 3" class="form-control"></textarea>
+                            <div *ngFor="let file of data[col.field]?.dinhKems" class="row mx-0 mb-1 align-items-center">
+                                <div [class]="{'col-10': thanhPhan?.trangThaiThanhPhanChiTietKey != 3, 'col-12': thanhPhan?.trangThaiThanhPhanChiTietKey == 3}" class="text-left pr-0" [title]="file?.tenFile"><!--no class truncate-->
+                                    <i class="flaticon2-file-1 icon-lg text-warning mr-3"></i>
+                                    <a href="javascript:void(0)" (click)="downloadFile(file?.urlDownload, file?.tenFile)">{{file?.tenFile}}</a>
+                                </div>
+                                <!-- Delete file -->
+                                <div 
+                                    *ngIf="thanhPhan?.trangThaiThanhPhanChiTietKey != 3"
+                                    class="col-2 pr-0 cursor-pointer text-center" 
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate"
+                                    (nzOnConfirm)="onDeleteFile(data?.kpiQuyChiTietId, file?.tenFile)">
+                                    <i class="fas fa-trash-alt icon-md text-danger"></i>
+                                </div>
+                                <ng-template #iconTpl>
+                                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                </ng-template>
+                            </div>
+                            <!-- Update load file  -->
+                            <app-select-file
+                                *ngIf="thanhPhan?.trangThaiThanhPhanChiTietKey != 3"
+                                [reset]="true" 
+                                [multiple]="true" 
+                                [acceptKey]="'excel_word_pdf_rar_zip_jpg_jpeg_png_gif_svg'" 
+                                [text]="'Tải tài liệu lên'" 
+                                [selectedFiles]="data[col.field].selectedFiles"
+                                (selectedFilesChange)="data[col.field].selectedFiles = $event; onAddAndEditGiaiTrinhBoPhan(data?.kpiQuyChiTietId, data[col.field])">
+                            </app-select-file>
+                        </div>
+                        <!-- Trọng số -->
+                        <span *ngSwitchCase="'trongSo'">
+                            <input type="number" numbersOnly min="0" [value]="data[col.field]" (change)="data[col.field] = $event.target.value; onAddAndEditTrongSo(data?.kpiQuyChiTietId, data)" class="form-control text-right">
+                        </span>
+                        <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                    </td>
+                </ng-container>
+            </ng-container>
+        </tr>
+    </ng-container>
+    <tr *ngIf="data?.thanhPhans?.length == 0">
+        <ng-container *ngFor="let col of dataTable.columns; let i = index; let f = first; let l = last; trackBy:trackByFn">
+            <!-- thanhPhans -->
+            <ng-container *ngIf="col.field == 'thucTeHoanThanhChiTieuQuy'">
+                <ng-container *ngIf="col.isActive">
+                    <td
+                        *ngFor="let row of [1,2,3,4]"
+                        class="px-1" 
+                        [nzAlign]="'center'"
+                        [class]="col?.className"
+                        [class.stick]="col?.stickyL || col?.stickyR"
+                        [style.minWidth]="col?.width"
+                        [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                        -
+                    </td>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="col.field != 'thucTeHoanThanhChiTieuQuy'">
+                <td 
+                    *ngIf="col.isActive"
+                    class="px-1" 
+                    [ngSwitch]="col.field"
+                    [nzAlign]="col?.align"
+                    [class]="col?.className"
+                    [class.stick]="col?.stickyL || col?.stickyR"
+                    [class.position-relative]="col?.field == 'ghiChu'"
+                    [class.bg-light-success]="col.field == 'stt' && getMin(data) == 1"
+                    [class.bg-light-danger]="col.field == 'stt' && getMin(data) == 2"
+                    [class.bg-light-info]="col.field == 'stt' && getMin(data) == 3"
+                    [class.bg-light-primary]="col.field == 'stt' && getMin(data) == 4"
+                    [class.bg-light-warning]="col.field == 'stt' && getMin(data) == 5"
+                    [style.minWidth]="col?.width"
+                    [style]="col?.stickyL ? {'left': (f ? 0 : dataTable.columns[i-1]?.width)} : col?.stickyR ? {'right': (l ? 0 : col?.width)} : null">
+                    <span *ngSwitchCase="'stt'">{{ index + 1 }}</span>
+                    <!-- Tên KPI -->
+                    <span *ngSwitchCase="'tenKPI'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                    <!-- Công thức -->
+                    <span *ngSwitchCase="'noiDungCongThuc'" [innerHTML]="(data[col.field] || '-') | safe: 'html'"></span>
+                    <!-- Nhân sự chịu tránh nhiệm -->
+                    <span *ngSwitchCase="'nhanSuChiuTrachNhiemDisplays'">
+                        <ul class="pl-6 mb-0"><li *ngFor="let n of data[col.field]">{{n}}</li></ul>
+                    </span>
+                    <span *ngSwitchCase="'noiDungGiaiTrinh'">-</span>
+                    <!-- Trọng số -->
+                    <span *ngSwitchCase="'trongSo'">
+                        <input type="number" numbersOnly min="0" [value]="data[col.field]" (change)="data[col.field] = $event.target.value; onAddAndEditTrongSo(data?.kpiQuyChiTietId, data)" class="form-control text-right">
+                    </span>
+                    <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                </td>
+            </ng-container>
+        </ng-container>
+    </tr>
+</ng-template>
+
+<!-- Show/Hide columns -->
+<app-setting-column-modal #settingColumn="setting" [dataTable]="dataTable" (change)="onChangeShowHideColumn($event)"></app-setting-column-modal>

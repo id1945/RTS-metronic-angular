@@ -1,0 +1,72 @@
+<!-- Approve/CancelApprove -->
+<div class="d-flex justify-content-start align-content-center mb-3" *ngIf="tabIndex == 0">
+    <div>
+        <input type="text" [(ngModel)]="opinion" placeholder="Ý kiến" class="form-control input_42" style="width: 410px;">
+    </div>
+    <div>
+        <button class="btn btn-primary h_42 ml-2 w_120" (click)="onApprove()">Duyệt</button>
+        <button class="btn btn-danger h_42 ml-2 w_120" (click)="onReject()">Không duyệt</button>
+    </div>
+</div>
+
+<!-- Table  -->
+<nz-table
+    [nzLoading]=""
+    [nzSize]="'small'"
+    [nzData]="dataTable.items"
+    [nzShowPagination]="false"
+    class="table table_classic table_40 table_no"
+    [nzScroll]="{ x: '900px', y: isSearchAdvance ? 'calc(100vh - 558px)' : 'calc(100vh - 490px)' }">
+    <thead>
+        <tr>
+            <ng-container *ngFor="let col of dataTable.columns">
+                <th
+                    [nzAlign]="col?.align"
+                    [nzWidth]="col?.width"
+                    [ngSwitch]="col.field">
+                    <ng-container *ngSwitchCase="'CHECKBOX'">
+                        <label nz-checkbox [ngModel]="isAllCheckbox" (ngModelChange)="selectCboxAll($event)"></label>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>{{ col?.title }}</ng-container>
+                </th>
+            </ng-container>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let data of dataTable.items">
+            <tr>
+                <ng-container *ngFor="let col of dataTable.columns">
+                    <td [nzAlign]="col?.align" [ngSwitch]="col.field">
+                        <ng-container *ngSwitchCase="'CHECKBOX'">
+                            <label nz-checkbox [(ngModel)]="data.checkbox"></label>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'FROMHOUR_TOHOUR'">
+                            <span class="mr-2">{{data?.FROMHOUR | date: 'dd/MM/yyyy'}}</span>
+                            <span class="text-blue-01">{{data?.FROMHOUR | date: 'HH:mm'}} - {{data?.TOHOUR | date: 'HH:mm'}}</span>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'FROMHOUR_TOHOUR_TOTAL'">
+                            {{totalHour(data?.FROMHOUR,data?.TOHOUR) | number:'1.2-2'}}
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'STATUS'">
+                            <ng-container [ngSwitch]="data[col.field]">
+                                <span *ngSwitchCase="0" class="label label-light-success label-inline">Đăng ký</span>
+                                <span *ngSwitchCase="1" class="label label-light-warning label-inline">Chờ phê duyệt</span>
+                                <span *ngSwitchCase="2" class="label label-light-primary label-inline">Đã phê duyệt</span>
+                                <span *ngSwitchCase="3" class="label label-light-danger label-inline">Từ chối</span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'NOTE'">
+                            <div [innerHTML]="data?.NOTE | safe: 'html'"></div>
+                        </ng-container>
+                        <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]"> 
+                            <span *ngIf="col?.pipe; else noPipe">{{ data[col.field] | date: col?.pipe }}</span>
+                            <ng-template #noPipe>{{ data[col.field] }}</ng-template>
+                        </span>
+                    </td>
+                </ng-container>
+            </tr>
+        </ng-container>
+    </tbody>
+</nz-table>
+<!-- Paging -->
+<app-paginator [paginator]="paginator" (paginate)="fetchList()"></app-paginator>

@@ -1,0 +1,298 @@
+<app-ky-niem></app-ky-niem>
+<div class="row gutter-b home">
+    <div class="col-xxl-12 order-1 order-xxl-1">
+        <h5 class="card-title font-weight-bolder text-black-02 mb-2">
+            {{ 'HOME.WORK.JOB' | translate }}
+        </h5>
+        <div class="col-12 alert alert-custom alert-white gutter-b mx-0 box-shadow flex-wrap px-3 pt-5">
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0 py-4">
+                <div class="symbol symbol-60 symbol-light">
+                    <span class="symbol-label">
+                        <img src="assets/media/bg/Vector_thanhtoan.svg" class="h-60 align-self-center">
+                    </span>
+                </div>
+                <div class="text-blue-01 truncate ml-2" routerLink="/submissions/requests-payment">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Thanh toán/tạm ứng"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>  {{ 'HOME.WORK.REQUEST_PAYMENT' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.thanhToanTamUng || 0}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0 py-4">
+                <div class="symbol symbol-60 symbol-light">
+                    <span class="symbol-label">
+                        <img src="assets/media/bg/Vector_totrinh.svg" class="h-60 align-self-center">
+                    </span>
+                </div>
+                <div class="text-blue-01 ml-2" routerLink="/submissions/list">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Tờ trình"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'HOME.WORK.PROPOSE_DOCUMENT' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.toTrinh || 0}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0 py-4">
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <img src='assets/media/bg/Vector_hosokhac.svg' onError="this.src='assets/media/bg/image_not_available.png'" alt="image">
+                </div>
+                <div class="text-blue-01 ml-2" routerLink="/purchase/list">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Mua hàng"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'HOME.WORK.PURCHASE' | translate }}</div>
+                    <div class="font-size-h1 font-weight-bolder d-flex">
+                        <div>{{asideMenu?.totalMuaHang$ | async}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0 py-4">
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <img src='assets/media/bg/Vector_nhansu.svg' onError="this.src='assets/media/bg/image_not_available.png'" alt="image">
+                </div>
+                <div class="text-blue-01 ml-2">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Nhân sự"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'HOME.WORK.Staffing' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.nhanSu || 0}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0 py-4">
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <img src='assets/media/bg/Vector_pheduyetkhac.svg' alt="image">
+                </div>
+                <div class="text-blue-01 ml-2">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Phê duyệt khác"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'HOME.WORK.OTHER' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.pheDuyetKhac || 0}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0 py-4">
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <img src='assets/media/bg/Vector_congvieckhac.svg' onError="this.src='assets/media/bg/image_not_available.png'" alt="image">
+                </div>
+                <div class="text-blue-01 ml-2">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Công việc"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'HOME.WORK.SCHEDULE' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.congViec || 0}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 order-1 mt-5 gutter-b">
+        <h5 class="d-flex justify-content-between align-items-center font-weight-bolder text-black-02 mb-2" style="padding-bottom:15px ;">
+            <div>{{ 'HOME.OTHER.NEWS' | translate }}</div>
+        </h5>
+        <div class="row col-12 alert alert-custom alert-white gutter-b box-shadow m-0 pt-10">
+            <div class="col-12 col-md-6 order-1 order-xxl-2 scroll-gray-none pl-0 pr-0 pr-md-5" style="max-height: 600px;">
+                <div class="d-flex flex-column">
+                    <img nz-image [nzSrc]="ListTinTuc[0]?.anhDaiDien_Thumnail" class="img_fit" height="450px" width="100%">
+                    <div class="font-weight-bold text-dark-50 font-size-sm pt-3 pb-1">
+                        <div class="text-dark">{{ListTinTuc[0]?.ngayTao * 1000 | date: "dd/MM/yyyy"}}</div>
+                    </div>
+                    <a (click)="showNewsDetail(ListTinTuc[0]?.baiVietId)"
+                        class="card-title text-blue-01 text-hover-primary font-size-h5 m-0 pb-1 truncate-2" [title]="ListTinTuc[0]?.tenBaiViet">
+                        {{ListTinTuc[0]?.tenBaiViet}}
+                    </a>
+                    <span class="text-dark-50 font-weight-normal font-size-sm truncate-2" style="font-size: 13px;" [title]="ListTinTuc[0]?.moTaNgan">
+                        {{ListTinTuc[0]?.moTaNgan}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 order-2 order-xxl-2 scroll-gray-8 mt-10 mt-md-0" style="height: 600px;">
+                <ng-container *ngFor="let itemTinTuc of ListTinTuc.slice(1,8)">
+                    <div class="d-flex align-items-top pb-2 border_bottom_dashed">
+                        <div class="bg-primary-dark list_item"></div>
+                        <div class="d-flex flex-column flex-grow-1 mb-3">
+                            <a (click)="showNewsDetail(itemTinTuc?.baiVietId)" class="text-blue-01 text-hover-primary h6 truncate-2" [title]="itemTinTuc?.tenBaiViet"> 
+                                {{itemTinTuc?.tenBaiViet}}
+                            </a>
+                            <span class="text-black-01">{{itemTinTuc?.ngayTao * 1000 | date: "dd/MM/yyyy"}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 order-2 mt-5 mt-xxl-0">
+        <div>
+            <h5 class="d-flex justify-content-between align-items-center font-weight-bolder text-black-02 h_40">
+                <div>{{ 'HOME.OTHER.WORKING_SCHEDULE' | translate }}</div>
+                <a *appCanAccess="'allow'" class="box-shadow btn btn-primary" [routerLink]="['/meeting','schedule']">{{ 'HOME.OTHER.BOOK_ROOM' | translate }}</a>
+            </h5>
+            <div class="col-12 gutter-b pb-5 box-shadow bg-white" style="min-height: 605px;">
+                <!-- MenuContext -->
+                <ng-template
+                    #cellTemplate
+                    let-day="day"
+                    let-openDay="openDay"
+                    let-locale="locale"
+                    let-tooltipPlacement="tooltipPlacement"
+                    let-highlightDay="highlightDay"
+                    let-unhighlightDay="unhighlightDay"
+                    let-eventClicked="eventClicked">
+                    <div
+                        class="fill-height"
+                        [class.bg_select]="day.events?.length > 0">
+                        <div class="cal-cell-top">
+                            <!-- badge -->
+                            <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">
+                                {{ day.badgeTotal }}
+                            </span>
+                            <!-- day number -->
+                            <span class="cal-day-number">
+                                {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+                            </span>
+                        </div>
+                    </div>
+                    <div
+                        class="fill-height"
+                        [class.bg_select]="day.events?.length > 0">
+                        <!-- Content note on day! -->
+                        <div 
+                            *ngFor="let event of day.events" class="m-1 p-1"
+                            [innerHTML]="event?.title | safe: 'html'"
+                            [class.status-phonghop]="event?.meta?.kieuCongViec == 1"
+                            [class.status-congviec]="event?.meta?.kieuCongViec == 2">
+                        </div>
+                    </div>
+                </ng-template>
+
+                <div class="pt-5">
+                    <mwl-utils-calendar-header
+                        [(view)]="view"
+                        [(viewDate)]="viewDate"
+                        (viewDateChange)="fetchCalendar($event)"
+                        [locale]="translate.currentLang">
+                    </mwl-utils-calendar-header>
+                </div>
+                <div [ngSwitch]="view">
+                    <mwl-calendar-month-view
+                      *ngSwitchCase="'month'"
+                      [locale]="translate.currentLang"
+                      [viewDate]="viewDate"
+                      [events]="events"
+                      [cellTemplate]="cellTemplate"
+                    >
+                    </mwl-calendar-month-view>
+                    <mwl-calendar-week-view
+                      *ngSwitchCase="'week'"
+                      [locale]="translate.currentLang"
+                      [viewDate]="viewDate"
+                      [events]="events"
+                    >
+                    </mwl-calendar-week-view>
+                    <mwl-calendar-day-view
+                      *ngSwitchCase="'day'"
+                      [locale]="translate.currentLang"
+                      [viewDate]="viewDate"
+                      [events]="events"
+                    >
+                    </mwl-calendar-day-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row gutter-b">
+    <div class="col-xxl-4 order-1 order-xxl-1">
+        <h5 class="card-title font-weight-bolder text-black-02 mb-2">
+            {{ 'HOME.OTHER.NEW_MEMBER' | translate }}
+        </h5>
+        <div class="col-12 alert alert-custom alert-white gutter-b mx-0 box-shadow">
+            <div class="flex-wrap w-100" style="height: 400px;">
+                <div class="d-flex flex-wrap align-items-center">
+                    <div class="symbol symbol-60 symbol-light mr-4 flex-shrink-0">
+                        <div class="symbol-label">
+                            <i class="flaticon-users-1 icon-2x text-blue-01"></i>
+                        </div>
+                    </div>
+                    <div class="text-blue-01 ml-2">
+                        <div class="font-size-h1 font-weight-bolder">{{ListNhanVienMoi.length}}</div>
+                        <div class="font-size-md text-muted font-weight-bold"> {{ 'HOME.OTHER.NEW_MEMBER' | translate }}</div>
+                    </div>
+                </div>
+                <div class="scroll-gray-8">
+                    <ng-container *ngFor="let itemNew of ListNhanVienMoi">
+                        <div class="d-flex flex-wrap align-items-center pb-10">
+                            <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                <div class="symbol-label rounded-circle" [style.backgroundImage]="itemNew?.anhDaiDienResize"></div>
+                            </div>
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a href="#"
+                                    class="text-dark font-weight-bold text-hover-primary mb-1 font-size-lg">{{itemNew?.hoTen}}</a>
+                                <span class="text-muted font-weight-bold">{{itemNew?.phongBan}}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="ps__rail-y" style="top: 0px; height: 446px; right: -2px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 188px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xxl-4 order-2 order-xxl-2">
+        <h5 class="card-title font-weight-bolder text-black-02 mb-2">
+            {{ 'HOME.OTHER.NEW_DOCUMENT' | translate }}
+        </h5>
+        <div class="row col-12 alert alert-custom alert-white gutter-b mx-0 box-shadow">
+            <div class="flex-wrap w-100 pr-3 scroll-gray-8" style="height: 400px;">
+                <ng-container *ngFor="let itemVanBan of ListVanBan">
+                    <div class="d-flex align-items-center mb-10">
+                        <div class="symbol symbol-40 symbol-light flex-shrink-0 mr-4">
+                            <span class="symbol-label">
+                                <i class="far fa-file-alt icon-1.5x text-blue-01"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                            <a (click)="showChiTietVanBanDinhChe(itemVanBan?.vanBanDinhCheId)"
+                                class="text-dark text-hover-primary mb-1 font-size-lg">{{itemVanBan?.tenVanBan}}</a>
+                            <span class="text-muted">Văn bản</span>
+                        </div>
+                        <a (click)="showChiTietVanBanDinhChe(itemVanBan?.vanBanDinhCheId)"
+                            class="btn btn-sm btn-light-primary font-weight-bold px-5 mr-2">New</a>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-xxl-4 order-2 order-xxl-2">
+        <h5 class="card-title font-weight-bolder text-black-02 mb-2">
+            {{ 'HOME.OTHER.HAPPY_BIRTHDAY' | translate }}
+        </h5>
+        <div class="col-12 alert alert-custom alert-white gutter-b mx-0 box-shadow" style="
+            background-image:url(../../../assets/media/bg/bg_birthday.jpg);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;">
+            <div class="flex-wrap w-100 scroll-gray-8" style="height: 400px;">
+                <ng-container *ngFor="let itemSinhNhat of ListSinhNhatThang">
+                    <div class="col-12 bg-hover-op">
+                        <div class="p-2 text-center text-white">
+                            <div class="symbol symbol-circle symbol-lg-75">
+                                <img nz-image [nzSrc]="itemSinhNhat?.anhDaiDienResize" onError="this.src='assets/media/users/default.jpg'" alt="image" class="cursor-pointer">
+                            </div>
+                            <div class="font-weight-bolder">{{itemSinhNhat?.hoTen}}</div>
+                            <div>{{itemSinhNhat?.ngaySinh * 1000 | date: "dd/MM/yyyy"}}</div>
+                            <div>{{itemSinhNhat?.phongBan}}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<!--begin::Card-->
+<div class="card card-custom card-stretch">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách chờ xác nhận</h3>
+        </div>
+    </div>
+    <div class="card-body py-0 scroll-gray-8" style="height: 500px;">
+        <div class="d-flex align-items-center border-bottom py-2" *ngFor="let item of lichHopChoXacNhan">
+            <!--begin::Bullet-->
+            <span class="bullet bullet-bar bg-warning align-self-stretch mr-3"></span>
+            <!--end::Bullet-->
+            <!--begin::Text-->
+            <div class="d-flex flex-column flex-grow-1">
+                <a href="javascript:void(0)" (click)="detail.emit(item)" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">{{item?.tieuDe}} - {{item?.tenPhongHop}}</a>
+                <span class="text-muted font-weight-bold">{{item?.thoiGianBatDau * 1000 | date: 'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+            <div class="d-flex align-content-center justify-content-end">
+                <i class="flaticon2-fast-next align-self-center cursor-pointer text-warning m-2" title="Chuyển tiếp" (click)="transition?.showModal(item)"></i>
+                <div
+                    title="Đồng ý"
+                    class="cursor-pointer p-1" 
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                    [nzIcon]="iconCheckTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    (nzOnConfirm)="onDongY(item)">
+                    <i class="flaticon2-check-mark text-success icon-lg"></i>
+                </div>
+                <ng-template #iconCheckTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+                <div
+                    title="Huỷ bỏ"
+                    class="cursor-pointer" 
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    (nzOnConfirm)="onDelete(item)">
+                    <i class="fas fa-trash-alt text-danger icon-md m-3"></i>
+                </div>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <!--end::Text-->
+        </div>
+    </div>
+</div>
+<!--end::Card-->
+<app-transition-modal #transition="transition" (loadList)="getList(); loadList.emit()"></app-transition-modal>

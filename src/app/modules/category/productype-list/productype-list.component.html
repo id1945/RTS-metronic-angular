@@ -1,0 +1,91 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách Nhóm sản phẩm</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-6 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" (input)="search$.next($event.target.value)" placeholder="Tìm kiếm..." />
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-6 px-0 text-lg-right">
+                <button type="button" class="btn btn-primary" (click)="formExpressDelivery.showModal()">Thêm mới</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzShowPagination]="false"
+            [nzData]="dataTable.items"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th *ngIf="!col?.sortField"
+                            [nzWidth]="col?.width"
+                            [nzSortOrder]="col.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                        <th *ngIf="col?.sortField"
+                            [nzAlign]="'center'"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index"  class="cursor-pointer">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col?.field" >
+                            <span *ngSwitchCase="'trangThaiDisplay'">
+                                <ng-container [ngSwitch]="data[col.field]">
+                                    <span *ngSwitchCase="'Hoàn thành'" class="label label-light-primary label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchCase="'Từ chối'" class="label label-light-danger label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchDefault class="label label-light-warning label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                </ng-container>
+                            </span>
+                            <div *ngSwitchCase="'thaoTac'" class="d-flex justify-content-center">
+                                <!-- <a  title="Edit" (click)="formExpressDelivery.showModal(data)"
+                                    class="btn btn-icon btn-hover btn-sm mx-2">
+                                    <img src="assets/media/bg/Vector_edit.svg" class="align-self-center w_30 h_30">
+                                </a> -->
+                                <a  title="Delete" 
+                                    class="btn btn-icon btn-hover btn-sm mx-2 cursor-pointer"
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate"
+                                    (nzOnConfirm)="onDelete(data?.nhomSanPhamId)">
+                                    <img src="assets/media/bg/Vector_delete.svg" class="align-self-center w_30 h_30">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </a>
+                            </div>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]" >{{ data[col.field] }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-form-productype-modal #formExpressDelivery (loadList)="getList()" ></app-form-productype-modal>

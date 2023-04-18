@@ -1,0 +1,107 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="700"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Đăng ký lấy số văn bản'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.INSTITUTION.DETAIL.documentName' | translate }}  <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="TenVanBan" placeholder="{{ 'DOCUMENT.INSTITUTION.DETAIL.documentName' | translate }}"
+                        class="form-control input_42 pt-3" rows="1"
+                        ></textarea>
+                    <div class="form-text text-danger">
+                        <span>VD: Chương trình thúc đẩy bán hàng Hyundai Accent
+                        </span>
+                    </div>
+                    <div class="form-text text-danger"
+                        *ngIf="f?.TenVanBan?.errors && (f?.TenVanBan?.touched || isSubmit)">
+                        <span>Tên văn bản là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ký hiệu văn bản <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="KiHieuVanBan" placeholder=" Ký hiệu văn bản"
+                        class="form-control input_42 pt-3" rows="1"
+                        ></textarea>
+                        <div class="form-text text-danger">
+                            <span>VD: BH-MKT/HTV
+                            </span>
+                        </div>
+                    <div class="form-text text-danger"
+                        *ngIf="f?.KiHieuVanBan?.errors && (f?.KiHieuVanBan?.touched || isSubmit)">
+                        <span>Ký hiệu văn bản là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Đơn vị nhận <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="DonViNhan" placeholder="Đơn vị nhận"
+                        class="form-control input_42 pt-3" rows="1"
+                        ></textarea>
+                        <div class="form-text text-danger">
+                            <span>VD: Đại lý Hyundai Phạm Văn Đồng; BP. BH-MKT;...
+                            </span>
+                        </div>
+                        <div class="form-text text-danger"
+                        *ngIf="f?.DonViNhan?.errors && (f?.DonViNhan?.touched || isSubmit)">
+                        <span>Đơn vị nhận là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.INSTITUTION.DETAIL.atttachments' | translate }} <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFiles">
+                    </app-select-file>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button 
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onCreate()">Lấy số</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

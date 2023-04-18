@@ -1,0 +1,116 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="700"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="dataDetail ? 'Cập nhật báo cáo nội bộ' : 'Thêm mới báo cáo nội bộ' | translate">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tiêu đề báo cáo <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="tieuDe" placeholder="{{ 'DOCUMENT.LAW.DETAIL.documentName' | translate }} "
+                        class="form-control input_42 pt-3" rows="1"
+                        ></textarea>
+                    <div class="form-text text-danger"
+                        *ngIf="f?.tieuDe?.errors && (f?.tieuDe?.touched || isSubmit)">
+                        <span> Tiêu đề báo cáo là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+          
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label"> {{'DOCUMENT.LAW.DETAIL.scope' | translate }}</div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="PhamViApDungs" [nzOptions]="phamViApDung" nzShowSearch
+                        nzAllowClear nzPlaceHolder="{{ 'DOCUMENT.LAW.DETAIL.scope' | translate }}" style="width: 100%;">
+                    </nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                   Ngày lập báo cáo
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="ngayBaoCao" nzPlaceHolder="Ngày lập báo cáo"
+                        [nzFormat]="'dd-MM-yyyy'" class="form-control input_42" rows="1"
+                        style="min-height: 42px;">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.atttachmentsVN' | translate }} <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="row mx-0 mb-2 align-items-center" *ngFor="let item of dataDetail?.attachments; let i = index;">
+                        <div class="col-12 pl-0">
+                            <i class="flaticon2-file-1 icon-lg mx-3" style="color: #FF8F1F;"></i>
+                            <span class="text-hover-primary-no">{{item?.tenFile | truncate : 30}}</span>
+                        </div>
+                    </div>
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFilesVi">
+                    </app-select-file>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{'DOCUMENT.LAW.DETAIL.atttachmentsEN' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="row mx-0 mb-2 align-items-center" *ngFor="let item of dataDetail?.attachments; let i = index;">
+                        <div class="col-12 pl-0">
+                            <i class="flaticon2-file-1 icon-lg mx-3" style="color: #FF8F1F;"></i>
+                            <span class="text-hover-primary-no">{{item?.tenFile | truncate : 30}}</span>
+                        </div>
+                    </div>
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFilesEn">
+                    </app-select-file>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2"
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" >Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

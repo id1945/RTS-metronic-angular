@@ -1,0 +1,32 @@
+.status {
+  &-holiday {
+    color: #fff;
+    background: red;
+    border: 0.5px solid red;
+  }
+  &-wleo {
+    color: #fff;
+    background: #d9534f;
+    border: 0.5px solid #d43f3a;
+  }
+  &-explain {
+    color: #fff;
+    background: #337ab7;
+    border: 0.5px solid #2e6da4;
+  }
+  &-success {
+    color: #fff;
+    background: #449d44;
+    border: 0.5px solid #398439;
+  }
+  &-pendding {
+    color: #fff;
+    background: #ffa800;
+    border: 0.5px solid #d58512;
+  }
+  &-unexplained {
+    color: #fff;
+    background: #6d6d6d;
+    border: 0.5px solid #5d5d5d;
+  }
+}

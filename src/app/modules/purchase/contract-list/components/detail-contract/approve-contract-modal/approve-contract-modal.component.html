@@ -1,0 +1,36 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="500"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Xác nhận phê duyệt / từ chối'"
+    (nzOnOk)="isVisible = false">
+
+    <div class="p-10">
+        <form [formGroup]="formGroup">
+            <div class="row">
+                <h6 class="col-12">
+                    Nội dung xác nhận <span *ngIf="!IsAccept" class="text-danger">(*)</span>
+                </h6>
+                <div class="col-12">
+                    <textarea formControlName="ghiChu" placeholder="Nhập nội dung phê duyệt/ từ chối" class="form-control input_42" rows="3">
+                    </textarea>
+                    <textarea *ngIf="f?.ghiChu?.value" formControlName="ghiChuEng" placeholder="Nhập nội dung phê duyệt/ từ chối tiếng Anh" class="form-control input_42" rows="3">
+                    </textarea>
+                    <div class="form-text text-danger" *ngIf="f?.ghiChuEng?.errors && (f?.ghiChu?.touched  || f?.ghiChuEng?.touched)">
+                        Nội dung xác nhận là bắt buộc
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitApprove()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

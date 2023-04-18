@@ -1,0 +1,171 @@
+<div class="w-100 box-shadow">
+    <!--begin::Content-->
+    <div class="card card-custom">
+        <div class="card-header border-0">
+            <div class="card-title">
+                <h3 class="card-label">Khai báo y tế</h3>
+            </div>
+        </div>
+        <div class="card-body py-0 m-auto">
+
+            <nz-alert *ngIf="isAlertSuccess"
+                class="mb-5"
+                nzType="success"
+                nzMessage="Thông báo"
+                nzDescription="Cập nhật tờ khai thành công"
+                nzShowIcon
+            ></nz-alert>
+
+            <nz-alert *ngIf="dataDetail"
+                class="my-5"
+                nzType="info"
+                nzMessage="Thông báo"
+                nzDescription="Cập nhật gần nhất lúc {{dataDetail?.createTime * 1000 || null | date: 'hh:mm - dd/MM/yyyy'}}"
+                nzShowIcon
+            ></nz-alert>
+
+            <ng-template
+                [ngTemplateOutlet]="defaultTemplate"
+                [ngTemplateOutletContext]="{
+                    title: 'Triệu chứng',
+                    question: 'Trong vòng 14 ngày qua Anh/Chị có thấy xuất hiện dấu hiệu nào sau đây không ?',
+                    formGroup: formGroup1,
+                    form: form1
+                }">
+            </ng-template>
+
+            <ng-template
+                [ngTemplateOutlet]="defaultTemplate"
+                [ngTemplateOutletContext]="{
+                    title: false,
+                    question: 'Trong vòng 14 ngày qua, Anh/Chị có tiếp xúc với',
+                    formGroup: formGroup2,
+                    form: form2
+                }">
+            </ng-template>
+
+            <ng-template
+                [ngTemplateOutlet]="defaultTemplate"
+                [ngTemplateOutletContext]="{
+                    title: 'Tên bệnh',
+                    question: 'Hiện tại Anh/Chị có các bệnh nào dưới đây',
+                    formGroup: formGroup3,
+                    form: form3
+                }">
+            </ng-template>
+
+            <ng-template
+                [ngTemplateOutlet]="defaultTemplate"
+                [ngTemplateOutletContext]="{
+                    title: false,
+                    question: false,
+                    formGroup: formGroup4,
+                    form: form4
+                }">
+            </ng-template>
+
+            <!-- Form 1-4 -->
+            <ng-template #defaultTemplate let-formGroup="formGroup" let-form="form" let-title="title" let-question="question">
+                <form [formGroup]="formGroup">
+                    <p *ngIf="question"><i class="font_size_14 text-muted">{{question}}</i> <span class="text-danger ml-2">(*)</span></p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center"><span *ngIf="title">{{title}}</span></th>
+                                <th width="100" class="text-center">Có</th>
+                                <th width="100" class="text-center">Không</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let row of form; let i = index; trackBy:trackByFn">
+                                <tr>
+                                    <ng-container *ngIf="row?.field != 'hasF'">
+                                        <td>
+                                            {{row?.label}} <span class="text-danger">(*)</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="radio" [value]="true" [formControlName]="row?.field" class="cursor-pointer h_15 w_15">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="radio" [value]="false" [formControlName]="row?.field" class="cursor-pointer h_15 w_15">
+                                        </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="row?.field == 'hasF' && f(2)?.tiepXucNguoiBenh?.value == true">
+                                        <td style="vertical-align: middle;">
+                                            {{row?.label}} <span class="text-danger">(*)</span>
+                                        </td>
+                                        <td class="text-center select_42" colspan="2">
+                                            <nz-select [nzOptions]="hasFOptions" formControlName="hasF"
+                                                nzShowSearch nzAllowClear nzPlaceHolder="--- Tiếp xúc với ---" style="width: 100%;" class="text-left">
+                                            </nz-select>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </form>
+            </ng-template>
+
+            <!-- Form 5 -->
+            <form [formGroup]="formGroup5" *ngIf="f(4)?.diChuyenTrongNuoc?.value">
+                <div class="row mt-5">
+                    <div class="col-2 ctrl_label">
+                        Phương tiện đi lại <span class="text-danger ml-1">(*)</span>
+                    </div>
+                    <div class="col-10 select_42">
+                        <nz-select [nzOptions]="phuongTienOptions" formControlName="phuongTienDiChuyen"
+                            nzShowSearch nzAllowClear nzPlaceHolder="Phương tiện đi lại" style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f(5)?.phuongTienDiChuyen?.errors && f(5)?.phuongTienDiChuyen?.touched">
+                            <span>Phương tiện đi lại là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-2 ctrl_label">Nơi đi</div>
+                    <div class="col-4 select_42">
+                        <nz-select [nzOptions]="danhMucTinhOptions" formControlName="noiDi"
+                            nzShowSearch nzAllowClear nzPlaceHolder="--- Tỉnh / Thành phố ---" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                    <div class="col-2 ctrl_label">Nơi đến</div>
+                    <div class="col-4 select_42">
+                        <nz-select [nzOptions]="danhMucTinhOptions" formControlName="noiDen"
+                            nzShowSearch nzAllowClear nzPlaceHolder="--- Tỉnh / Thành phố ---" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-2 ctrl_label">Đi từ ngày</div>
+                    <div class="col-4">
+                        <nz-date-picker formControlName="ngayKhoiHanh" nzFormat="dd-MM-yyyy" nzPlaceHolder="Đi từ ngày" class="form-control input_42"></nz-date-picker>
+                    </div>
+                    <div class="col-2 ctrl_label">Tới ngày</div>
+                    <div class="col-4">
+                        <nz-date-picker formControlName="ngayToi" nzFormat="dd-MM-yyyy" nzPlaceHolder="Tới ngày" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="ctrl_label">Lịch trình di chuyển</div>
+                        <textarea formControlName="lichTrinhDiChuyen" placeholder="Lịch trình di chuyển" cols="30" rows="3" class="form-control pt-3 mt-1" maxlength="1000"></textarea>
+                    </div>
+                </div>
+            </form>
+
+            <div class="d-flex justify-content-center my-10">
+                <button class="btn btn-primary font-weight-bold btn-pill w_200" (click)="onSubmit()">Xác nhận</button>
+            </div>
+
+            <div class="mb-5">
+                <p class="m-0">Email tiếp nhận thông tin: hanhchinh@hyundai.tcmotor.vn</p>
+                <p class="m-0">Hoặc đầu mối tiếp nhận thông tin của Đội phản ứng nhanh Covid 19_HTV:</p>
+                <p class="m-0">🔥Phương Lan HCNS: 0903 229 144</p>
+                <p class="m-0">🔥Ms. Nguyệt HCNS: 0912.341.021</p>
+                <p class="m-0">🔥Mr. Công TTTH: 0973.319.586</p>
+                <p class="m-0">🔥Ms. Vân DV: 0976.254.930</p>
+            </div>
+        </div>
+    </div>
+</div>

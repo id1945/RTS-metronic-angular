@@ -1,0 +1,127 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="700"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="dataDetail ? 'Cập nhật nhóm Người dùng' : 'Thêm mới nhóm Người dùng'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên đăng nhập<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder="Mã tài liệu" class="form-control input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.tenChucVu?.errors && f?.tenChucVu?.touched">
+                        <span> tên đăng nhập là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Họ tên<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder="Tên tài liệu" class="form-control input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.tenChucVu?.errors && f?.tenChucVu?.touched">
+                        <span> Tên tài liệu là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mã nhân viên
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder="Mã nhân viên" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Email công ty
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder="Email công ty" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Số máy lẻ
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder="Số máy lẻ" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Bộ phận
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select nzShowSearch [nzOptions]="loaiTaiLieuOptions" nzAllowClear nzPlaceHolder="Lựa chọn"
+                        formControlName="phongBanKey" (ngModelChange)="false" style="width: 100%;">
+                    </nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Đơn vị làm việc
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder=" Đơn vị làm việc" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Nơi làm việc
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenChucVu" placeholder=" Nơi làm việc" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">Trạng thái làm việc</div>
+                <div class="col-12 col-md-7">
+                    <nz-switch #switch formControlName="isHieuLuc" nzCheckedChildren="" nzUnCheckedChildren=""></nz-switch>
+                    <!-- <span class="ml-3"
+                        [class.active_switch]="isHieuLuc?.value"
+                        [translate]="isHieuLuc?.value ? 'Còn hiệu lực' : 'Hết hiệu lực'">
+                    </span> -->
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    (nzOnCancel)="isVisible = true" 
+                    (nzOnConfirm)="isVisible = false"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="dataDetail ? onEdit() : onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

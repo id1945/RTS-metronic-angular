@@ -1,0 +1,492 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="925" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="saveDraft()" nzTitle="{{ 'SUBMISSIONS.CREATE.title' | translate }}">
+    <div class="card card-custom detail">
+        <div class="card-body py-0">
+            <!--begin: Step -->
+            <div class="steps">
+                <div class="step" [title]="'SUBMISSIONS.CREATE.step_1.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 1" [class.text-white]="step === 1"
+                        (click)="nextStep(1)">1</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 1"
+                        [translate]="'SUBMISSIONS.CREATE.step_1.title'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'SUBMISSIONS.CREATE.step_2.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 2" [class.text-white]="step === 2"
+                        (click)="nextStep(2)">2</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 2"
+                        [translate]="'SUBMISSIONS.CREATE.step_2.title'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'SUBMISSIONS.CREATE.step_3.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 3" [class.text-white]="step === 3"
+                        (click)="nextStep(3)">3</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 3"
+                        [translate]="'SUBMISSIONS.CREATE.step_3.title'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'SUBMISSIONS.CREATE.step_4.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 4" [class.text-white]="step === 4"
+                        (click)="nextStep(4)">4</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 4"
+                        [translate]="'SUBMISSIONS.CREATE.step_4.title'"></div>
+                </div>
+            </div>
+            <!--end: Step -->
+        </div>
+
+        <div [ngClass]="{'d-block': step == 1, 'd-none': step != 1}" class="card-body scroll-gray-8 p-10"
+            style="max-height: calc(100vh - 290px);">
+            <!--begin: Form Wizard Step 1-->
+            <form [formGroup]="formGroupTTTT">
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{ 'SUBMISSIONS.CREATE.step_1.form.propose.level' | translate }}
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <div class="radio-inline">
+                            <nz-radio-group formControlName="IsMucDoTrinhKyGap">
+                                <label nz-radio [nzValue]="false">Yêu cầu thông thường</label>
+                                <label nz-radio [nzValue]="true">Yêu cầu gấp</label>
+                            </nz-radio-group>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{ 'SUBMISSIONS.CREATE.step_1.form.propose.code' | translate }}
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <input type="text" [value]="fTTTT?.SoToTrinh?.value + '/' + fTTTT?.MaHanhChinh?.value"
+                            class="form-control input_42" readonly style="min-height: 42px;">
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{ 'SUBMISSIONS.CREATE.step_1.form.propose.name' | translate }} <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <textarea formControlName="TenToTrinh" placeholder=" {{'SUBMISSIONS.CREATE.step_1.form.propose.placeholderVN' | translate }}"
+                            class="form-control input_42 pt-3" rows="1"
+                            ></textarea>
+                        <textarea formControlName="TenToTrinh_Eng" placeholder=" {{ 'SUBMISSIONS.CREATE.step_1.form.propose.placeholderEN' | translate }}"
+                            class="form-control input_42 pt-3" rows="1"
+                            *ngIf="fTTTT?.TenToTrinh?.value"></textarea>
+                        <div class="form-text text-danger"
+                            *ngIf="fTTTT?.TenToTrinh_Eng?.errors && fTTTT?.TenToTrinh_Eng?.touched">
+                            <span [translate]="'SUBMISSIONS.CREATE.step_1.form.propose.required'"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{ 'SUBMISSIONS.CREATE.step_1.form.propose.budget' | translate }}
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <div class="radio-inline">
+                            <nz-radio-group formControlName="IsTrongNganSach">
+                                <label nz-radio [nzValue]="true">Trong ngân sách</label>
+                                <label nz-radio [nzValue]="false">Ngoài ngân sách</label>
+                            </nz-radio-group>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{ 'SUBMISSIONS.CREATE.step_1.form.type_of_business.label' | translate }} <span
+                            class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="LoaiNghiepVuKey" nzShowSearch nzAllowClear
+                            nzPlaceHolder="{{ 'SUBMISSIONS.CREATE.step_1.form.type_of_business.placeholder' | translate }}"
+                            [nzOptions]="loaiNghiepVuOptions" style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger"
+                            *ngIf="fTTTT?.LoaiNghiepVuKey?.errors && fTTTT?.LoaiNghiepVuKey?.touched">
+                            <span [translate]="'SUBMISSIONS.CREATE.step_1.form.type_of_business.required'"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Quy trình 
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="quyTrinhKey" nzShowSearch nzAllowClear
+                            nzPlaceHolder="Chọn quy trình"
+                            [nzOptions]="quyTrinhOptions" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        {{ 'SUBMISSIONS.CREATE.step_1.form.attachments.label' | translate }} <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <app-select-file 
+                            [reset]="false" 
+                            [multiple]="true" 
+                            [acceptKey]="'excel_word_pdf_rar_zip'" 
+                            [text]="'SUBMISSIONS.CREATE.step_1.form.attachments.button' | translate" 
+                            [(selectedFiles)]="selectedFiles">
+                        </app-select-file>
+                        <div class="form-text text-danger" *ngIf="selectedFiles?.length === 0 && this.formGroupTTTT?.touched">
+                            <span [translate]="'SUBMISSIONS.CREATE.step_1.form.attachments.required'"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col">
+                        <label class="ctrl_label"> {{ 'SUBMISSIONS.CREATE.step_1.form.explain.label' | translate }} <span class="text-danger">(*)</span></label>
+                        <div [ngxSummernote]="config" formControlName="NoiDung" class="position-relative"></div>
+                        <div [ngxSummernote]="config" formControlName="NoiDung_Eng" *ngIf="fTTTT?.NoiDung?.value"
+                            class="position-relative"></div>
+                        <div class="form-text text-danger"
+                            *ngIf="fTTTT?.NoiDung_Eng?.errors && fTTTT?.NoiDung_Eng?.touched">
+                            <span [translate]="'SUBMISSIONS.CREATE.step_1.form.explain.required'"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--end: Form Wizard Step 1-->
+        </div>
+
+        <div [ngClass]="{'d-block': step == 2, 'd-none': step != 2}" class="card-body scroll-gray-8 p-10">
+            <!--begin: Form Wizard Step 2-->
+            <div class="d-flex justify-content-between align-items-center my-2">
+                <div class="w-auto h6"><label nz-checkbox [(ngModel)]="isToTrinhHanMucChiPhi" (ngModelChange)="onChangeToTrinhHanMucChiPhi($event)"> {{ 'SUBMISSIONS.CREATE.step_2.costTitle' | translate }}   </label></div>
+                <div *ngIf="isToTrinhHanMucChiPhi">
+                    <button class="btn btn-primary" (click)="addChiPhiRow()">{{ 'COMMON.btn.add_new' | translate }}</button>
+                </div>
+            </div>
+            <div class="row d-none" [class.d-block]="isToTrinhHanMucChiPhi">
+                <form [formGroup]="formGroupCP">
+                    <div class="scroll-gray-10 w-100">
+                        <table class="table table_classic table_sticky table_40 table_no mb-0">
+                            <thead>
+                                <tr class="c-grey-900 text-center">
+                                    <th>STT</th>
+                                    <th class="min_w_100">{{ 'SUBMISSIONS.CREATE.step_2.form.table.Expenses' | translate }}   <span class="text-danger"> (*)</span></th>
+                                    <th class="min_w_100">{{ 'SUBMISSIONS.CREATE.step_2.form.table.code' | translate }}</th>
+                                    <th class="min_w_100">{{ 'SUBMISSIONS.CREATE.step_2.form.table.amount' | translate }} <span class="text-danger">(*)</span></th>
+                                    <th class="min_w_100">{{ 'SUBMISSIONS.CREATE.step_2.form.table.estimated_price' | translate }} <span class="text-danger">(*)</span></th>
+                                    <th class="min_w_100">{{ 'SUBMISSIONS.CREATE.step_2.form.table.total_estimate' | translate }}</th>
+                                    <th class="min_w_100 d-none">Năm </th>
+                                    <th class="min_w_100 d-none">Tháng </th>
+                                    <th class="text-center w_50">Xoá</th>
+                                </tr>
+                            </thead>
+                            <tbody class="form-group">
+                                <tr formArrayName="fArray"
+                                    *ngFor="let item of fCP?.fArray?.controls; let i = index; trackBy:trackByFn" class="py-1">
+                                    <ng-container [formGroupName]="i">
+                                        <td class="text-center">{{i + 1}}</td>
+                                        <td>
+                                        <input placeholder="Khoản chi" formControlName="khoanChi"
+                                            class="form-control form-control-sm" placeholder="Khoản chi"
+                                            [class.is-invalid]="item?.controls?.khoanChi?.errors && item?.controls?.khoanChi?.touched"
+                                            maxlength="200" />
+                                        </td>
+                                        <td>
+                                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="--- Lựa chọn ---" formControlName="maChiPhiKey"
+                                                [nzOptions]="maChiPhiOptions" class="w_140"
+                                                [class.is-invalid]="item?.controls?.maChiPhiKey?.errors && item?.controls?.maChiPhiKey?.touched"></nz-select>
+                                        </td>
+                                        <td>
+                                            <nz-input-number
+                                                (keyup)="handleCalc(item?.value, i)"
+                                                [nzMin]="0"
+                                                [nzStep]="1"
+                                                [nzFormatter]="formatter"
+                                                [nzParser]="parser"
+                                                formControlName="soLuong"
+                                                [class.is-invalid]="item?.controls?.soLuong?.errors && item?.controls?.soLuong?.touched"
+                                                nzPlaceHolder="Số lượng" class="form-control form-control-sm"
+                                            ></nz-input-number>
+                                        </td>
+                                        <td>
+                                            <nz-input-number
+                                                (keyup)="handleCalc(item?.value, i)"
+                                                [nzMin]="0"
+                                                [nzStep]="1"
+                                                [nzFormatter]="formatter"
+                                                [nzParser]="parser"
+                                                formControlName="donGiaDuKien"
+                                                [class.is-invalid]="item?.controls?.donGiaDuKien?.errors && item?.controls?.donGiaDuKien?.touched"
+                                                nzPlaceHolder="Đơn giá dự kiến" class="form-control form-control-sm"
+                                            ></nz-input-number>
+                                        </td>
+                                        <td>
+                                            <nz-input-number
+                                                [nzMin]="0"
+                                                [nzStep]="1"
+                                                [nzFormatter]="formatter"
+                                                [nzParser]="parser"
+                                                [nzDisabled]="true"
+                                                formControlName="thanhTienDuKien"
+                                                nzPlaceHolder="Thành tiền" class="form-control form-control-sm"
+                                            ></nz-input-number>
+                                        </td>
+                                      
+                                        <td class="d-none">
+                                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="--- Lựa chọn ---"
+                                                formControlName="yearPay" [nzOptions]="namOptions" class="w_140">
+                                            </nz-select>
+                                        </td>
+                                        <td class="d-none">
+                                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="--- Lựa chọn ---"
+                                                formControlName="monthPay" [nzOptions]="thangOptions" class="w_140">
+                                            </nz-select>
+                                        </td>
+                                        <td class="d-flex justify-content-around">
+                                            <button
+                                                nz-popconfirm
+                                                [nzPopconfirmTitle]="'COMMON.btn.are_you_sure' | translate"
+                                                [nzIcon]="iconTpl"
+                                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                                (nzOnConfirm)="removeChiPhiRow(i)"
+                                                [translate]="'COMMON.btn.cancel'" [class]="'btn btn-icon btn-sm'">
+                                                <i class="fas fa-trash-alt icon-md text-danger"></i>
+                                            </button>
+                                            <ng-template #iconTpl>
+                                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                            </ng-template>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                                <tr>
+                                    <td colspan="7" class="border-top">
+                                        <p class="text-right text-blue-01 mb-0"><b>Tổng: {{total | number: '1.0-0'}} VND</b></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <!--end: Form Wizard Step 2-->
+        </div>
+
+        <div [ngClass]="{'d-block': step == 3, 'd-none': step != 3}" class="card-body scroll-gray-8 p-10">
+            <!--begin: Form Wizard Step 3-->
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <label class="col-form-label">{{ 'SUBMISSIONS.CREATE.step_3.department.label' | translate }}</label>
+                    <div class="form-group select_42">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="--- Lựa chọn ---"
+                            [(ngModel)]="partSelected" [ngModelOptions]="{standalone: true}"
+                            [nzOptions]="partOptions" (ngModelChange)="getNhanVien($event); fullnameSelected = null"
+                            style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="col-form-label">{{ 'SUBMISSIONS.CREATE.step_3.table.fullname' | translate }}</label>
+                    <div class="form-group select_42">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="--- Lựa chọn ---"
+                            [(ngModel)]="fullnameSelected" [ngModelOptions]="{standalone: true}"
+                            [nzOptions]="fullnameOptions"
+                            (ngModelChange)="addDongTrinhDSRow($event)" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col scroll-gray-10 w-100">
+                    <table class="table table_classic table_sticky table_40 table_no">
+                        <thead>
+                            <tr class="c-grey-900">
+                                <th>STT</th>
+                                <th class="min_w_150">{{ 'SUBMISSIONS.CREATE.step_3.table.fullname' | translate }}</th>
+                                <th class="min_w_150">{{ 'SUBMISSIONS.CREATE.step_3.department.label' | translate }}</th>
+                                <th class="min_w_60 text-center">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dongTrinhDS;let i = index">
+                                <td class="text-center">{{i + 1}}</td>
+                                <td >{{item?.employeeDisplay}}</td>
+                                <td >{{item?.departmentDisplay}}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-icon btn-sm" (click)="removeDongTrinhDSRow(i)"><i class="fas fa-trash-alt icon-md text-danger"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--end: Form Wizard Step 3-->
+        </div>
+
+        <div [ngClass]="{'d-block': step == 4, 'd-none': step != 4}" class="card-body scroll-gray-8 p-10"
+            style="max-height: calc(100vh - 290px);">
+            <!--begin: Form Wizard Step 4-->
+            <div class="pb-5">
+                <div class="detail_header">
+                    <div class="text-left">
+                        <div class="company"> {{ 'SUBMISSIONS.CREATE.step_4.companyName' | translate }}</div>
+                        <div class="no">Số tờ trình: <b>{{fTTTT.SoToTrinh.value}} /{{fTTTT.MaHanhChinh.value}} </b></div>
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240"></div>
+                        <div class="today">Hà Nội, Ngày {{today | date: 'dd'}} tháng {{today | date: 'MM'}} năm {{today
+                            | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">
+                    <p>{{ 'SUBMISSIONS.CREATE.step_4.titleHeader' | translate }}: {{fTTTT.TenToTrinh.value || "-"}}</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <!-- <div>Kính gửi: Ông <b>Nguyễn Văn An</b> </div> -->
+                        <div class="mb-3 font-weight-bolder">{{ 'SUBMISSIONS.CREATE.step_4.basedOn' | translate }}:</div>
+
+                        <table *ngIf="selectedFiles?.length">
+                            <tr *ngFor="let item of selectedFiles; let i = index; trackBy:trackByFn">
+                                <td class="w_140">
+                                    <span *ngIf="i == 0">{{ 'SUBMISSIONS.CREATE.step_4.attachDocs' | translate }}</span>
+                                </td>
+                                <td>
+                                    {{i + 1}}.
+                                    <i class="flaticon2-file-1 icon-lg mx-3" style="color: #FF8F1F;"></i>
+                                    <a href="javascript:void(0)" (click)="api.downloadURI(item?.base64, item?.name)">{{item?.name}}</a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="my-5">
+                            {{ 'SUBMISSIONS.CREATE.step_4.departmentLabel' | translate }} <b>{{ userInfo?.phongBan }}</b> <span *ngFor="let item of uniqBoPhan(dongTrinhDS,'departmentDisplay'); let i = index"> {{
+                                'SUBMISSIONS.CREATE.step_4.andLabel' | translate }} {{ 'SUBMISSIONS.CREATE.step_4.departmentLabel' | translate
+                                }} <b>{{item?.departmentDisplay}}</b></span> {{ 'SUBMISSIONS.CREATE.step_4.suggestionsLabel' | translate }}:
+                        </div>
+                        <div *ngIf="step == 4" [innerHTML]="fTTTT?.NoiDung?.value | safe: 'html'" class="my-5"></div>
+                    </div>
+                </div>
+                <div *ngIf="fCP?.fArray?.length">
+                    <div class="scroll-gray-10 w-100">
+                        <div class="mb-3 font-weight-bolder text-blue-01">{{ 'SUBMISSIONS.CREATE.step_4.titleCost' | translate }} :</div>
+                        <table class="table table_classic table_40 table_blue table_no">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th style="width: 120px" class="text-center">{{
+                                        'SUBMISSIONS.CREATE.step_4.table.Expenses' | translate }}</th>
+                                   <th style="width: 120px;" class="text-center">{{
+                                            'SUBMISSIONS.CREATE.step_4.table.code' | translate }}</th>
+                                    <th style="width: 120px" class="text-right">{{
+                                        'SUBMISSIONS.CREATE.step_4.table.amount' | translate }}</th>
+                                    <th style="width: 130px" class="text-right">{{
+                                        'SUBMISSIONS.CREATE.step_4.table.estimated_price' | translate }}</th>
+                                    <th style="width: 130px" class="text-right">{{
+                                        'SUBMISSIONS.CREATE.step_4.table.total_estimate' | translate }}</th>
+                                    <th style="width: 120px;display: none;" class="text-center">Năm </th>
+                                    <th style="width: 120px;display: none;" class="text-center">Tháng </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of fCP?.fArray?.value; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{item?.khoanChi}}</td>
+                                    <td>
+                                        <span class="truncate-2" [title]="chiPhiName(item?.maChiPhiKey)">{{chiPhiName(item?.maChiPhiKey)}}</span>
+                                    </td>
+                                    <td>{{item?.soLuong | number: '1.0-0'}}</td>
+                                    <td>{{item?.donGiaDuKien | number: '1.0-0'}}</td>
+                                    <td>{{item?.thanhTienDuKien | number: '1.0-0'}}</td>
+                                  
+                                    <td style="display: none;">
+                                        <span class="truncate-2" [title]="namName(item?.yearPay)">{{namName(item?.yearPay)}}</span>
+                                    </td>
+                                    <td style="display: none;">
+                                        <span class="truncate-2" [title]="thangName(item?.monthPay)">{{thangName(item?.monthPay)}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="border-top">
+                                        <p class="text-right text-blue-01 mb-0"><b>Tổng: {{total | number: '1.0-0'}} VND</b></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="dongTrinhDS?.length">
+                    <div class="scroll-gray-10 w-100">
+                        <div class="mb-3 font-weight-bolder text-blue-01">{{ 'SUBMISSIONS.CREATE.step_3.title' | translate }}:</div>
+                        <table class="table table_classic table_sticky table_40 table_blue table_no mb-0">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th class="min_w_150">{{ 'SUBMISSIONS.CREATE.step_3.department.label' | translate }}</th>
+                                    <th class="min_w_150">{{ 'SUBMISSIONS.CREATE.step_3.table.fullname' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of dongTrinhDS; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{item?.employeeDisplay}}</td>
+                                    <td>{{item?.departmentDisplay}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- <div>Bộ phận <b>Phòng CNTT</b> và bộ phận <b>Phòng Hợp Tác và Phát Triển</b> kính đề nghị ông <b>Nguyễn Văn An</b></div> -->
+            <!--end: Form Wizard Step 4-->
+        </div>
+
+        <div class="footer">
+            <div class="d-flex justify-content-between">
+                <div class="mr-2">
+                    <button *ngIf="step > 1" class="btn btn-light btn-14 py-3 w_130" (click)="prevStep()"
+                        [translate]="'COMMON.btn.before'">Trước</button>
+                </div>
+                <div>
+                    <div [ngSwitch]="step" class="d-flex">
+                        <div>
+                            <button 
+                                nz-popconfirm 
+                                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure_save_draft' | translate }}"
+                                [nzIcon]="iconTpl" 
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                class="btn btn-light btn-14 py-3 w_130 mr-2"
+                                (nzOnCancel)="isVisible = false; removeDraft()" 
+                                (nzOnConfirm)="saveDraft()" 
+                                [translate]="'COMMON.btn.cancel'">
+                            </button>
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </div>
+                        <div *ngSwitchCase="'1'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(2)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'2'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(3)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'3'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="nextStep(4)"
+                                [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'4'">
+                            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()"
+                                [translate]="'COMMON.btn.browser'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-modal>

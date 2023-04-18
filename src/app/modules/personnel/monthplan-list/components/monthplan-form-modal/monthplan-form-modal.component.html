@@ -1,0 +1,549 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="925" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="saveDraft()" [nzTitle]="'Thêm mới kế hoạch công tác tháng'">
+    <div class="card card-custom detail">
+        <div class="card-body py-0">
+            <!--begin: Step -->
+            <div class="steps">
+                <div class="step" [title]="'Thông tin đề nghị'">
+                    <div class="step_number" [class.bg-primary-1]="step === 1" [class.text-white]="step === 1"
+                        (click)="nextStep(1)">1</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 1" [translate]="'Thông tin đề nghị'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'Nội dung công tác'">
+                    <div class="step_number" [class.bg-primary-1]="step === 2" [class.text-white]="step === 2"
+                        (click)="nextStep(2)">2</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 2" [translate]="'Nội dung công tác'"></div>
+                    <div class="step_dot"></div>
+                </div>
+                <div class="step" [title]="'PURCHASE.CREATE.step_4.title' | translate">
+                    <div class="step_number" [class.bg-primary-1]="step === 3" [class.text-white]="step === 3"
+                        (click)="nextStep(3)">3</div>
+                    <div class="step_title truncate" [class.text-primary-1]="step === 3" [translate]="'PURCHASE.CREATE.step_4.title'"></div>
+                </div>
+            </div>
+            <!--end: Step -->
+        </div>
+
+        <!-- Step 1 -->
+        <div [ngClass]="{'d-block': step == 1, 'd-none': step != 1}" class="card-body scroll-gray-8 p-10"
+            style="max-height: calc(100vh - 290px);">
+            <form [formGroup]="formGroup1">
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Năm <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42" style="min-width: 450px;">
+                        <nz-select
+                            formControlName="namKey"
+                            [nzOptions]="namOptions"
+                            nzShowSearch
+                            nzAllowClear
+                            nzPlaceHolder="Chọn năm"
+                            style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f1?.namKey?.errors && f1?.namKey?.touched">
+                            <span>Năm là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Tháng <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42" style="min-width: 450px;">
+                        <nz-select
+                            formControlName="thangKey"
+                            [nzOptions]="thangOptions"
+                            nzShowSearch
+                            nzAllowClear
+                            nzPlaceHolder="Chọn tháng" 
+                            style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f1?.thangKey?.errors && f1?.thangKey?.touched">
+                            <span>Tháng là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Tài liệu đính kèm 
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <app-select-file 
+                            [reset]="false" 
+                            [multiple]="true" 
+                            [acceptKey]="'excel_word_pdf_rar_zip'" 
+                            [text]="'Tải tài liệu' | translate" 
+                            [(selectedFiles)]="selectedFiles">
+                        </app-select-file>
+                        
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Người đề nghị
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <input type="text" [value]="auth?.currentUserValue?.hoTen" class="form-control input_42" placeholder="Người đề nghị" readonly disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Bộ phận
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <input type="text" [value]="auth?.currentUserValue?.phongBan" class="form-control input_42" placeholder="Bộ phận" readonly disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--Step 2-->
+        <div [ngClass]="{'d-block': step == 2, 'd-none': step != 2}" class="card-body scroll-gray-8 p-10" style="max-height: calc(100vh - 290px);">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div class="font_size_18 text-blue-01">Danh sách thông tin</div>
+                <div>
+                    <button *ngIf="!isForm2" type="button" (click)="isForm2 = true"
+                        class="btn btn-primary" style="height: 42px;">
+                        <i class="flaticon2-plus icon-1x"></i>{{ 'COMMON.btn.add_new_info' | translate }}
+                    </button>
+                </div>
+            </div>
+            <form [formGroup]="formGroup2" class="form_border" (submit)="onSubmitForm2(targetScollEl)" [class.d-none]="!isForm2">
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Người đi <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="nguoiDiKey" [nzOptions]="nguoiDiOptions" nzShowSearch nzAllowClear nzPlaceHolder="Chọn người đi" style="width: 100%;"></nz-select>
+                        <div class="form-text text-danger" *ngIf="f2?.nguoiDiKey?.errors && f2?.nguoiDiKey?.touched">
+                            <span>Người đi là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div #targetScollElInputInvalid class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Ngày đi <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <nz-date-picker formControlName="ngayDi" nzPlaceHolder="Ngày đi"
+                            [nzFormat]="'dd-MM-yyyy'" class="form-control pt-1 input_42">
+                        </nz-date-picker>
+                        <div class="form-text text-danger" *ngIf="f2?.ngayDi?.errors && f2?.ngayDi?.touched">
+                            <span>Ngày đi là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div #targetScollElInputInvalid class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Ngày về <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <nz-date-picker formControlName="ngayVe" nzPlaceHolder=" Ngày về"
+                            [nzFormat]="'dd-MM-yyyy'" class="form-control pt-1 input_42">
+                        </nz-date-picker>
+                        <div class="form-text text-danger" *ngIf="f2?.ngayVe?.errors && f2?.ngayVe?.touched">
+                            <span>Ngày về là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div #targetScollElInputInvalid class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Địa điểm công tác <span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <nz-radio-group formControlName="isTrongNuoc">
+                            <label nz-radio [nzValue]="true">Trong nước</label>
+                            <label nz-radio [nzValue]="false">Nước ngoài</label>
+                        </nz-radio-group>
+                        <div class="form-text text-danger" *ngIf="f2?.isTrongNuoc?.errors && f2?.isTrongNuoc?.touched">
+                            <span>Địa điểm công tác là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5" *ngIf="f2.isTrongNuoc.value">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Tỉnh thành<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="tinhThanhKey" [nzOptions]="tinhThanhOptions" nzShowSearch nzAllowClear
+                            nzPlaceHolder="Chọn tỉnh thành" 
+                            style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f2?.tinhThanhKey?.errors && f2?.tinhThanhKey?.touched">
+                            <span>Tỉnh thành là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row mb-5" *ngIf="f2.isTrongNuoc.value">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Quận huyện<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="quanHuyenKey" [nzOptions]="quanHuyenOptions" nzShowSearch nzAllowClear
+                            nzPlaceHolder="Chọn quận huyện"
+                            style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f2?.quanHuyenKey?.errors && f2?.quanHuyenKey?.touched">
+                            <span>Quận huyện là bắt buộc</span>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row mb-5" *ngIf="f2.isTrongNuoc.value == false">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Quốc gia<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="quocGiaKey" [nzOptions]="quocGiaOptions" nzShowSearch nzAllowClear
+                            nzPlaceHolder="Quốc gia"
+                            style="width: 100%;">
+                        </nz-select>
+                        <div class="form-text text-danger" *ngIf="f2?.quocGiaKey?.errors && f2?.quocGiaKey?.touched">
+                            <span>Quốc gia là bắt buộc</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label"></div>
+                    <div class="col-12 col-md-7 select_42">
+                        <button type="button" class="btn btn-outline-info w-100" (click)="onThemDiaChiTrongNuoc()"><i class="flaticon-map-location"></i>Thêm địa chỉ</button>
+                        <table class="table table_classic table_40 w-100 mt-3">
+                            <tr>
+                                <th>Tỉnh thành</th>
+                                <!-- <th>Quận huyện</th> -->
+                                <th class="text-center">Xoá</th>
+                            </tr>
+                            <tr *ngFor="let item of diaDiemTrongNuoc; let i = index">
+                                <td class="w_240"><span class="truncate-2">{{item?.meta?.tinhThanhLabel || '-'}}</span></td>
+                                <!-- <td class="w_240"><span class="truncate-2">{{item?.meta?.quanHuyenLabel || '-'}}</span></td> -->
+                                <td class="text-center">
+                                    <i 
+                                        nz-icon nzType="delete"
+                                        nzTheme="outline"
+                                        title="Xoá"
+                                        class="btn icon-md p-0"
+                                        [nzTheme]="'twotone'" 
+                                        [nzTwotoneColor]="'#F64E60'"
+                                        nz-popconfirm
+                                        nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                        [nzIcon]="iconTpl"
+                                        [nzOkText]="'COMMON.btn.yes' | translate"
+                                        [nzCancelText]="'COMMON.btn.no' | translate" 
+                                        (nzOnConfirm)="onXoaDiaChi(i)">
+                                        <ng-template #iconTpl>
+                                            <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                        </ng-template>
+                                    </i>
+                                </td>
+                            </tr>
+                            <tr *ngIf="diaDiemTrongNuoc?.length == 0">
+                                <td colspan="3" class="text-center p-0">
+                                    <nz-alert nzType="warning" nzBanner nzMessage="Chưa có dữ liệu!"></nz-alert>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row mb-5" *ngIf="f2.isTrongNuoc.value == false">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Chi tiết
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <input type="text" formControlName="quocGiaChiTiet" placeholder="Chi tiết" class="form-control input_42"/>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Quản lý
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <label nz-checkbox formControlName="isManageByPBP">Quản lý bởi PBP</label> 
+                        <label nz-checkbox formControlName="isManageByPTGD">Quản lý bởi PTGD</label> 
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label" >Số người đi <span class="text-danger" > (*)</span></div>
+                    <div class="col-12 col-md-7">
+                        <input formControlName="soLuongNguoiDi" type="number" min="0" step="1" max="20"  class="form-control input_42" />
+                    </div>
+                    <div class="form-text text-danger" *ngIf="f2?.soLuongNguoiDi?.errors && f2?.soLuongNguoiDi?.touched">
+                        <span>Số người đi là bắt buộc</span>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label" >Nội dung công tác<span class="text-danger"> (*)</span></div>
+                    <div class="col-12 col-md-7">
+                        <textarea formControlName="noiDung" placeholder="Nội dung công tác"
+                            class="form-control input_42 pt-3" cols="20" rows="1"
+                            ></textarea>
+                    </div>
+                    <div class="form-text text-danger" *ngIf="f2?.noiDung?.errors && f2?.noiDung?.touched">
+                        <span>Nội dung công tác là bắt buộc</span>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label" [translate]="'Hành trình'"></div>
+                    <div class="col-12 col-md-7">
+                        <textarea formControlName="ghiChu" placeholder="Hành trình"
+                            class="form-control input_42 pt-3" cols="20" rows="1"
+                            ></textarea>
+                    </div>
+                </div>
+                <!-- <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Tài liệu đính kèm 
+                    </div>
+                    <div class="col-12 col-md-7">
+                        <app-select-file 
+                            [reset]="false" 
+                            [multiple]="true" 
+                            [acceptKey]="'excel_word_pdf_rar_zip'" 
+                            [text]="'Tải tài liệu' | translate" 
+                            [(selectedFiles)]="khctChiTietFiles">
+                        </app-select-file>
+                        
+                    </div>
+                </div> -->
+
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center mt-5">
+                        <button *ngIf="isForm2" type="button"
+                            (click)="isForm2 = false"
+                            class="btn btn-light btn-14 w_130 mx-1"
+                            [translate]="'COMMON.btn.cancel'"></button>
+                        <button *ngIf="isForm2" type="submit" class="btn btn-primary btn-14 w_130 mx-1"
+                            [translate]="'COMMON.btn.record'"></button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- 10 All data -->
+            <table #targetScollEl class="col-lg-12" class="table table_classic table_no table_40 mb-8">
+                <thead>
+                    <tr>
+                        <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.no'"></th>
+                        <th class="min_w_80" [translate]="'Người đi'"></th>
+                        <th class="min_w_100" [translate]="'Nội dung công tác'"></th>
+                        <th class="min_w_100" [translate]="'Địa điểm'"></th>
+                        <th class="min_w_80" [translate]="'Ngày đi'"></th>
+                        <th class="min_w_80" [translate]="'Ngày về'"></th>
+                        <th class="min_w_100" [translate]="'Ghi chú'"></th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataTable; let i = index">
+                        <ng-container>
+                            <td>{{i + 1}}</td>
+                            <td [title]="item?.nguoiDiKey">
+                                <span class="truncate-2">
+                                    {{getObjOptions('nguoiDiOptions', item?.nguoiDiKey)?.label}}
+                                </span>
+                            </td>
+                            <td [title]="item?.noiDung">
+                                <span class="truncate-2">{{item?.noiDung || '-'}}</span>
+                            </td>
+                            <td>
+                                <span class="truncate-2" *ngIf="item?.isTrongNuoc">
+                                    <!-- {{getObjOptions('quanHuyenOptions', item?.quanHuyenKey)?.label}},  -->
+                                    {{ item?.diaDiemTrongNuoc}}
+                                </span>
+                                <span class="truncate-2" *ngIf="!item?.isTrongNuoc">
+                                    {{getObjOptions('quocGiaOptions', item?.quocGiaKey)?.label}}
+                                </span>
+                            </td>
+                            <td [title]="item?.ngayDi">
+                                <span class="truncate-2">{{item?.ngayDi | date: 'dd/MM/yyyy'}}</span>
+                            </td>
+                            <td [title]="item?.ngayVe">
+                                <span class="truncate-2">{{item?.ngayVe | date: 'dd/MM/yyyy'}}</span>
+                            </td>
+                            <td [title]="item?.ghiChu">
+                                <span class="truncate-2">{{item?.ghiChu || '-'}}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-around align-items-center">
+                                    <!-- Edit -->
+                                    <img (click)="onEditRow(item)" src="assets/media/bg/Vector_edit.svg" class="cursor-pointer" alt="edit" width="35px" height="35px"/>
+                                    <!-- Delete -->
+                                    <button 
+                                        nz-popconfirm 
+                                        nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                                        [nzIcon]="iconTpl"
+                                        [nzOkText]="'COMMON.btn.yes' | translate"
+                                        [nzCancelText]="'COMMON.btn.no' | translate"
+                                        class="btn btn-icon btn-hover" 
+                                        (nzOnConfirm)="onDeleteItemTableForm2(item.uuid)"
+                                        style="font-weight: 500; font-size: 14px">
+                                        <i class="fas fa-trash-alt icon-lg text-danger"></i>
+                                    </button>
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Step 3 -->
+        <div [ngClass]="{'d-block': step == 3, 'd-none': step != 3}" class="card-body scroll-gray-8 p-10"
+            style="max-height: calc(100vh - 290px);">
+            <!--begin: Form Wizard Step 4-->
+            <div class="detail_header">
+                <div class="text-left">
+                    <div class="company"> {{ 'PURCHASE.CREATE.step_4.companyName' | translate }}</div>
+                    <!-- <div class="no">Số tờ trình: <b>3412MV921</b></div> -->
+                </div>
+                <div class="text-right">
+                    <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240"></div>
+                    <div class="today">Hà Nội, Ngày {{today | date: 'dd'}} tháng {{today | date: 'MM'}} năm {{today
+                        | date: 'yyyy'}}</div>
+                </div>
+            </div>
+            <div class="detail_name">
+                <p>Kế hoạch công tác tháng {{f1.thangKey.value}} năm {{f1.namKey.value}}</p>
+            </div>
+
+            <!-- Thông tin đề nghị -->
+            <div class="row">
+                <div class="col-12 mt-8 mb-5">
+                    <div class="mb-3 font_size_15 text-blue-01">Thông tin đề nghị</div>
+                    <table class="table table_classic table_40">
+                        <tr>
+                            <td style="width: 30%;" class="pl-6">Năm</td>
+                            <td style="width: 70%;">{{f1.namKey.value}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-7">Tháng</td>
+                            <td>{{f1.thangKey.value}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-6">Người đề nghị</td>
+                            <td>{{this.auth.currentUserValue.hoTen}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-6">Bộ phận</td>
+                            <td>{{this.auth.currentUserValue.phongBan}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Nội dung công tác -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3 font_size_15 text-blue-01">Nội dung công tác</div>
+                    <table class="table table_classic table_no table_40 table_blue">
+                        <thead>
+                            <tr>
+                                <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.no'"></th>
+                                <th class="min_w_80" [translate]="'Người đi'"></th>
+                                <th class="min_w_100" [translate]="'Nội dung công tác'"></th>
+                                <th class="min_w_100" [translate]="'Địa điểm'"></th>
+                                <th class="min_w_80" [translate]="'Ngày đi'"></th>
+                                <th class="min_w_80" [translate]="'Ngày về'"></th>
+                                <th class="min_w_80" [translate]="'Số người đi'"></th>
+                                <th class="min_w_100" [translate]="'Ghi chú'"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataTable; let i = index">
+                                <ng-container>
+                                    <td>{{i + 1}}</td>
+                                    <td [title]="item?.nguoiDiKey">
+                                        <span class="truncate-2">
+                                            {{getObjOptions('nguoiDiOptions', item?.nguoiDiKey)?.label}}
+                                        </span>
+                                    </td>
+                                    <td [title]="item?.noiDung">
+                                        <span class="truncate-2">{{item?.noiDung || '-'}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="truncate-2" *ngIf="item?.isTrongNuoc">
+                                            {{item?.diaDiemTrongNuoc}}
+                                        </span>
+                                        <span class="truncate-2" *ngIf="!item?.isTrongNuoc">
+                                            {{getObjOptions('quocGiaOptions', item?.quocGiaKey)?.label}}
+                                        </span>
+                                    </td>
+                                    <td [title]="item?.ngayDi">
+                                        <span class="truncate-2">{{item?.ngayDi | date: 'dd/MM/yyyy'}}</span>
+                                    </td>
+                                    <td [title]="item?.ngayVe">
+                                        <span class="truncate-2">{{item?.ngayVe | date: 'dd/MM/yyyy'}}</span>
+                                    </td>
+                                    <td [title]="item?.soLuongNguoiDi">
+                                        <span class="truncate-2">{{item?.soLuongNguoiDi || '-'}}</span>
+                                    </td>
+                                    <td [title]="item?.ghiChu">
+                                        <span class="truncate-2">{{item?.ghiChu || '-'}}</span>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- <div>Bộ phận <b>Phòng CNTT</b> và bộ phận <b>Phòng Hợp Tác và Phát Triển</b> kính đề nghị ông <b>Nguyễn Văn An</b></div> -->
+            <!--end: Form Wizard Step 4-->
+        </div>
+
+        <div class="footer">
+            <div class="d-flex justify-content-between">
+                <div class="mr-2">
+                    <button *ngIf="step > 1" class="btn btn-light btn-14 w_130 py-3" (click)="prevStep()" [translate]="'COMMON.btn.before'">Trước</button>
+                </div>
+                <div>
+                    <div [ngSwitch]="step" class="d-flex">
+                        <div>
+                            <button
+                                nz-popconfirm
+                                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure_save_draft' | translate }}"
+                                [nzIcon]="iconTpl"
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                class="btn btn-light btn-14 py-3 w_130 mr-2"
+                                (nzOnCancel)="isVisible = false; removeDraft()"
+                                (nzOnConfirm)="saveDraft()"
+                                [translate]="'COMMON.btn.cancel'">
+                            </button>
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </div>
+                        <div *ngSwitchCase="'1'">
+                            <button class="btn btn-primary btn-14 w_130 py-3" (click)="nextStep(2)" [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'2'">
+                            <button class="btn btn-primary btn-14 w_130 py-3" (click)="nextStep(3); scrollEl(targetScollElInputInvalid, 0)" [translate]="'COMMON.btn.next'"></button>
+                        </div>
+                        <div *ngSwitchCase="'3'">
+                            <button *ngIf="this.dataRow===null" class="btn btn-primary btn-14 w_130 py-3 mr-2" (click)="onCreate(true)" >Trình duyệt</button>
+                            <button class="btn btn-warning btn-14 w_130 py-3" (click)="this.dataRow ? onEdit(false) : onCreate(false)" [translate]="'COMMON.btn.save'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-modal>

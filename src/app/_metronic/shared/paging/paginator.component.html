@@ -1,0 +1,40 @@
+<!-- start: Paginator -->
+<div class="row align-items-center justify-content-between mx-0 my-5">
+  <div>
+    <ng-pagination
+      [collectionSize]="paginator.totalRecord"
+      [(page)]="paginator.page"
+      [maxSize]="4"
+      [rotate]="true"
+      [boundaryLinks]="true"
+      [pageSize]="paginator.pageSize"
+      (pageChange)="pageChange($event)"
+    ></ng-pagination>
+  </div>
+  <div class="d-flex align-items-center">
+    <!-- begin: loading -->
+    <div class="d-flex align-items-center" *ngIf="isLoading">
+      <div class="mr-2 text-muted">Loading...</div>
+      <div class="spinner spinner-primary mr-10"></div>
+    </div>
+    <!-- end: loading -->
+  
+    <!-- begin: pageSize -->
+    <select
+      class="form-control font-weight-bold mr-4 border-0 bg-light false"
+      style="width: 75px"
+      [(ngModel)]="paginator.pageSize"
+      (change)="sizeChange()"
+    >
+      <option class="btn" *ngFor="let ps of pageSizes">
+        {{ ps }}
+      </option></select
+    ><span class="react-bootstrap-table-pagin ation-total"
+      >&nbsp;Hiển thị từ {{ paginator.totalRecord != 0 ? paginator.pageSize * paginator.page - paginator.pageSize + 1 : 0 }} đến&nbsp;
+      {{ paginator.pageSize * paginator.page > paginator.totalRecord ? paginator.totalRecord : paginator.pageSize * paginator.page }}
+      của&nbsp;{{ paginator.totalRecord }}</span
+    >
+    <!-- end: pageSize -->
+  </div>
+</div>
+<!-- end: Paginator -->

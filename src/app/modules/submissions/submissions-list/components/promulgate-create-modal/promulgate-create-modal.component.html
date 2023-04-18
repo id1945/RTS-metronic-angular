@@ -1,0 +1,72 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="725"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Thêm mới ban hành'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên văn bản
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" class="form-control input_42" [value]="dataDetail?.tenToTrinh" readonly disabled>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ngày ban hành <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="ngayBanHanh" class="form-control input_42" nzPlaceHolder="Ngày ban hành"></nz-date-picker>
+                    <div class="form-text text-danger" *ngIf="f?.ngayBanHanh?.errors && f?.ngayBanHanh?.touched">
+                        <span>Ngày ban hành là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Phạm vi áp dụng <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="phongBanKey" nzMode="multiple" nzPlaceHolder="Phạm vi áp dụng" class="w-100">
+                        <ng-container *ngFor="let o of phongBanOptions">
+                            <nz-option [nzValue]="o?.value" [nzLabel]="o?.label"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.phongBanKey?.errors && f?.phongBanKey?.touched">
+                        <span>Phạm vi áp dụng là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2"
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

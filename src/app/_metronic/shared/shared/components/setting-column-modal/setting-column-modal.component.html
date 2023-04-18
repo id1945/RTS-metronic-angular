@@ -1,0 +1,28 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="925" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="isVisible = false" [nzTitle]="'Danh sách cột'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <div class="row">
+            <div class="col py-3">
+                <label nz-checkbox [(ngModel)]="dataTable.isActive" (ngModelChange)="onModelChange($event)">Chọn tất cả</label>
+            </div>
+        </div>
+
+        <ng-container *ngIf="dataTable?.columns?.length">
+            <div class="row">
+                <ng-container *ngFor="let item of dataTable?.columns">
+                    <div class="col-3 py-3">
+                        <label nz-checkbox [(ngModel)]="item.isActive" (ngModelChange)="change.emit(item)">{{item?.title}}</label>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div class="d-flex">
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="isVisible = false">Đóng</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

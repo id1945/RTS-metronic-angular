@@ -1,0 +1,150 @@
+<div class="detail">
+    <div class="title d-flex flex-column-fluid my-3">
+      Chi tiết đề nghị văn bản định chế
+    </div>
+
+    <div *ngIf="dataDetail" class="d-flex flex-column-fluid">
+       
+    <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+        <div class="box-shadow p-8 radius-10 bg-white">
+            <div class="pb-5">
+                <div class="detail_header">
+                    <div class="text-left">
+                        <div class="company">{{ 'SUBMISSIONS.CREATE.step_4.companyName' | translate }}</div>
+                        <div class="no"> Số văn bản:
+                            <b>{{dataDetail?.maVanBanTrinhDuyet}}</b>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240">
+                        </div>
+                        <div class="today">Hà Nội, Ngày {{dataDetail?.ngayTao * 1000 | date: 'dd'}} tháng
+                            {{dataDetail?.ngayTao * 1000 | date: 'MM'}} năm {{dataDetail?.ngayTao * 1000 | date:
+                            'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">
+                    <p>Đề xuất Văn bản định chế</p>
+                    <p class="i">{{dataDetail?.tenVanBan}}</p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                            *ngIf="dataDetail?.isAllowPheDuyet">
+                            Kính gửi : Ông/bà : <b>{{tenNguoiPheDuyet}}</b></div>
+                    </div>
+                </div>
+                <div class="row mt-8">
+                    <div class="col-12">
+                        <div class="mb-5">
+                            <div class="card-body">
+                                <div class="col-md-12  box-shadow" style="height: 800px;;">
+                                    <!--begin::Content-->
+                                    <div class="col-xxl-12 order-1 order-xxl-1">
+                                        <div class="scroll-gray-box-7">
+                                            <ngx-extended-pdf-viewer *ngIf="urlPdf" [src]="urlPdf" [useBrowserLocale]="true"
+                                                [textLayer]="true" [showHandToolButton]="true" height="800px">
+                                            </ngx-extended-pdf-viewer>
+                                        </div>
+                                    </div>
+                                    <!--end::Content-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <div class="card card-custom card-stretch-half">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="card-label font-weight-bold text-hover-primary"
+                                            style="font-size: 22px;font-weight: bold;margin-top: 10px;text-align: center;color:#003469;">
+                                            THÔNG TIN CHI TIẾT VĂN BẢN</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-md-12  box-shadow" style="padding-top: 20px;padding-bottom: 20px;;">
+                                        <div class="row py-3">
+                                            <div class="col-xxl-2 font-weight-bolder">Mã văn bản trình duyệt:</div>
+                                            <div class="col-xxl-4">{{dataDetail?.maVanBanTrinhDuyet}}</div>
+                                            <div class="col-xxl-2 font-weight-bolder">Mã văn bản chính thức :</div>
+                                            <div class="col-xxl-4">{{dataDetail?.maVanBanChinhThuc}}</div>
+                                            <!-- <div class="col-xxl-4">{{dataDetail?.lanSuaDoi}}</div> -->
+                                        </div>
+                                        <div class="row py-3">
+                                            <div class="col-xxl-2 font-weight-bolder">Quyền truy cập :</div>
+                                            <div class="col-xxl-4">
+                                                <ng-container *ngFor="let item of dataDetail?.quyenTruyCap.items">
+                                                    {{ item?.quyenTruyCapDisplay }};
+                                                </ng-container>
+                                            </div>
+                                            <div class="col-xxl-2 font-weight-bolder">Phạm vi áp dụng :</div>
+                                            <div class="col-xxl-4">
+                                                <ng-container *ngFor="let item of dataDetail?.phamViApDung?.items">
+                                                    {{ item?.phamViApDungDisplay }};
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="row py-3">
+                                            <div class="col-xxl-2 font-weight-bolder">Ngày hiệu lực :</div>
+                                            <div class="col-xxl-4" *ngIf="dataDetail?.ngayHieuLuc">
+                                                {{dataDetail?.ngayHieuLuc * 1000 | date: "dd/MM/yyyy"}}
+                                            </div>
+                                            <div class="col-xxl-2 font-weight-bolder">Ngày hết hiệu lực :</div>
+                                            <div class="col-xxl-4" *ngIf="dataDetail?.ngayHetHieuLuc">
+                                                {{dataDetail?.ngayHetHieuLuc * 1000 | date: "dd/MM/yyyy"}}
+                                            </div>
+                                        </div>
+                                        <div class="row py-3" *ngIf="dataDetail?.tenVanBanOld">
+                                            <div class="col-xxl-2 font-weight-bolder">Thay thế văn bản :</div>
+                                            <div class="col-xxl-4" >
+                                                {{dataDetail?.tenVanBanOld}}
+                                            </div>
+                                        </div>
+                                        <div class="row py-3">
+                                            <div class="col-xxl-2 font-weight-bolder">Tài liệu đính kèm :</div>
+                                            <div class="col-xxl-10">
+                                                <ng-container *ngFor="let item of dataDetail?.dinhKem?.items;">
+                                                    <div class="cursor-pointer">
+                                                        <i class="flaticon2-file-1 icon-lg mr-3" style="color: #FF8F1F;"></i>
+                                                        <span title="Click để xem" (click)="previewPdf(item)" class="text-hover-primary">{{item?.fileName | truncate : 30}}</span>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div
+                    *ngIf="dataDetail?.isAllowPheDuyet ||dataDetail?.isAllowThamVan || dataDetail?.isAllowDongTrinh ">
+                    Bộ phận <b>{{dataDetail.tenPhongBanNguoiTao}}</b> kính trình ông/bà <b>{{tenNguoiPheDuyet}}</b> phê
+                    duyệt.
+                </div>
+            </div>
+        </div>
+        <div class="footer mt-5">
+            <div class="d-flex justify-content-end">
+                <div *ngIf="dataDetail?.isAllowPheDuyet ">
+                    <button class="btn btn-danger btn-14 py-3 ml-2" style="width: 150px"
+                        (click)="appApproveModal?.showModal(dataDetail, params?.hoSoId, 'reject')"
+                        [translate]="'COMMON.btn.reject'"></button>
+                </div>
+                <div
+                    *ngIf="dataDetail?.isAllowPheDuyet">
+                    <button class="btn btn-primary btn-14 py-3 ml-2" style="width: 150px"
+                        (click)="appApproveModal?.showModal(dataDetail, params?.hoSoId, 'approve')"
+                        [translate]="'COMMON.btn.approve'"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white"
+            [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+<app-approve-regime-modal #appApproveModal (loadTimeLine)="getDetail(currentHoSoId)"></app-approve-regime-modal>
+<!-- <app-consultation-modal #appConsultationModal (loadTimeLine)="getDetail(currentHoSoId)"></app-consultation-modal> -->

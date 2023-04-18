@@ -1,0 +1,45 @@
+:host {
+  .search_custom {
+    i,
+    input {
+      position: absolute;
+    }
+    i {
+      left: 40px;
+      z-index: 99;
+    }
+    input {
+      border: 0;
+      left: 70px;
+      font-size: 17px;
+      width: 300px;
+    }
+
+    &_xxl {
+      @media (min-width: 1000px) {
+        i {
+          top: 5px;
+        }
+        input {
+          top: 3px;
+        }
+      }
+    }
+    &_xs {
+      @media (max-width: 1000px) {
+        i {
+          top: 8px;
+        }
+        input {
+          top: 3px;
+        }
+      }
+    }
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+}

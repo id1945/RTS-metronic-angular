@@ -1,0 +1,30 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Xác nhận hủy chuyến'"
+    (nzOnOk)="isVisible = false">
+
+    <form [formGroup]="formGroup">
+        <div class="form-group px-8 my-10">
+            <label>
+               Lý do hủy <span *ngIf="f?.ghiChu?.errors?.required" class="text-danger">(*)</span>
+            </label>
+            <textarea formControlName="noiDung" placeholder="Nhập lý do hủy" class="form-control" rows="3">
+            </textarea>
+            <div class="form-text text-danger" *ngIf="f?.noiDung?.errors && f?.noiDung?.touched">
+                <span>Bạn phải nhập lý do từ chối.</span>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitApprove()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

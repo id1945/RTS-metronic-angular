@@ -1,0 +1,184 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="900"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="(modeScreen == 0) ? 'Thêm mới công việc' : 'Chỉnh sửa công việc'"
+    (nzOnOk)="isVisible = false">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 180px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="mb-2"> Nội dung công việc <span class="text-danger">(*)</span></div>
+                    <div [ngxSummernote]="config" formControlName="NoiDungCongViec" class="col-12"></div>
+                    <div class="form-text text-danger" *ngIf="f?.NoiDungCongViec?.errors && f?.NoiDungCongViec?.touched">
+                        <span>Nội dung công việc là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">Người phụ trách <span class="text-danger">(*)</span></div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="NguoiPhuTrachKeys" nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="Người phụ trách" [nzOptions]="nguoiPhuTrachOptions" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.NguoiPhuTrachKeys?.errors && f?.NguoiPhuTrachKeys?.touched">
+                        <span>Người phụ trách là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="mb-2">Tiêu chí đánh giá mức độ hoàn thành của công việc</div>
+                    <div [ngxSummernote]="config" formControlName="TieuChiDanhGia" class="col-12"></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="mb-2">Tài liệu đầu ra</div>
+                    <div [ngxSummernote]="config" formControlName="TaiLieuDauRa" class="col-12"></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 1</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang1.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang1.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 2</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang2.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang2.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 3</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang3.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang3.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 4</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang4.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang4.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 5</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang5.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang5.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 6</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang6.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang6.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 7</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang7.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang7.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 8</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang8.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang8.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 9</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang9.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang9.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 10</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang10.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang10.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 11</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang11.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang11.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Tháng 12</div>
+                    <div class="col-12 col-md-8 select_42"><nz-select formControlName="Thang12.TrangThaiTienDoKey" nzShowSearch nzAllowClear nzPlaceHolder="-- Lựa chọn --" [nzOptions]="TrangThaiTienDo" class="w-100"></nz-select></div>
+                </div>
+                <div class="col-12 col-md-6 row mx-0 px-0">
+                    <div class="col-12 col-md-4 ctrl_label">Nội dung</div>
+                    <div class="col-12 col-md-8"><textarea formControlName="Thang12.MoTa" rows="1" class="form-control input_42 pt-3" maxlength="500"></textarea></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = true"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="(modeScreen == 0) ? onCreate() : onEdit()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

@@ -1,0 +1,85 @@
+<nz-modal nzCentered [nzWidth]="1000" [(nzVisible)]="isVisible" [nzFooter]="null" (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false" [nzTitle]="'Thông tin hàng hoá, dịch vụ'" (nzOnOk)="isVisible = false">
+
+    <div class="card card-custom">
+        <div class="card-body" *ngIf="dataDetail?.thongTinHangHoaDichVu?.items.length">
+            <nz-table
+                [nzLoading]=""
+                [nzSize]="'small'"
+                [nzData]="dataDetail?.thongTinHangHoaDichVu?.items"
+                [nzShowPagination]="false"
+                class="ant-table-border"
+                [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+                <table class="table table_classic table_40 table_no table_blue">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã hàng hoá</th>
+                        <th>Hàng hoá, dịch vụ</th>
+                        <th>Quy cach</th>
+                        <th>ĐVT</th>
+                        <th class="text-right">Số lượng</th>
+                        <th class="text-right">Đơn giá (Chưa VAT)</th>
+                        <th class="text-right">Thành tiền (Chưa VAT)</th>
+                        <th>Ghi chú</th>
+                    </tr>
+                    <ng-container *ngFor="let item of dataDetail?.thongTinHangHoaDichVu?.items; let i = index">
+                        <tr>
+                            <td>{{i + 1}}</td>
+                            <td>{{item?.maHangHoaDichVu || '-'}}</td>
+                            <td>{{item?.tenHangHoaDichVu || '-'}}</td>
+                            <td>{{item?.quyCach || '-'}}</td>
+                            <td>{{item?.tenDVT || '-'}}</td>
+                            <td class="text-right">{{item?.soLuong || 0}}</td>
+                            <td class="text-right">{{item?.donGiaChuaVAT || 0 | number: '1.0'}}</td>
+                            <td class="text-right">{{item?.donGiaChuaVAT*item?.soLuong || 0 | number: '1.0'}}</td>
+                            <td>N/A</td>
+                        </tr>
+                    </ng-container>
+                    <tr>
+                        <td colspan="4" style="border-top: 1px solid #e3ebf6;">
+                            <div class="text-blue-01 d-flex justify-content-start">
+                                <div style="min-width: 80px;">Ghi chú: </div>
+                                <div class="text-left"></div>
+                            </div>
+                        </td>
+                        <td colspan="4" style="border-top: 1px solid #e3ebf6;">
+                            <table class="w-100">
+                                <tr>
+                                    <td class="text-right w-50">
+                                        <b>Tổng (Chưa VAT):</b>
+                                    </td>
+                                    <td>
+                                        <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.tongTienChuaVAT || 0 | number: '1.0'}}</b></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right w-50">
+                                        <b>VAT:</b>
+                                    </td>
+                                    <td>
+                                        <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.vat || 0 | number: '1.0'}}</b></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right w-50">
+                                        <span class="text-blue-01"><b>Tổng tiền:</b></span>
+                                    </td>
+                                    <td>
+                                        <span class="text-blue-01"><b>{{dataDetail?.thongTinHangHoaDichVu?.tongTienCoVAT || 0 | number: '1.0'}}</b></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </nz-table>
+        </div>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 py-3 mr-2" (click)="isVisible = false" [translate]="'COMMON.btn.close'"></button>
+        </div>
+    </div>
+
+</nz-modal>

@@ -1,0 +1,81 @@
+<ng-template #content let-modal>
+    <!-- <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Kỷ niệm</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> -->
+    <div class="modal-body"> 
+        <nz-carousel nzAutoPlay [nzEffect]="effect">
+            <div nz-carousel-content *ngFor="let row of ListNhanVien">
+                <div class="card card-custom card-custom-ky-niem card-stretch">
+                    <div class="card-body pt-4 employee_box px-2">
+                        <div class="align-items-end">
+                            <div class="avatar_box text-center w-100 py-3">
+                                <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3 mg-top-30">
+                                    <div class="symbol symbol-circle symbol-lg-200">
+                                        <img *ngIf="row.thamNienLanViec===1" src="/assets/media/1-year.png" alt="image" class="img-logo">
+                                        <img *ngIf="row.thamNienLanViec===3"src="/assets/media/3-year.png" alt="image" class="img-logo">
+                                        <img *ngIf="row.thamNienLanViec===5"src="/assets/media/5-year.png" alt="image" class="img-logo">
+                                        <img *ngIf="row.thamNienLanViec===10"src="/assets/media/10-year.png" alt="image" class="img-logo">
+                                        <img *ngIf="row.thamNienLanViec===15"src="/assets/media/15-year.png" alt="image" class="img-logo">
+                                    </div> 
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <span class="text-color font-weight-bold text-hover-primary font-size-h3 mb-0 text-uppercase">{{row?.hoTen}}</span>
+                                    <span class="text-color font-weight-bold text-uppercase font-size-h4">BP. {{row?.phongBan}}</span> 
+                                    <span class="text-color font-weight-bold text-uppercase font-size-h4">Ngày gia nhập HTV: {{row?.ngayLamViec * 1000 | date: 'dd/MM/yyyy'}}</span>
+                                </div> 
+                            </div>
+                           
+                            <div class="avatar_box text-center w-100 py-3"> 
+                                <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                    <div class="symbol symbol-circle symbol-lg-200">
+                                        <img [src]="row?.anhDaiDienResize" onError="this.src='assets/media/users/blank.png'" alt="image" class="img-kyniem">
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </nz-carousel>
+
+        <!-- <app-image-slider [images]="imageObject"></app-image-slider> -->
+        <!-- <ng-container *ngFor="let row of ListNhanVien">
+              <div class="card card-custom card-custom-ky-niem card-stretch">
+                <div class="card-body pt-4 employee_box px-2">
+                    <div class="align-items-end">
+                        <div class="avatar_box text-center w-100 py-3">
+                            <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3 mg-top-30">
+                                <div class="symbol symbol-circle symbol-lg-200">
+                                    <img *ngIf="row.thamNienLanViec===1" src="/assets/media/1-year.png" alt="image" class="img-logo">
+                                    <img *ngIf="row.thamNienLanViec===3"src="/assets/media/3-year.png" alt="image" class="img-logo">
+                                    <img *ngIf="row.thamNienLanViec===5"src="/assets/media/5-year.png" alt="image" class="img-logo">
+                                    <img *ngIf="row.thamNienLanViec===10"src="/assets/media/10-year.png" alt="image" class="img-logo">
+                                    <img *ngIf="row.thamNienLanViec===15"src="/assets/media/15-year.png" alt="image" class="img-logo">
+                                </div> 
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class="text-color font-weight-bold text-hover-primary font-size-h3 mb-0 text-uppercase">{{row?.hoTen}}</span>
+                                <span class="text-color font-weight-bold text-uppercase font-size-h4">BP. {{row?.phongBan}}</span> 
+                                <span class="text-color font-weight-bold text-uppercase font-size-h4">Ngày gia nhập HTV: {{row?.ngayLamViec * 1000 | date: 'dd/MM/yyyy'}}</span>
+                            </div> 
+                        </div>
+                       
+                        <div class="avatar_box text-center w-100 py-3"> 
+                            <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+                                <div class="symbol symbol-circle symbol-lg-200">
+                                    <img [src]="row?.anhDaiDienResize" onError="this.src='assets/media/users/blank.png'" alt="image" class="img-kyniem">
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container> -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Đóng</button>
+    </div>
+  </ng-template> 

@@ -1,0 +1,36 @@
+<div class="card card-custom card-stretch card-stretch-half gutter-b">
+    <!--begin::header-->
+    <div class="card-header border-0">
+        <h3 class="card-title font-weight-bolder">Văn bản vừa ban hành</h3>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body pt-2">
+        <!--begin::Item-->
+        <div class="scroll-gray" style="height: calc(100vh / 3);">
+            <ng-container *ngFor="let item of dataTable?.items">
+                <div class="d-flex align-items-center pb-5">
+                    <!--begin::Symbol-->
+                    <div class="symbol symbol-45 symbol-light mr-4">
+                        <span class="symbol-label">
+                            <span class="svg-icon svg-icon-2x svg-icon-dark-50">
+                                <i class="far fa-file-alt text-primary icon-2x"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <!--end::Symbol-->
+                    <!--begin::Text-->
+                    <div class="d-flex flex-column flex-grow-1">
+                        <a (click)="showChiTietVanBanDinhChe(item?.vanBanDinhCheId)"
+                            class="text-dark-75 text-hover-primary mb-1">{{item?.tenVanBan}}</a>
+                        <span class="text-muted font-weight-bold">
+                            Ngày hiệu lực :{{item?.ngayHieuLuc * 1000 | date: 'dd/MM/yyyy'}}</span>
+                    </div>
+                    <!--end::Text-->
+                </div>
+                <!--end::Item-->
+            </ng-container>
+        </div>
+        <!--end::Body-->
+    </div>
+</div>

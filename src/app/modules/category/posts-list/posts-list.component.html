@@ -1,0 +1,126 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách bài viết</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-6 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm..." (input)="SearchText$.next($event.target.value)" />
+                </div>
+                <ng-container *ngIf="isSearchAdvance">
+                    <nz-select ngModel="null" (ngModelChange)="paginator.nhomBaiViet = $event; getList()"
+                        [nzOptions]="nhomBaiVietOptions" nzShowSearch nzAllowClear nzPlaceHolder="Nhóm bài viết"
+                        style="width: 170px;">
+                    </nz-select>
+                    <nz-select ngModel="null" (ngModelChange)="paginator.namKey = $event; getList()"
+                        [nzOptions]="namOptions" nzShowSearch nzAllowClear nzPlaceHolder="Năm" style="width: 170px;">
+                    </nz-select>
+                </ng-container>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-6 px-0 text-lg-right">
+                <button type="button" class="btn m-0 m-md-1" [class.btn-primary]="!isSearchAdvance" [class.btn-info]="isSearchAdvance" style="width: 50px" (click)="isSearchAdvance = !isSearchAdvance">
+                    <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                    <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="formPosts?.showModal()">{{ 'COMMON.btn.add_new' | translate }}</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table [nzLoading]="" [nzSize]="'small'" [nzData]="dataTable.items" [nzShowPagination]="false"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th *ngIf="col?.sortField" [nzAlign]="col?.align" [nzWidth]="col?.width"
+                            [nzSortOrder]="col.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                        <th *ngIf="!col?.sortField" [nzAlign]="col?.align" [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let data of dataTable.items; let i = index">
+                    <tr class="cursor-pointer">
+                        <ng-container *ngFor="let col of dataTable.columns">
+                            <td *ngIf="col?.field" [nzAlign]="col?.align" class="px-1" [ngSwitch]="col.field">
+                                <span *ngSwitchCase="'ngayTao'" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">
+                                    {{data[col.field] * 1000 | date: 'dd/MM/yyyy'}}
+                                </span>
+                                <span *ngSwitchCase="'tenTrangThai'" [title]="data[col.field]">
+                                    <ng-container [ngSwitch]="data[col.field]">
+                                        <span *ngSwitchCase="'Đã xuất bản'"
+                                            class="label label-light-primary label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchDefault class="label label-light-warning label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                    </ng-container>
+                                </span>
+                                <span *ngSwitchCase="'isAllowRoleXuatBan'" class="truncate-2" [title]="data[col.field]">
+                                    <span *ngIf="data[col.field]"
+                                        nz-popconfirm
+                                        [nzIcon]="iconTpl"
+                                        [nzOkText]="'COMMON.btn.yes' | translate"
+                                        [nzCancelText]="'COMMON.btn.no' | translate"
+                                        nzPopconfirmTitle="Bạn có chắc chắn xuất bản bài viết này không?"
+                                        (nzOnConfirm)="onPublish(data?.baiVietId)">
+                                        <i nz-icon nzType="wallet" nzTheme="outline" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" class="icon-lg"></i>
+                                        <ng-template #iconTpl>
+                                            <i nz-icon nzType="question-circle-o" style="color: #52c41a"></i>
+                                        </ng-template>
+                                    </span>
+                                </span>
+                                <span *ngSwitchCase="'anhDaiDienURL'" class="truncate-2" [title]="data[col.field]">
+                                    <span class="symbol-label">
+                                        <img nz-image [nzSrc]="data?.anhDaiDienURL" class="h-30 w_40 align-self-center" style="max-width: 40px;max-height: 40px;">
+                                    </span>
+                                </span>
+                                <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]">
+                                    {{ data[col.field] }}
+                                </span>
+                            </td>
+                        </ng-container>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <a *ngIf="data?.isAllowEdit" title="Edit" (click)="formPosts?.showModal(data)"
+                                    class="btn btn-icon btn-hover btn-sm mx-2">
+                                    <img src="assets/media/bg/Vector_edit.svg" class="align-self-center w_30 h_30"
+                                        style="width:30px;height:30px;">
+                                </a>
+                                <a *ngIf="data?.isAllowDelete" 
+                                    title="Delete"
+                                    class="btn btn-icon btn-hover btn-sm mx-2 cursor-pointer"
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate" 
+                                    (nzOnConfirm)="onDelete(data?.baiVietId)">
+                                    <img src="assets/media/bg/Vector_delete.svg" class="align-self-center w_30 h_30"
+                                        style="width:30px;height:30px;">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-form-posts-modal #formPosts (loadList)="getList()"></app-form-posts-modal>

@@ -1,0 +1,110 @@
+<div class="detail">
+    <div class="d-flex flex-column-fluid title my-3">
+        Đăng ký xe đưa đón
+    </div>
+    <div class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="detail_header">
+                    <div class="text-left">
+                        <div class="company">CÔNG TY CỔ PHẦN LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM (HTV)</div>
+                        <div class="no">Số tờ trình: <b>{{dataDetail?.soDeNghi}}</b></div>
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240">
+                        </div>
+                        <div class="today">Hà Nội, Ngày {{dataDetail?.ngayTao | date: 'dd'}} tháng {{dataDetail?.ngayTao
+                            | date: 'MM'}} năm {{dataDetail?.ngayTao | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">
+                    <p>ĐĂNG KÝ XE ĐƯA ĐÓN </p>
+                </div>
+                <div class="dear_name" *ngIf="dataDetail?.isAllowPheDuyet">
+                    Kính gửi: Ông/Bà <b>{{tenNguoiPheDuyet}}</b>
+                </div>
+                <div class="content_text">
+                    Bộ phận {{dataDetail?.tenPhongBanNguoiTao}} xin đăng ký xe đưa đón với thông tin chi tiết như sau :
+                </div>
+                <div>
+                    <table class="table table_classic table_40 mt-5">
+                        <tr>
+                            <td class="pl-5">Thời gian đi</td>
+                            <td class="font-weight-bolder">{{ dataDetail?.thoiGianDi * 1000 | date: 'dd/MM/yyyy HH:mm'
+                                }}</td>
+                            <td>Thời gian về</td>
+                            <td class="font-weight-bolder">{{ dataDetail?.thoiGianVe * 1000 | date: 'dd/MM/yyyy HH:mm'
+                                }}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-5">Tỉnh thành</td>
+                            <td class="font-weight-bolder">{{dataDetail?.tinhThanhDisplay}}</td>
+                            <td>Quận huyện</td>
+                            <td class="font-weight-bolder">{{dataDetail?.quanHuyenDisplay}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-5">Nội dung</td>
+                            <td class="font-weight-bolder">{{dataDetail?.noiDungCongViec}}</td>
+                            <td>Hành trình</td>
+                            <td class="font-weight-bolder">{{dataDetail?.chiTietHanhTrinh}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-5">Phương tiện đề xuất</td>
+                            <td class="font-weight-bolder">{{dataDetail?.phuongTienDeXuatDisplay}}</td>
+                            <td>Hình thức</td>
+                            <td class="font-weight-bolder">{{dataDetail?.hinhThucLaiXeDisplay}}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-5">Hình thức công tác</td>
+                            <td class="font-weight-bolder">{{dataDetail?.isTrongKeHoach ? 'Trong kế hoạch' : 'Ngoài kế hoạch'}}</td>
+                            <td>Ghi chú</td>
+                            <td class="font-weight-bolder">{{dataDetail?.ghiChu}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="mb-5">
+                    <div class="mb-2 title_top">Danh sách người đi</div>
+                    <div class="line-height-xl w-100">
+                        <ul>
+                            <li *ngFor="let item of dataDetail?.nguoiDi.items" class="font-weight-bolder">
+                                {{item?.nguoiDiEmployeeDisplay}} - {{item?.nguoiDiDepartmentDisplay | titlecase}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div *ngIf="dataDetail?.isAllowPheDuyet">
+                    Bộ phận {{dataDetail.tenPhongBanNguoiTao}} kính trình ông/bà {{tenNguoiPheDuyet}} phê duyệt.
+                </div>
+            </div>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-end">
+                    <div *ngIf="dataDetail?.isAllowPheDuyet">
+                        <button class="btn btn-danger btn-14 py-3 mr-2"
+                            (click)="approveRegisterVehicle.showModal(dataDetail, false)" style="width: 150px"
+                            [translate]="'COMMON.btn.reject'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet">
+                        <button class="btn btn-primary btn-14 py-3" style="width: 150px"
+                            (click)="approveRegisterVehicle.showModal(dataDetail, true)"
+                            [translate]="'COMMON.btn.approve'"></button>
+                    </div>
+                    <div  *ngIf="dataDetail?.isAllowTaoChuyen">
+                        <button class="btn btn-primary btn-14 py-3" style="width: 150px"
+                           [routerLink]="['/administration','bussinesstrip-create',dataDetail?.hoSoId]"
+                            [translate]="'Tạo chuyến'"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white"
+            [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+<app-approve-registervehicle-modal #approveRegisterVehicle (loadTimeLine)="getDetail()">
+</app-approve-registervehicle-modal>

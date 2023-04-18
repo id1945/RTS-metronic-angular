@@ -1,0 +1,110 @@
+
+<div class="card card-custom card-stretch">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách đăng ký văn phòng phẩm</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-6 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" (input)="search$.next($event.target.value)" placeholder="Tìm kiếm..." />
+                </div>
+                <ng-container *ngIf="isSearchAdvance">
+                    <nz-select ngModel="null"
+                        (ngModelChange)="paginator.TrangThaiKey = $event; getList()"
+                        [nzOptions]="statusOptions" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Bộ lọc">
+                    </nz-select>
+                </ng-container>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-6 px-0 text-lg-right">
+                <button type="button" class="btn m-0 m-md-1" [class.btn-primary]="!isSearchAdvance" [class.btn-info]="isSearchAdvance" style="width: 50px" (click)="isSearchAdvance = !isSearchAdvance">
+                    <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                    <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="formStationery.showModal()">Thêm mới</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzShowPagination]="false"
+            [nzData]="dataTable.items"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th *ngIf="col?.sortField"
+                            [nzWidth]="col?.width"
+                            [nzAlign]="col?.align"
+                            [nzSortOrder]="col.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                        <th *ngIf="!col?.sortField"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index" class="cursor-pointer" >
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col?.field" [nzAlign]="col?.align" (click)="showDetail(data?.hoSoId)" [class.font-weight-bolder]="data?.isAllowPheDuyet">
+                            <span *ngSwitchCase="'ngayTao'" class="truncate-2" [title]="data[col.field]" >
+                                {{ data[col.field] * 1000 | date: 'dd/MM/yyyy' }}
+                            </span>
+                            <span *ngSwitchCase="'tongSoLuong'" class="truncate-2" [title]="data[col.field]">
+                                {{ data[col.field] | number: '1.2-2' }}
+                            </span>
+                            <span *ngSwitchCase="'tongThanhTien'" class="truncate-2" [title]="data[col.field]">
+                                {{ data[col.field] | number: '1.0' }}
+                            </span>
+                            <span *ngSwitchCase="'trangThaiDisplay'" [title]="data[col.field]">
+                                <ng-container [ngSwitch]="data[col.field]">
+                                    <span *ngSwitchCase="'Hoàn thành'" class="label label-light-primary label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchCase="'Từ chối'" class="label label-light-danger label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchDefault class="label label-light-warning label-inline">{{ data[col.field] }}</span>
+                                </ng-container>
+                            </span>
+                            <div *ngSwitchCase="'thaoTac'" class="d-flex justify-content-center">
+                                <a *ngIf="data?.isAllowEdit" title="Edit" (click)="formStationery.showModal(data?.hoSoId)"
+                                    class="btn btn-icon btn-hover btn-sm mx-2">
+                                    <img src="assets/media/bg/Vector_edit.svg" class="align-self-center w_30 h_30">
+                                </a>
+                                <a *ngIf="data?.isAllowDelete" title="Delete" 
+                                    class="btn btn-icon btn-hover btn-sm mx-2 cursor-pointer"
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    (nzOnConfirm)="onDelete(data?.hoSoId)">
+                                    <img src="assets/media/bg/Vector_delete.svg" class="align-self-center w_30 h_30">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </a>
+                            </div>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]">{{ data[col.field] }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-form-stationery-modal #formStationery (loadList)="getList()"></app-form-stationery-modal>
+<app-approve-stationery-modal #approveStationery></app-approve-stationery-modal>

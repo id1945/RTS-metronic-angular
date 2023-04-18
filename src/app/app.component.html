@@ -1,0 +1,9 @@
+<router-outlet></router-outlet>
+<!-- Loading -->
+<ng-template [ngIf]="(api.loading | async) || (api.loadingCustom | async)">
+    <div class="spin_app">
+        <div class="backdrop"></div>
+        <nz-spin nzSimple nzTip="HTV Portal" [nzSize]="'large'" [style]="spinnerStyle"></nz-spin>
+    </div>
+</ng-template>
+

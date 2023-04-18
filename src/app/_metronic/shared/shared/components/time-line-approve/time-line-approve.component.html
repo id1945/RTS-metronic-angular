@@ -1,0 +1,43 @@
+<div class="title">Tiến độ</div>
+<div class="timeline">
+    <ng-container *ngFor="let item of data; let last = last">
+        <div class="phase_block" [class]="last ? 'border_blank' : ''">
+            <div class="time" *ngIf="item?.ngayDuyetStr; else ngayDuyetNum">{{ item?.ngayDuyetStr }}</div>
+            <ng-template #ngayDuyetNum>
+                <div class="time">{{ item?.ngayDuyetNum * 1000 | date: 'dd/MM/yyyy HH:mm:ss'}}</div>
+            </ng-template>
+            <div class="name" style="font-size: 10px;color: gray;">{{ item.tenBuocThucHien}}</div>
+            <div class="action" >
+                <span  nzTooltipPlacement="bottom" nz-button nz-tooltip>
+                    <a class="truncate-2 font-weight-bolder" (click)="showNguoiDung(item?.nguoiDuyets[0].nguoiDuyetId)" target="_blank"> {{ item?.nguoiDuyet }}</a>
+                </span>
+            </div>
+            <div class="action" [ngSwitch]="item.tinhTrangKey | lowercase">
+                <span *ngSwitchCase="'accept'" class="label label-lg label-light-primary label-inline">Duyệt
+                    <span *ngIf="item?.ghiChu" [nzTooltipTitle]="item?.ghiChu" nzTooltipPlacement="bottom" nz-button nz-tooltip></span>
+                </span>
+                <span *ngSwitchCase="'reject'" class="label label-lg label-light-danger label-inline">Không duyệt
+                    <span *ngIf="item?.ghiChu" [nzTooltipTitle]="item?.ghiChu" nzTooltipPlacement="bottom" nz-button nz-tooltip></span>
+                </span>
+                <!-- <span *ngSwitchDefault class="label label-lg label-inline">Chờ xác nhận</span> -->
+            </div>
+            <div class="action" [ngSwitch]="item.tinhTrang | lowercase">
+                <span *ngSwitchCase="'đang chờ xử lý'" class="label label-lg label-light-primary label-inline">Chờ xác nhận</span>
+            </div>
+            <div class="description" *ngIf="item?.ghiChu" [innerHTML]="item?.ghiChu | safe: 'html'"></div>
+            <div class="icon_dot icon_dot_{{item?.tinhTrangKey | lowercase}}"></div>
+            <!-- files -->
+            <ng-container *ngIf="item?.dinhKem">
+                <button class="btn btn-info py-1 mt-2" style="border-radius: 6px;" (click)="isCollapsedFiles = !isCollapsedFiles" [attr.aria-expanded]="!isCollapsedFiles" aria-controls="collapsedFiles">
+                    <i class="ki icon-nm" [class.ki-arrow-down]="!isCollapsedFiles" [class.ki-arrow-up]="isCollapsedFiles"></i>File đính kèm
+                </button>
+                <div id="collapsedFiles" [ngbCollapse]="!isCollapsedFiles" class="pb-2">
+                    <div *ngFor="let file of item?.dinhKem?.items" class="truncate my-2">
+                        <a href="javascript:void(0)" (click)="download(file)"><i class="flaticon2-file icon-md mr-1 text-warning w_30"></i>{{file?.tenFile}}</a>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
+

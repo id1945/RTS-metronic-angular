@@ -1,0 +1,59 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách banh hành </h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-6 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm..." (input)="search$.next($event.target.value)" />
+                </div>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '900px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            [nzWidth]="col?.width"
+                            [nzSortOrder]="col?.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index" (click)="showDetail(data)" class="cursor-pointer">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col.field" [class.font-weight-bolder]="data?.isAllowPheDuyet || data?.isAllowDongTrinh|| data?.isAllowThamVan">
+                            <span *ngSwitchCase="'tenToTrinh'" class="truncate-2" [title]="data[col.field]">
+                                <span class="symbol-label">
+                                    <img src="assets/media/bg/Vector_vbdc.svg" class="align-self-center w_30 h_30" width="40px" style="max-width: 40px;max-height: 40px;;">
+                                </span>
+                                {{ data[col.field] }}
+                            </span>
+                            <span *ngSwitchCase="'ngayBanHanh'" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">
+                                {{data[col.field] * 1000 | date: "dd/MM/yyyy"}}
+                            </span>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]"> {{ data[col.field] }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>

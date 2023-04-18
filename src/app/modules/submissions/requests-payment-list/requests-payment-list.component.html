@@ -1,0 +1,169 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label"> {{'PAYMENT.DETAIL.title' | translate }} </h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-md-6 text-left">
+                <div class="row">
+                    <div class="input-group-prepend position-relative">
+                        <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 20px; right: 15px;"></i>
+                        <input type="text" class="form-control" placeholder="{{'PAYMENT.DETAIL.searchHint' | translate }}..." (input)="SearchText$.next($event.target.value)" />
+                    </div>
+                    <button type="button" title="Tìm kiếm nâng cao" class="btn w_50" [class.btn-primary]="!isSearchAdvance" [class.btn-info]="isSearchAdvance" (click)="isSearchAdvance = !isSearchAdvance">
+                        <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                        <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 text-right px-0">
+                <button type="button" *ngIf="dataTable.selected?.length" class="btn btn-outline-info mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="onPrints()"><i class="fas fa-print"></i>{{'COMMON.btn.prints' | translate }}</button>
+                <button type="button" class="btn btn-outline-info mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="importFileTemplate.showModal()"><i class="fas fa-upload"></i>Import Excel</button>
+                <button type="button" class="btn btn-outline-info mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="exportExcel()"><i class="fas fa-download"></i>Export Excel</button>                 
+                <button type="button" class="btn btn-primary mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="requestsPaymentCreate.showModal()">{{ 'COMMON.btn.add_new' | translate }}</button>
+            </div>
+        </div>
+
+        <div class="row search_table">
+            <ng-container *ngIf="isSearchAdvance">
+                <div class="row input-group mx-0">
+                    <div class="input-group-prepend position-relative">
+                        <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                        <input type="text" (input)="SoChungTu$.next($event.target.value)" class="form-control" placeholder="Số chứng từ nội bộ">
+                    </div>
+                    <div class="input-group-prepend position-relative">
+                        <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                        <input type="text" (input)="UserNameNguoiYeuCau$.next($event.target.value)" class="form-control" placeholder="Người yêu cầu">
+                    </div>
+                    <nz-range-picker [ngModel]="null" (ngModelChange)="onChangeDateRange($event)" [nzPlaceHolder]="['Ngày tạo từ', 'Ngày tạo đến']" nzFormat="dd/MM/yyyy"></nz-range-picker>
+                    <nz-date-picker [ngModel]="null" (ngModelChange)="onChangeDate($event)" [nzPlaceHolder]="'Ngày kết thúc'" nzFormat="dd/MM/yyyy" class="w_180"></nz-date-picker>
+                    <nz-select ngModel="null"
+                        (ngModelChange)="paginator.LoaiDeNghiKey = $event; getList()"
+                        [nzOptions]="loaiDeNghiTTOptions" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Loại đề nghị"
+                        class="w_180">
+                    </nz-select>
+                    <!-- <nz-select ngModel="null"
+                        (ngModelChange)="paginator.NhaCungCapKey = $event; getList()"
+                        [nzOptions]="nccOptions" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Nhà cung cấp"
+                        class="w_180">
+                    </nz-select> -->
+                    <nz-select ngModel="null"
+                        (ngModelChange)="paginator.TrangThaiThanhToanKey = $event; getList()"
+                        [nzOptions]="statusTTOptions" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Trạng thái thanh toán"
+                        class="w_180">
+                    </nz-select>
+                    <nz-select ngModel="ChoPheDuyet"
+                        (ngModelChange)="paginator.TinhTrangKey = $event; getList()"
+                        [nzOptions]="statusStepsOptions" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Bước thực hiện"
+                        class="w_180">
+                    </nz-select>
+                </div>
+            </ng-container>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '1100px', y: isSearchAdvance ? 'calc(100vh - 425px)' : 'calc(100vh - 365px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th *ngIf="col?.field == 'checkbox'; else noCheckbox"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            <label 
+                                nz-checkbox 
+                                [ngModel]="dataTable.selected?.length == dataTable.items?.length" 
+                                (ngModelChange)="onCheckboxAll($event)" 
+                                [nzDisabled]="!(dataTable.items?.length && dataTable.items[0]?.isAllowPrint)">
+                            </label>
+                        </th>
+                        <ng-template #noCheckbox>
+                            <th *ngIf="col?.sortField"
+                                [nzAlign]="col?.align"
+                                [nzWidth]="col?.width"
+                                [nzSortOrder]="col.sortOrder || null"
+                                (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                                {{ col?.title }}
+                            </th>
+                            <th *ngIf="!col?.sortField"
+                                [nzAlign]="col?.align"
+                                [nzWidth]="col?.width">
+                                {{ col?.title }}
+                            </th>
+                        </ng-template>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let data of dataTable.items; let i = index">
+                    <tr class="cursor-pointer">
+                        <ng-container *ngFor="let col of dataTable.columns">
+                            <td *ngIf="col?.field" [nzAlign]="col?.align" class="px-1" [ngSwitch]="col.field" [class.font-weight-bolder]="data?.isAllowPheDuyet" [class.text-danger]="data?.isThanhToanUuTien">
+                                <label #checkbox *ngSwitchCase="'checkbox'" nz-checkbox [(ngModel)]="data.checkbox" (ngModelChange)="onCheckbox()" [nzDisabled]="!data?.isAllowPrint"></label>
+                                <div *ngSwitchCase="'soChungTu'" [title]="data[col.field]" class="text-blue-01 d-flex align-content-center" [class.text-danger]="data?.isThanhToanUuTien">
+                                    <div>
+                                        <i (click)="paymentConfirmation.showModal(data)" *ngIf="data?.isAllowXacNhanThanhToan" nz-icon nzType="credit-card" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" class="mr-2 icon-xl cursor-pointer"></i>
+                                        <i (click)="onPrint(data?.hoSoId)" *ngIf="data?.isAllowPrint" nz-icon nzType="printer" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" class="mr-2 icon-xl cursor-pointer"></i>
+                                    </div>
+                                    <a target="_blank" [routerLink]="['/submissions','payment-detail',data?.hoSoId]">{{data[col.field]}}</a>
+                                </div>
+                                <span (click)="showDetail(data)" *ngSwitchCase="'ngayYeuCau'" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">{{data[col.field] * 1000 | date: 'dd/MM/yyyy'}}</span>
+                                <span (click)="showDetail(data)" *ngSwitchCase="'ngayKetThuc'" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">{{data[col.field] * 1000 | date: 'dd/MM/yyyy'}}</span>
+                                <span (click)="showDetail(data)" *ngSwitchCase="'ngayThanhToan'" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">{{data[col.field] * 1000 | date: 'dd/MM/yyyy'}}</span>
+                                <span (click)="showDetail(data)" *ngSwitchCase="'tongTien'" class="truncate-2" [title]="data[col.field] | number: '1.0'">{{ data[col.field] | number: '1.0'}}</span>
+                                <span *ngSwitchCase="'dinhKem'" class="truncate-2">
+                                    <button type="button" (click)="data?.dinhKem?.items?.length && data.expand = !data.expand" class="btn btn-sm btn-info">Xem file</button>
+                                    <button type="button" (click)="donwloadAllById(data)" class="btn btn-icon btn-info ml-1 btn-sm"><i class="la la-download icon-md text-white"></i></button>
+                                </span>
+                                <span *ngSwitchCase="'tenTrangThai'" [title]="data[col.field]" (click)="showDetail(data)">
+                                    <ng-container [ngSwitch]="data[col.field]">
+                                        <span *ngSwitchCase="'Hoàn thành'" class="label label-light-primary label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchCase="'Từ chối'" class="label label-light-danger label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchDefault class="label label-light-warning label-inline">{{ data[col.field] }}</span>
+                                    </ng-container>
+                                </span>
+                                <span *ngSwitchCase="'thaoTac'">
+                                    <a *ngIf="data?.isAllowTaoLai" title="Sao chép tạo lại bản ghi" (click)="requestsPaymentCreate.showModal(data, 'modeSaoChep')" class="btn btn-icon btn-hover btn-sm mx-2">
+                                        <i class="la la-copy align-self-center icon-xl w_30 h_30"></i>
+                                    </a>
+                                </span>
+                                <span (click)="showDetail(data)" *ngSwitchDefault class="truncate-2" [title]="data[col.field]">{{ data[col.field] }}</span>
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr *ngIf="data.expand">
+                        <td colspan="9"></td>
+                        <td colspan="4">
+                            <a *ngFor="let item of data?.dinhKem?.items; let idx = index" class="mb_0 d-block" (click)="donwloadById(data, item)" href="javascript:void(0)">{{idx + 1}}. {{item?.fileName}}</a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-requests-payment-create-modal #requestsPaymentCreate (loadList)="getList()"></app-requests-payment-create-modal>
+<app-payment-confirmation-modal #paymentConfirmation (loadList)="getList()"></app-payment-confirmation-modal>
+<app-import-file-template
+    #importFileTemplate
+    [isMultiple]="false"
+    [importApiUrl]="'/api/denghi-thanhtoan-daily-update/import-xacnhan-thanhtoan'"
+    [templateApiUrl]="'/api/denghi-thanhtoan-daily-misc/download-import-thanhtoan'"
+></app-import-file-template>

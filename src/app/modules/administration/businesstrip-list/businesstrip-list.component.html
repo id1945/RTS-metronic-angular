@@ -1,0 +1,95 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label">Danh sách Chuyến đi công tác</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-6 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" (input)="search$.next($event.target.value)" placeholder="Tìm kiếm..." />
+                </div>
+                <ng-container *ngIf="isSearchAdvance">
+                    <nz-select ngModel="selectStatusOptions"
+                        (ngModelChange)="paginator.TrangThaiKey = $event; getList()" [nzOptions]="statusOptions"
+                        nzAllowClear nzPlaceHolder="Bộ lọc">
+                    </nz-select>
+                    <nz-range-picker [ngModel]="null" (ngModelChange)="onChangeDateRange($event)" [nzPlaceHolder]="['Ngày tạo từ', 'Ngày tạo đến']" nzFormat="dd/MM/yyyy"></nz-range-picker>
+                </ng-container>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-6 px-0 text-lg-right">
+                <button type="button" class="btnmb-3 mb-md-0 mx-0 mx-md-1" [class.btn-primary]="!isSearchAdvance" [class.btn-info]="isSearchAdvance" style="width: 50px" (click)="isSearchAdvance = !isSearchAdvance">
+                    <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                    <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                </button>
+                <button type="button" class="btn btn-outline-info mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="exportExcel()"><i class="fas fa-download"></i>Nhật trình</button> 
+                <button type="button" class="btn btn-outline-info mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="exportExcelChuyenDi()"><i class="fas fa-download"></i>Đánh giá</button>   
+                <button type="button" class="btn btn-primary mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="formBussinesstrip.showModal()">Thêm mới</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table [nzLoading]="" [nzSize]="'small'" [nzShowPagination]="false" [nzData]="dataTable.items"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            *ngIf="col?.sortField"
+                            [nzWidth]="col?.width"
+                            [nzAlign]="col?.align"
+                            [nzSortOrder]="col.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                        <th 
+                            *ngIf="!col?.sortField"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index" class="cursor-pointer">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col?.field" [nzAlign]="col?.align" (click)="showDetail(data)">
+                            <span *ngSwitchCase="'thoiGianDon'" class="truncate-2"
+                                [title]="data[col.field]">
+                                {{ data[col.field] * 1000 | date: 'dd/MM/yyyy HH:mm' }}
+                            </span>
+                            <span *ngSwitchCase="'trangThaiDisplay'">
+                                <ng-container [ngSwitch]="data[col.field]">
+                                    <span *ngSwitchCase="'Đã hoàn thành'"
+                                        class="label label-light-success label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchCase="'Đã hủy'"
+                                        class="label label-light-danger label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchDefault
+                                        class="label label-light-warning label-inline">{{
+                                        data[col.field] }}</span>
+                                </ng-container>
+                            </span>
+                            <div *ngSwitchCase="'thaoTac'" class="d-flex justify-content-center">
+                                <a *ngIf="data?.isAllowThemChuyen" title="Tạo chuyến đi" [routerLink]="['/administration', 'bussinesstrip-create', data?.hoSoIdYeuCau]">Thêm chuyến</a>
+                                <!-- <a *ngIf="data?.isAllowUpdate" title="Sửa chuyến đi" href="javascript:void(0)">Sửa chuyến đi</a> -->
+                            </div>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]">{{
+                                data[col.field] }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-form-bussinesstrip-modal #formBussinesstrip (loadList)="getList()"></app-form-bussinesstrip-modal>

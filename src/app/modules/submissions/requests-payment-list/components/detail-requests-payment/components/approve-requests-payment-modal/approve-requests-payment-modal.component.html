@@ -1,0 +1,56 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Xác nhận phê duyệt / từ chối'"
+    (nzOnOk)="isVisible = false">
+
+    <div class="p-10">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-5 ctrl_label">
+                    Nội dung xác nhận <span *ngIf="!IsAccept" class="text-danger">(*)</span>
+                </div>
+                <div class="col-7">
+                    <textarea formControlName="noiDung" placeholder="Nhập nội dung phê duyệt/ từ chối" class="form-control input_42" rows="3"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.noiDung?.errors && f?.noiDung?.touched">
+                        <span>Bạn phải nhập lý do từ chối.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5" *ngIf="IsAccept">
+                <!-- With Approve -->
+                <div class="col-5 ctrl_label">
+                    Passcode
+                </div>
+                <div class="col-7">
+                    <input type="text" formControlName="passCode" placeholder="Nhập passcode" class="form-control input_42">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5 ctrl_label">
+                    Tài liệu đính kèm
+                </div>
+                <div class="col-7">
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải lên văn bản'" 
+                        [(selectedFiles)]="selectedFiles">
+                    </app-select-file>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitApprove()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

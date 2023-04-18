@@ -1,0 +1,141 @@
+<div class="detail">
+    <div class="d-flex flex-column-fluid title my-3">
+        Chi tiết kế hoạch công tác tháng
+    </div>
+    <div *ngIf="dataDetail" class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="pb-5">
+                    <div class="detail_header">
+                        <div class="text-left">
+                            <div class="company"> {{ 'PURCHASE.CREATE.step_4.companyName' | translate }}</div>
+                            <!-- <div class="no">Số tờ trình: <b>3412MV921</b></div> -->
+                        </div>
+                        <div class="text-right">
+                            <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240"></div>
+                            <div class="today">Hà Nội, Ngày {{today | date: 'dd'}} tháng {{today | date: 'MM'}} năm {{today | date: 'yyyy'}}</div>
+                        </div>
+                    </div>
+                    <div class="detail_name">
+                        <p>Kế hoạch công tác tháng {{dataDetail?.thangKey}} năm {{dataDetail?.namKey}}</p>
+                    </div>
+    
+                    <!-- Thông tin đề nghị -->
+                    <div class="row">
+                        <div class="col-12 mt-8 mb-5">
+                            <div class="mb-3 font_size_15 text-blue-01">Thông tin đề nghị</div>
+                            <table class="table table_classic table_40">
+                                <tr>
+                                    <td style="width: 30%;" class="pl-6">Năm</td>
+                                    <td style="width: 70%;">{{dataDetail?.namKey}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-7">Tháng</td>
+                                    <td>{{dataDetail?.thangKey}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-6">Người đề nghị</td>
+                                    <td>{{dataDetail?.tenNguoiTao || '-'}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-6">Bộ phận</td>
+                                    <td>{{dataDetail.tenPhongBanNguoiTao}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Chi tiết chỉ tiêu -->
+                <div class="mb-2 title_top">
+                    Tài liệu đính kèm   
+                </div>
+                <div class="mb-9">
+                    <ng-container *ngFor="let item of dataDetail?.dinhKem?.items">
+                        <a href="javascript:void(0)" [title]="item?.tenFile" class="truncate-2" (click)="downloadFile(item?.urlDownload)"><i class="flaticon2-file icon-md mr-1 text-warning"></i> {{item?.tenFile }}</a>
+                    </ng-container>
+                </div>
+    
+                    <!-- Nội dung công tác -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3 font_size_15 text-blue-01">Nội dung công tác</div>
+                            <table class="table table_classic table_no table_40 table_blue">
+                                <thead>
+                                    <tr>
+                                        <th [translate]="'PURCHASE.CREATE.step_4.table.cphh.no'"></th>
+                                        <th class="min_w_80" [translate]="'Người đi'"></th>
+                                        <th class="min_w_100" [translate]="'Nội dung công tác'"></th>
+                                        <th class="min_w_100" [translate]="'Địa điểm'"></th>
+                                        <th class="min_w_80" [translate]="'Ngày đi'"></th>
+                                        <th class="min_w_80" [translate]="'Ngày về'"></th>
+                                        <th class="min_w_80" [translate]="'Số người đi'"></th>
+                                        <th class="min_w_100" [translate]="'Ghi chú'"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of dataDetail?.khct?.items; let i = index">
+                                        <ng-container>
+                                            <td>{{i + 1}}</td>
+                                            <td [title]="item?.tenNguoiDi">
+                                                <span class="truncate-2">
+                                                    {{item?.tenNguoiDi || '-'}}
+                                                </span>
+                                            </td>
+                                            <td [title]="item?.noiDung">
+                                                <span class="truncate-2">{{item?.noiDung || '-'}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="truncate-2" *ngIf="!item?.isTrongNuoc">
+                                                    {{item?.diaDiem || '-'}}
+                                                </span>
+                                            </td>
+                                            <td [title]="item?.ngayDi">
+                                                <span class="truncate-2">{{item?.ngayDi * 1000 | date: 'dd/MM/yyyy'}}</span>
+                                            </td>
+                                            <td [title]="item?.ngayVe">
+                                                <span class="truncate-2">{{item?.ngayVe * 1000 | date: 'dd/MM/yyyy'}}</span>
+                                            </td>
+                                            <td [title]="item?.soLuongNguoiDi">
+                                                <span class="truncate-2">{{item?.soLuongNguoiDi || '-'}}</span>
+                                            </td>
+                                            <td [title]="item?.ghiChu">
+                                                <span class="truncate-2">{{item?.ghiChu || '-'}}</span>
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-end">
+                    <div *ngIf="dataDetail?.isAllowPheDuyet==true">
+                        <button class="btn btn-danger btn-14 py-3 mr-2 w_150" (click)="appApproveModal?.showModal(dataDetail, false)" [translate]="'COMMON.btn.reject'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet==true">
+                        <button class="btn btn-primary btn-14 py-3 w_150" (click)="appApproveModal?.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowTrinhDuyet==true">
+                        <button
+                            nz-popconfirm 
+                            nzPopconfirmTitle="Bạn có chắc chắn trình duyệt không ?"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate"
+                            class="btn btn-primary btn-14 mr-2 py-3 w_130" 
+                            (nzOnConfirm)="onSubmitApprove(dataDetail)">
+                            Trình duyệt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white" [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+<app-approve-monthplan-modal #appApproveModal (loadTimeLine)="getDetail()"></app-approve-monthplan-modal>

@@ -1,0 +1,78 @@
+<div class="row">
+    <!--begin::Content-->
+    <div class="col-xxl-9 order-1 order-xxl-1">
+        <div class="card card-custom gutter-b">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label font-weight-bold text-hover-primary"
+                        style="font-size: 22px;font-weight: bold;margin-top: 10px;text-align: center;color:#003469;">
+                        {{NewsDetailModel?.tenBaiViet}}</h3>
+                </div>
+                <div class="card-title" style="margin-top: 20px;">
+                    <span style="font-size: 13px">
+                        <i class="flaticon2-chronometer text-primary"></i>
+                        {{NewsDetailModel?.ngayTao * 1000 | date: "dd/MM/yyyy HH:mm"}}
+                    </span>
+                    <span style="font-size: 13px;margin-left: 10px;">
+                        <i class="flaticon2-user text-primary"></i>
+                        {{NewsDetailModel?.tenNguoiDang}}
+                    </span>
+                </div>
+            </div>
+            <div class="card-body" id="remove_style_img">
+                <div class="col-12" [innerHTML]="NewsDetailModel?.noiDung | safe: 'html'"></div>
+            </div>
+        </div>
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="card-label font-weight-bold text-hover-primary"
+                    style="font-size: 22px;font-weight: bold;margin-top: 10px;text-align: center;color: #003469;">TIN
+                    TỨC LIÊN QUAN</h3>
+            </div>
+        </div>
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <app-image-slider [images]="imageObject" (clickEvent)="imageClick($event)"></app-image-slider>
+            </div>
+        </div>
+    </div>
+    <!--end::Content-->
+    <!--begin::Aside-->
+    <div class="col-lg-12 col-xxl-3 order-2 order-xxl-2">
+        <div class="card card-custom gutter-b">
+            <!--begin::header-->
+            <div class="card-header border-0">
+                <h3 class="card-title font-weight-bolder">Tin tức liên quan</h3>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body pt-2 mb-4 scroll-gray-box">
+                <div class="pt-1">
+                    <ng-container *ngFor="let itemVanBan of ListVanBan?.slice(0,25)">
+                        <!--begin::Item-->
+                        <div class="d-flex align-items-center pb-5">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-45 symbol-light mr-4 box-shadow-b">
+                                <img nz-image [nzSrc]="itemVanBan?.anhDaiDien" width="50px" height="50px">
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1">
+                                <a (click)="showChiTietVanBanDinhChe(itemVanBan?.baiVietId)"
+                                    class="text-dark-75 text-hover-primary mb-1">
+                                    {{itemVanBan?.tenBaiViet}}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Item-->
+                    </ng-container>
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::List Widget 3-->
+        </div>
+    </div>
+    <!--end::Aside-->
+
+</div>

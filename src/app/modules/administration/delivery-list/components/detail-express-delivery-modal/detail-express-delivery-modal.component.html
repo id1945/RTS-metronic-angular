@@ -1,0 +1,122 @@
+<nz-modal 
+    nzCentered 
+    [(nzVisible)]="isVisible" 
+    [nzWidth]="925" 
+    [nzFooter]="null" 
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false" 
+    (nzOnCancel)="isVisible = false" 
+    [nzTitle]="'Chi tiết yêu cầu chuyển phát nhanh'">
+
+    <div class="scroll-gray-8 row m-5" style="max-height: calc(100vh - 230px);" id="print_delivery_detail">
+        <div class="col-12 col-md-9">
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Tên công ty gửi</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">Công ty CP liên doanh ô tô Hyundai Thành Công Việt Nam</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Địa chỉ</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">Tầng 12, tòa nhà Thành Công, 79 Dịch Vọng Hậu, Cầu Giấy, Hà Nội</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Mã phiếu</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.maHoSo || '-'}}</div>
+            </div>
+                        
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Tên người tạo</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.tenNguoiTao || '-'}}</div>
+            </div>
+                
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Mã nhân viên người tạo</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.maNhanVienNguoiTao || '-'}}</div>
+            </div>
+                
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Ngày tạo</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.ngayTao * 1000 | date: 'dd/MM/yyyy' }}</div>
+            </div>
+                
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Tên người nhận</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.tenNguoiNhan || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Điện thoại người nhận</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.sdtNguoiNhan || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Địa chỉ người nhận</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.diaChiNguoiNhan || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Ngày gửi</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.ngayGiao * 1000 | date: 'dd/MM/yyyy'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Số lượng</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.soLuong || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Trọng lượng</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.trongLuong || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Hình thức chuyển</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.hinhThucChuyenDisplay || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Loại bưu phẩm</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.loaiBuuPhamDisplay || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Loại thanh toán</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.loaiThanhToanDisplay || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Đóng gói</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.dongGoiDisplay || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Đơn vị vận chuyển</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.donViVanChuyenDisplay || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Mã vận đơn</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.maVanDon || '-'}}</div>
+            </div>
+            
+            <div class="row my-3">
+                <div class="col-12 col-md-5">Nội dung</div>
+                <div class="col-12 col-md-7 text-blue-01 font-weight-bolder">{{dataDetail?.noiDung || '-'}}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-3 border-left pr-0">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 w_130 mr-3" (click)="isVisible = false">Đóng</button>
+            <button class="btn btn-primary btn-14 py-3 w_130 mr-3" [print]="['print_delivery_detail']">Print</button>
+            <button class="btn btn-danger btn-14 py-3 w_130 mr-3" *ngIf="dataDetail?.isAllowPheDuyet" (click)="approveExpressDelivery.showModal(dataDetail, false)">Từ chối</button>
+            <button class="btn btn-primary btn-14 py-3 w_130" *ngIf="dataDetail?.isAllowPheDuyet" (click)="approveExpressDelivery.showModal(dataDetail, true)">Phê duyệt</button>
+        </div>
+    </div>
+    <app-approve-express-delivery-modal #approveExpressDelivery (loadTimeLine)="loadDetail()"></app-approve-express-delivery-modal>
+</nz-modal>

@@ -1,0 +1,123 @@
+<div class="detail">
+    <div class="d-flex flex-column-fluid title my-3">
+        Chi tiết đăng ký văn phòng phẩm
+    </div>
+    <div class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="detail_header">
+                    <div class="text-left">
+                        <div class="company">CÔNG TY CỔ PHẦN LIÊN DOANH Ô TÔ HYUNDAI THÀNH CÔNG VIỆT NAM (HTV)</div>
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240">
+                        </div>
+                        <div class="today">Hà Nội, Ngày {{dataDetail?.ngayTao * 1000 | date: 'dd'}} tháng {{dataDetail?.ngayTao * 1000 | date: 'MM'}} năm {{dataDetail?.ngayTao * 1000 | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">
+                    <p>ĐĂNG KÝ VĂN PHÒNG PHẨM</p> 
+                    <!-- <p>THÀNH CÔNG MOTOR ĐỂ tổ chức, quản lý, tham gia sự kiện “ABCDEF RANDOM TEXT”</p> -->
+                </div>
+                <!-- <div class="dear_name">
+                    Kính gửi: Ông/Bà <b>Nguyễn Văn An</b>
+                </div>
+                <div class="content_text">
+                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
+                </div> -->
+                <div>
+                    <div class="mb-2 title_top">Thông tin đề nghị</div>
+                    <table class="table table_classic table_40 table_blue">
+                        <tbody>
+                            <tr>
+                                <td class="pl-5" style="width: 200px;">Người đề nghị</td>
+                                <td>{{dataDetail?.nguoiTaoHoTen}}</td>
+                            </tr>
+                            <tr>
+                                <td class="pl-5" style="width: 200px;">Bộ phận</td>
+                                <td>{{dataDetail?.tenPhongBan}}</td>
+                            </tr>
+                            <!-- <tr>
+                                <td class="pl-5" style="width: 200px;">Người phê duyệt</td>
+                                <td>{{dataDetail?.nguoiPheDuyet}}</td>
+                            </tr>
+                            <tr>
+                                <td class="pl-5" style="width: 200px;">Tình trạng hiện tại</td>
+                                <td>{{dataDetail?.tenTinhTrangHienTai}}</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <div class="mb-2 title_top">Chi tiết mặt hàng</div>
+                    <table class="table table_classic table_40 table_no table_blue">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th style="width:175px">Mặt hàng</th>
+                                <th style="width:75px">ĐVT</th>
+                                <th class="text-right" style="width:100px">Số lượng</th>
+                                <th class="text-right" style="width:110px">Đơn giá</th>
+                                <th class="text-right" style="width:110px">VAT</th>
+                                <th class="text-right" style="width:110px">Thành tiền</th>
+                                <th style="width:110px">Trạng thái</th>
+                                <th style="width:110px">Ghi chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataDetail?.danhSachHang?.items; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td [title]="item?.matHangDisplay" class="truncate-2">
+                                    {{item?.matHangDisplay}}
+                                </td>
+                                <td>
+                                    {{item?.donViTinhDisplay}}
+                                </td>
+                                <td class="text-right">
+                                    {{item?.soLuong | number}}
+                                </td>
+                                <td class="text-right">
+                                    {{item?.donGia | number: '1.0'}}
+                                </td>
+                                <td class="text-right">
+                                    {{item?.vat | number: '1.0'}}
+                                </td>
+                                <td class="text-right">
+                                    {{item?.thanhTien | number: '1.0'}}
+                                </td>
+                                <td>
+                                    {{item?.trangThaiMuaDisplay}}
+                                </td>
+                                <td class="text-right" [title]="item?.ghiChu">
+                                    {{item?.ghiChu | truncate: 25}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border_top font-weight-bolder">Tổng</td>
+                                <td colspan="2" class="border_top font-weight-bolder text-right">{{soLuongTotal | number: '1.0'}}</td>
+                                <td colspan="3" class="border_top font-weight-bolder text-right">{{thanhTienTotal | number: '1.0'}}</td>
+                                <td colspan="3" class="border_top"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-end">
+                    <div *ngIf="dataDetail?.isAllowPheDuyet">
+                        <button class="btn btn-danger btn-14 py-3 mr-2" (click)="approveStationery.showModal(dataDetail, false)" style="width: 150px" [translate]="'COMMON.btn.reject'"></button>
+                    </div>
+                    <div *ngIf="dataDetail?.isAllowPheDuyet">
+                        <button class="btn btn-primary btn-14 py-3" (click)="approveStationery.showModal(dataDetail, true)" style="width: 150px" [translate]="'COMMON.btn.approve'"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white" [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+<app-approve-stationery-modal #approveStationery (loadTimeLine)="getDetail()"></app-approve-stationery-modal>

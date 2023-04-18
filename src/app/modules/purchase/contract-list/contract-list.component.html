@@ -1,0 +1,104 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title"><h3 class="card-label"> {{'CONTRACT.DETAIL.title' | translate }}</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-8 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" placeholder="{{'CONTRACT.DETAIL.searchHint' | translate }}" (input)="search$.next($event.target.value)" />
+                </div>
+                <button type="button" title="Tìm kiếm nâng cao" class="btn" [class.btn-primary]="!isSearchAdvance" [class.btn-info]="isSearchAdvance" style="width: 50px" (click)="isSearchAdvance = !isSearchAdvance">
+                    <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                    <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                </button>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-4 px-0 text-lg-right">
+                <button type="button" class="btn btn-primary" (click)="formContract?.showModal()">{{ 'COMMON.btn.add_new' | translate }}</button>
+            </div>
+        </div>
+        <div class="row search_table">
+            <div class="col-12 p-0">
+                <ng-container *ngIf="isSearchAdvance">
+                    <div class="row m-0">
+                        <nz-range-picker [ngModel]="null" (ngModelChange)="onChangeDate($event)" [nzPlaceHolder]="['Ngày bắt đầu', 'Ngày kết thúc']" nzFormat="dd/MM/yyyy"></nz-range-picker>
+                        <nz-select ngModel="null"
+                            (ngModelChange)="paginator.NhaCungCapKey = $event; getList()"
+                            [nzOptions]="nhaCungOptions" nzShowSearch nzAllowClear
+                            nzPlaceHolder="Nhà cung cấp"
+                            class="w_200">
+                        </nz-select>
+                        <nz-select ngModel="null"
+                            (ngModelChange)="paginator.TrangThaiKey = $event; getList()"
+                            [nzOptions]="statusOptions" nzShowSearch nzAllowClear
+                            nzPlaceHolder="Trạng thái"
+                            class="w_200">
+                        </nz-select>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '900px', y: isSearchAdvance ? 'calc(100vh - 425px)' : 'calc(100vh - 365px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            *ngIf="!col?.field"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                        <th 
+                            *ngIf="col?.field"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width"
+                            [nzSortOrder]="col?.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index" (click)="showDetail(data)" class="cursor-pointer"  [class.font-weight-bolder]="data?.isAllowPheDuyet || data?.isAllowThamVan">
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col.field" [nzAlign]="col?.align">
+                            <span *ngSwitchCase="'ngayTao'" class="truncate-2" [title]="data[col.field] * 1000 | date: 'dd/MM/yyyy'">
+                                {{ data[col.field] * 1000 | date: 'dd/MM/yyyy' }}
+                            </span>
+                            <span *ngSwitchCase="'tenTrangThai'" [title]="data[col.field]">
+                                <ng-container [ngSwitch]="true">
+                                    <span *ngSwitchCase="data[col.field] == 'Hoàn thành'" class="label label-light-primary label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchCase="data[col.field] == 'Hủy bỏ'" class="label label-light-danger label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchCase="data[col.field] == 'Nháp'" class="label label-light-info label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchDefault class="label label-light-warning label-inline">{{ data[col.field] }}</span>
+                                </ng-container>
+                            </span>
+                            <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]"> {{ data[col.field] || '-' }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<!-- form - create/edit -->
+<app-form-contract-modal #formContract="form-contract" (loadList)="getList()"></app-form-contract-modal>

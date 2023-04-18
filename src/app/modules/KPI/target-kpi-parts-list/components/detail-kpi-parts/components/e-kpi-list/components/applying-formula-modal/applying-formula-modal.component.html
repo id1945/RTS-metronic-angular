@@ -1,0 +1,66 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="825"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Áp dụng công thức cho KPI'"
+    (nzOnOk)="isVisible = false">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 180px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <label>Tên KPI</label>
+                    <span [innerHTML]="dataDetail?.tenKPI | safe: 'html'" class="input_42"></span>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12">
+                    <label>Danh sách thành phần</label>
+                    <ul *ngIf="dataDetail?.congThucTinh?.thanhPhans?.length">
+                        <li *ngFor="let item of dataDetail?.congThucTinh?.thanhPhans"><span class="text-primary">{{item?.thanhPhanDisplay}}</span></li>
+                    </ul>
+                    <nz-alert *ngIf="dataDetail?.congThucTinh?.thanhPhans?.length == 0" nzType="warning" nzMessage="Không có dữ liệu!" nzShowIcon></nz-alert>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12">
+                    <label>Công thức tính thực tế</label>
+                    <input type="text" formControlName="congThucTinhThucTe" class="form-control input_42">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <label>Loại công thức</label>
+                    <div class="select_42">
+                        <nz-select formControlName="loaiCongThucKey" nzShowSearch nzAllowClear [nzOptions]="loaiCongThucOptions" class="w-100"></nz-select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = true"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onCreate()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

@@ -1,0 +1,204 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="1000"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="kpiMucTieuId ? 'Cập nhật KPI Thư viện' : 'Thêm mới KPI Thư viện'"
+    (nzOnOk)="isVisible = false">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 180px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Bộ phận <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="phongBanKey" nzShowSearch nzAllowClear [nzOptions]="boPhanOptions" nzPlaceHolder="Bộ phận" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.phongBanKey?.errors && f?.phongBanKey?.touched">
+                        <span>Bộ phận là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mục tiêu năm bộ phận <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="mucTieuNamBoPhanKey" nzShowSearch nzAllowClear [nzOptions]="mucTieuNamOptions" nzPlaceHolder="Mục tiêu năm bộ phận" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.mucTieuNamBoPhanKey?.errors && f?.mucTieuNamBoPhanKey?.touched">
+                        <span>Mục tiêu năm bộ phận là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mục tiêu bộ phận <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="mucTieuBoPhanKey" nzShowSearch nzAllowClear [nzOptions]="mucTieuBoPhanOptions" nzPlaceHolder="Mục tiêu bộ phận" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.mucTieuBoPhanKey?.errors && f?.mucTieuBoPhanKey?.touched">
+                        <span>Mục tiêu bộ phận là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Kế hoạch công việc liên quan
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="keHoachCongViecLienQuanKeys" nzMode="multiple" nzShowSearch nzAllowClear nzPlaceHolder="Kế hoạch công việc liên quan" [nzOptions]="keHoachCongViecOptions" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col">
+                    <div class="mb-2"> Tên KPI <span class="text-danger">(*)</span></div>
+                    <div [ngxSummernote]="config" formControlName="tenKPI"></div>
+                    <div class="form-text text-danger" *ngIf="f?.tenKPI?.errors && f?.tenKPI?.touched">
+                        <span>Tên KPI là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col">
+                    <div class="mb-2"> Nội dung công thức tính <span class="text-danger">(*)</span></div>
+                    <div [ngxSummernote]="config" formControlName="noiDungCongThuc"></div>
+                    <div class="form-text text-danger" *ngIf="f?.noiDungCongThuc?.errors && f?.noiDungCongThuc?.touched">
+                        <span>Nội dung công thức tính là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Công thức tính toán <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="congThucTinhToan" class="form-control pt-3 input_42" placeholder="Công thức tính toán"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.congThucTinhToan?.errors && f?.congThucTinhToan?.touched">
+                        <span>Công thức tính toán là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại công thức <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="loaiCongThucKey" nzShowSearch nzAllowClear [nzOptions]="loaiCongThucOptions" nzPlaceHolder="Loại công thức" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.loaiCongThucKey?.errors && f?.loaiCongThucKey?.touched">
+                        <span>Loại công thức là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thành phần
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-tags-button [(tags)]="thanhPhanTags" (onAdd)="addIngredients.showModal()" btnLable="Thêm thành phần"></app-select-tags-button>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Đơn vị tính <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="donViTinhKey" nzShowSearch nzAllowClear [nzOptions]="donViOptions" nzPlaceHolder="Đơn vị tính" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.donViTinhKey?.errors && f?.donViTinhKey?.touched">
+                        <span>Đơn vị tính là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại KPI <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="loaiKPIKey" nzShowSearch nzAllowClear [nzOptions]="loaiKpiOptions" nzPlaceHolder="Loại KPI" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.loaiKPIKey?.errors && f?.loaiKPIKey?.touched">
+                        <span>Loại KPI là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tần suất theo dõi <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="tanSuatTheoDoiKey" nzShowSearch nzAllowClear [nzOptions]="tanSuatOptions" nzPlaceHolder="Tần suất theo dõi" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.tanSuatTheoDoiKey?.errors && f?.tanSuatTheoDoiKey?.touched">
+                        <span>Tần suất theo dõi là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Trọng số (%) <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-input-number
+                        [nzMin]="0"
+                        [nzMax]="100"
+                        [nzStep]="1"
+                        [nzFormatter]="formatter"
+                        [nzParser]="parser"
+                        formControlName="trongSo"
+                        nzPlaceHolder="Trọng số" class="form-control input_42 text-left">
+                    </nz-input-number>
+                    <div class="form-text text-danger" *ngIf="f?.trongSo?.errors && f?.trongSo?.touched">
+                        <span>Trọng số là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-2"> Ghi chú <span class="text-danger">(*)</span></div>
+                    <div [ngxSummernote]="config" formControlName="ghiChu"></div>
+                    <div class="form-text text-danger" *ngIf="f?.ghiChu?.errors && f?.ghiChu?.touched">
+                        <span>Ghi chú là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = false"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="kpiMucTieuId ? onEdit() : onCreate()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+    <!-- Thêm mới thành phần -->
+    <app-add-ingredients-modal
+        #addIngredients="add-ingredients"
+        (thanhPhan)="onAddThanhPhan($event)" 
+        [apiStt]="'/api/danhsachthuvienkpibophan-dm/trang-thai-thanh-phan'"
+        [apiCreate]="'/api/danhsachthuvienkpibophan-create/thanh-phan'">
+    </app-add-ingredients-modal>
+</nz-modal>

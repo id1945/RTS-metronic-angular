@@ -1,0 +1,20 @@
+app-layout {
+  opacity: 0;
+  height: 100%;
+
+  .grid-root {
+    height: 100%;
+  }
+}
+
+.page-loaded {
+  app-layout {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+}
+
+.aside {
+  // background: linear-gradient(0deg, rgba(2,121,187,1) 0%, rgba(1,158,137,1) 100%);
+  background: #003469;
+}

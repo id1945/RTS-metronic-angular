@@ -1,0 +1,8 @@
+<div class="tag_box p-1">
+    <button *ngFor="let tag of tags; let i = index" class="btn tag_btn btn-outline-secondary mr-1 text-left">
+        <span>{{ tag?.label }}</span><i nz-icon (click)="remove(i)" nzType="close" class="ml-1" nzTheme="outline"></i>
+    </button>
+    <button class="btn tag_btn btn-info" (click)="onAdd.emit()">
+        <i nz-icon nzType="plus-circle" nzTheme="outline"></i><span>{{btnLable}}</span>
+    </button>
+</div>

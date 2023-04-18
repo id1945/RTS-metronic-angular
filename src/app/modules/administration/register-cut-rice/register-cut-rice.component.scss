@@ -1,0 +1,56 @@
+::ng-deep {
+  .cal-day-selected {
+    .fill-height {
+      background-color: #fff7b0 !important;
+    }
+  }
+  .fill-height {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    &.bg_select {
+      background-color: #fffacd52;
+    }
+  }
+  .cal-month-view {
+    .cal-day-cell {
+      &:not(.cal-out-month) {
+        .cal-day-number {
+          opacity: 1;
+        }
+      }
+    }
+    .ant-alert {
+      padding: 0px 2px;
+      font-size: 12.5px;
+    }
+  }
+}
+
+.status {
+  &-success {
+    color: #fff;
+    border-radius: 2px;
+    background: #449d44;
+    border: 0.5px solid #398439;
+  }
+  &-warning {
+    color: #fff;
+    border-radius: 2px;
+    background: #ffa800;
+    border: 0.5px solid #d58512;
+  }
+  &-primary {
+    color: #fff;
+    border-radius: 2px;
+    background: #337ab7;
+    border: 0.5px solid #2e6da4;
+  }
+  &-danger {
+    color: #fff;
+    border-radius: 2px;
+    background: #d9534f;
+    border: 0.5px solid #d43f3a;
+  }
+}

@@ -1,0 +1,49 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <ng-container [ngSwitch]="params?.screen || '' | lowercase">
+                <ng-container *ngSwitchCase="'holiday'">
+                    <h3 class="card-label">Đăng ký nghỉ</h3>
+                </ng-container>
+                <ng-container *ngSwitchCase="'overtime'">
+                    <h3 class="card-label">Đăng ký làm thêm</h3>
+                </ng-container>
+                <ng-container *ngSwitchCase="'wleo'">
+                    <h3 class="card-label">Đăng ký nghỉ không lương dưới nửa ngày</h3>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="card-title">
+            <span class="mr-3"><i class="flaticon2-accept text-primary"></i> Phép đã nghỉ: {{dashboard?.PHEP_DA_NGHI || '-'}} </span>
+            <span class="mr-3"><i class="flaticon2-chronometer text-primary"></i> Phép còn lại: {{dashboard?.PHEP_CON_LAI || '-'}} </span>
+            <span class="mr-3"><i class="flaticon2-pie-chart-1 text-primary"></i> Phép trong năm: {{dashboard?.PHEP_TRONG_NAM || '-'}} </span>
+        </div>
+    </div>
+    <div class="card-body py-0 px-5">
+        <div class="row w-100 py-0 m-0">
+            <div class="col-xxl-3 col-xl-4">
+                <!--begin::Card-->
+                <div class="card card-custom card-stretch gutter-b">
+                    <div class="card-body p-0">
+                        <app-search-register-rest-overtime [params]="params" #search="search"></app-search-register-rest-overtime>
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <div class="col-xxl-9 col-xl-8">
+                <!--begin::Card-->
+                <div class="card card-custom card-stretch gutter-b">
+                    <div class="card-body p-0">
+                        <app-calendar-register-rest-overtime
+                            [params]="params"
+                            [formGroup1]="search.formGroup1"
+                            [formGroup2]="search.formGroup2"
+                            [formGroup3]="search.formGroup3">
+                        </app-calendar-register-rest-overtime>
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+        </div>
+    </div>
+</div>

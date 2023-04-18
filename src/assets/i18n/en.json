@@ -1,0 +1,1140 @@
+{
+   "lang": "en",
+   "data": {
+      "COMMON": {
+         "read_only": "Read only",
+         "btn": {
+            "ok": "OK",
+            "no": "No",
+            "yes": "Yes",
+            "next": "Next",
+            "save": "Save",
+            "cancel": "Cancel",
+            "close": "Closed",
+            "before": "Before",
+            "browser": "Browser",
+            "record": "Record",
+            "approve": "Approve",
+            "consultation": "Consultation",
+            "reject": "Reject",
+            "add_new": "Add new",
+            "confirm": "Confirm",
+            "print": "Print",
+            "prints": "Prints",
+            "change_password": "Change password",
+            "add_new_info": "Add new information",
+            "are_you_sure": "Are you sure?",
+            "are_you_sure_delete": "Do you really want to delete?",
+            "are_you_sure_save_draft": "Do you want to save the draft?"
+         },
+         "msg": {
+            "error": "Error! An error occurred",
+            "try_again_later": "Please try again later.",
+            "expires": "Session expired. \n Please login again!"
+         },
+         "file": {
+            "excel_word_pdf_rar_zip_jpg_jpeg_png_gif_svg": "Only files like xls, xlsx, xlsm, doc, docx, pdf, rar, zip, jpg, jpeg, png, gif, svg are allowed.",
+            "type_excel_word_pdf_rar_zip": "Only files like xls, xlsx, xlsm, doc, docx, pdf, rar, zip are allowed.",
+            "type_excel_word_pdf": "Only files like xls, xlsx, xlsm, doc, docx, pdf are allowed.",
+            "type_excel_word": "Only files like xls, xlsx, xlsm, doc, docx are allowed.",
+            "type_excel": "Only files like xls, xlsx, xlsm are allowed.",
+            "type_images": "Only files like png, jpg, jpeg, gif are allowed.",
+            "size_20": "The file size should not exceed 20 MB."
+         }
+      },
+      "TRANSLATOR": {
+         "SELECT": "Select your language"
+      },
+      "MENU": {
+         "HOME": "Home",
+         "USER_INFOR": "User Infomation",
+         "USER_MANUAL":"User manual",
+         "HEALTH_DECLARATION" : "Health declaration",
+         "HTC": {
+            "INFOR": "HTV Information",
+            "INTRODUCE": "Introduce",
+            "CONTACTS": "Contacts",
+            "INSTITUTIONAL_DOCUMENTS": "Institutional Documents"
+         },
+         "USER_PERSONNEL":{
+            "USER_PERSONNEL":"Personnel",
+            "MONTH_PLAN":"Month plan",
+            "MISION_PLAN":"Mission plan"
+         },
+         "DOCUMENT": {
+            "DOCUMENT": "Documents",
+            "INSTITUTIONAL_DOCUMENTS": "Institutional Documents",
+            "INSTITUTIONAL_PROPOSE": "Institutional Propose",
+            "LAW_LIBRARY": "Law Library"
+         },
+         "REPORT": {
+            "REPORT": "Report",
+            "EXPENSE_REPORT": "Propose document",
+            "PROMULGATE": "Promulgates",
+            "REQUESTS_PAYMENT": "Request for payment/advance",
+            "SUPPLIER_SELECTION": "Supplier Selection",
+            "SIGN_CONTRACT": "Propose sign contract"
+         },
+         "PURCHASE": {
+            "PURCHASE": "Purchase",
+            "REQUEST": "Purchase Request"
+         },
+         "ADMINISTRATION": {
+            "ADMINISTRATION": "Administration",
+            "MYPARCEL": "My Parcel",
+            "IMPORTPARCEL": "Import Parcel",
+            "DELIVEREXPRESS": "Deliver Express",
+            "REGISTERVEHICLE": "Register Vehicle",
+            "STATIONERY": "Stationery"
+         },
+         "CALENDAR": {
+            "CALENDAR": "Calendar",
+            "WORK": "Work Calendar",
+            "SCHEDULING_MEETINGS": "Scheduling meetings"
+         },
+         "MANAGEMENT": {
+            "MANAGEMENT": "Management",
+            "NEWS": "News"
+         }
+      },
+      "AUTH": {
+         "GENERAL": {
+            "OR": "Or",
+            "SUBMIT_BUTTON": "Submit",
+            "NO_ACCOUNT": "Don't have an account?",
+            "SIGNUP_BUTTON": "Sign Up",
+            "FORGOT_BUTTON": "Forgot Password",
+            "BACK_BUTTON": "Back",
+            "PRIVACY": "Privacy",
+            "LEGAL": "Legal",
+            "CONTACT": "Contact"
+         },
+         "LOGIN": {
+            "TITLE": "Login to HTV Portal",
+            "USER_LABEL": "Login Account",
+            "USER_PASS": "Password",
+            "BUTTON": "Sign In",
+            "BUTTON_SSO": "Sign In SSO"
+         },
+         "LOGOUT": {
+            "TITLE": "Login Account",
+            "BUTTON": "Logout",
+            "USER_INFOR": "Personal information",
+            "NOTIFICATION": "{{value}} notification"
+         },
+         "FORGOT": {
+            "TITLE": "Forgotten Password?",
+            "DESC": "Enter your email to reset your password",
+            "SUCCESS": "Your account has been successfully reset."
+         },
+         "REGISTER": {
+            "TITLE": "Sign Up",
+            "DESC": "Enter your details to create your account",
+            "SUCCESS": "Your account has been successfuly registered."
+         },
+         "INPUT": {
+            "EMAIL": "Email",
+            "FULLNAME": "Fullname",
+            "PASSWORD": "Password",
+            "CONFIRM_PASSWORD": "Confirm Password",
+            "USERNAME": "Username"
+         },
+         "VALIDATION": {
+            "INVALID": "{{name}} is not valid",
+            "REQUIRED": "{{name}} is required",
+            "MIN_LENGTH": "{{name}} minimum length is {{min}}",
+            "AGREEMENT_REQUIRED": "Accepting terms & conditions are required",
+            "NOT_FOUND": "The requested {{name}} is not found",
+            "INVALID_LOGIN": "The login detail is incorrect",
+            "REQUIRED_FIELD": "Required field",
+            "MIN_LENGTH_FIELD": "Minimum field length:",
+            "MAX_LENGTH_FIELD": "Maximum field length:",
+            "INVALID_FIELD": "Field is not valid"
+         }
+      },
+      "OFFCANVAS": {
+         "NOTIFICATIONS": {
+            "TITLE": "Notifications"
+         }
+      },
+      "HOME": {
+         "WORK": {
+            "JOB": "My job",
+            "REQUEST_PAYMENT": "Request payment",
+            "PROPOSE_DOCUMENT": "Propose document",
+            "PURCHASE": "Purchase",
+            "Staffing": "Staffing",
+            "OTHER": "Other",
+            "SCHEDULE": "Working Schedule"
+         },
+         "OTHER": {
+            "NEWS": "News",
+            "NEW_MEMBER": "New member",
+            "NEW_DOCUMENT": "New document",
+            "HAPPY_BIRTHDAY": "Happy birthday",
+            "WORKING_SCHEDULE": "Working schedule",
+            "BOOK_ROOM": "Book room"
+         }
+      },
+      "PERSONAL": {
+         "Title": "Personal information",
+         "WORK": {
+            "JOB": "My job",
+            "REQUEST_PAYMENT": "Request payment",
+            "PROPOSE_DOCUMENT": "Propose document",
+            "PURCHASE": "Purchase",
+            "Staffing": "Staffing",
+            "OTHER": "Other",
+            "SCHEDULE": "Working Schedule",
+            "KPI_MONTH": "KPI Month",
+            "KPI_QUARTERLY": "KPI Quarterly",
+            "KPI_YEAR": "KPI Year"
+         },
+         "PERSONAL_INFO": {
+            "MY_PURCHASE": "My purchase",
+            "MY_PAYMENT": "My request payment",
+            "MY_PROPOSE": "My propose document",
+            "MY_Timekeeping": "My timekeeping",
+            "MY_VEHICLE": "My register vehicle",
+            "MY_DELIVER": "My deliver express",
+            "MY_PARCEL": "My parcel",
+            "MY_IMAGE": "My image"
+         },
+         "GENERAL_INFO": {
+            "TITLE": "General Information",
+            "FULLNAME": "Full name",
+            "POSITION": "Position",
+            "DEPARTMENT": "Department",
+            "CONTACT_TITLE": "Contact Information",
+            "PHONE": "Phone number",
+            "ADDRESS": "Address"
+         }
+      },
+      "COMPANY_INFO": {
+         "INTRODUCE": {
+            "imageLibrary": "Image Library",
+            "videoLibrary": "Video Library",
+            "companyDocument": "Company Documents"
+         },
+         "STAFFS": {
+            "LIST": {
+               "title": "Staffs",
+               "hintSearch": "Search text",
+               "hintDepartment": "--Choose department--",
+               "btnSearch": "Search"
+            },
+            "DETAIL": {
+               "title": "General Information",
+               "fullName": "Full name",
+               "position": "Position",
+               "department": "Department",
+               "phoneNumber": "Phone number",
+               "phoneCompany": "Phone company",
+               "work_history": "Work history",
+               "comment": "Comments",
+               "schedule": "Schedule",
+               "image": "Image"
+            }
+         }
+      },
+      "DOCUMENT": {
+         "INSTITUTION": {
+            "LIST": {
+               "title": "List institutional documents",
+               "hintSearch": "Search text",
+               "hintChoose": "Choose",
+               "newDocument": "New released documents",
+               "expiredDocument": "Expired documents"
+            },
+            "DETAIL": {
+               "addDocument": "Add new institutional document",
+               "documentCode": "Document code",
+               "documentName": "Document name",
+               "scope": "Scope apply",
+               "accessRights": "access Rights",
+               "effectiveDateFrom": "Efective date from",
+               "effectiveDateTo": "Efective date to",
+               "atttachments": "Attachments file"
+            }
+         },
+         "LAW": {
+            "LIST": {
+               "title": "List library laws",
+               "hintSearch": "Search text",
+               "hintChoose": "Choose",
+               "btnSearch": "Tìm kiếm"
+            },
+            "DETAIL": {
+               "addDocument": "Add new library law",
+               "documentCode": "Document code",
+               "documentName": "Document name",
+               "issuers": "Issuers name",
+               "documentGroup": "Law group",
+               "link": "Link to document",
+               "scope": "Scope apply",
+               "effectiveDateFrom": "Efective date from",
+               "effectiveDateTo": "Efective date to",
+               "atttachmentsVN": "Attachments file VietNam",
+               "atttachmentsEN": "Attachments file English"
+            }
+         }
+      },
+      "PURCHASE": {
+         "CREATE": {
+            "title": "Add a new purchase request",
+            "step_1": {
+               "title": "Information required",
+               "form": {
+                  "type_of_business": {
+                     "label": "Type of business",
+                     "placeholder": "Select type of business",
+                     "required": "Business type is required."
+                  },
+                  "title": {
+                     "label": "Title",
+                     "placeholderVN": "Title Vietnamese",
+                     "placeholderEN": "Title English",
+                     "required": "The title is required to enter."
+                  },
+                  "internal_report": {
+                     "label": "Internal report",
+                     "placeholder": "Select internal report"
+                  },
+                  "item_type": {
+                     "label": "Item type",
+                     "placeholder": "Select item type",
+                     "required": "Item type is required."
+                  },
+                  "attachments": {
+                     "label": "Attachments",
+                     "placeholder": "Select a profile type",
+                     "button": "Upload document",
+                     "required": "Please select a profile type!"
+                  },
+                  "explain": {
+                     "label": "Explain"
+                  }
+               }
+            },
+            "step_2": {
+               "title": "Goods, services",
+               "sub_title": "Information List",
+               "form": {
+                  "date": {
+                     "label": "Desired delivery date",
+                     "placeholder": "Choose a date",
+                     "required": "Delivery desired day is required."
+                  },
+                  "supplier": {
+                     "label": "Supplier has traded",
+                     "yes": "Yes",
+                     "no": "No"
+                  },
+                  "goods_services": {
+                     "label": "Goods/services",
+                     "placeholder": "Selection of Goods and Services",
+                     "required": "Goods and services are required."
+                  },
+                  "budget_code": {
+                     "label": "Budget code",
+                     "placeholder": "Choose a budget code",
+                     "required": "The budget code is required."
+                  },
+                  "amount": {
+                     "label": "Amount",
+                     "required": "Quantity is required to enter."
+                  },
+                  "estimated_price": {
+                     "label": "Estimated price",
+                     "required": "Price estimate is entered signed."
+                  },
+                  "total_estimate": {
+                     "label": "Total estimate",
+                     "required": "Over budget for the whole year"
+                  },
+                  "note": {
+                     "label": "Note",
+                     "placeholderVN": "Note Vietnamese",
+                     "placeholderEN": "Note English"
+                  },
+                  "specifications": {
+                     "label": "Specifications",
+                     "placeholderVN": "Specifications VietNamese",
+                     "placeholderEN": "Specifications English"
+                  },
+                  "recommended_supplier": {
+                     "label": "Recommended supplier",
+                     "placeholder": "Select a recommended supplier",
+                     "required": "Recommended supplier is required",
+                     "requiredQuantity": "Minimum required supplier is {{value}}"
+                  }
+               },
+               "table": {
+                  "no": "No",
+                  "goods_services": "Goods,services",
+                  "amount": "Amount",
+                  "estimated_price": "Estimated unit price (excluding VAT)",
+                  "total_estimate": "Cost Estimate (VAT excluded)",
+                  "total": "Total estimate"
+               }
+            },
+            "step_3": {
+               "title": "Related department",
+               "sub_title": "Specialized department",
+               "department": {
+                  "label": "Specialized department",
+                  "placeholder": "Selecting a specialized department"
+               },
+               "table": {
+                  "no": "No",
+                  "department": "Part",
+                  "fullname": "Full name",
+                  "action": "Delete",
+                  "no_data_found": "No data found"
+               }
+            },
+            "step_4": {
+               "title": "Finish",
+               "titlePurchaseDetail": "Purchase request",
+               "titleProgess": "PROGRESS",
+               "titleApprove": "Approved",
+               "titleNotApprove": "Not approve",
+               "titleRequestApprove": "Request",
+               "titleApprovePurchaseRequest": "Approve/Reject Purchase Request",
+               "companyName": "HYUNDAI THANH CONG VN AUTO JOINT VENTURE JSC",
+               "dearLabel": "Dear",
+               "dearPerson": "Mr/Ms",
+               "basedOn": "Base on",
+               "attachDocs": "Attached Docs",
+               "departmentLabel": "Department",
+               "andLabel": "and",
+               "suggestionsLabel": "would like to propose the following contents",
+               "submitForApproveLabel": "would like to submit to Mr/Ms",
+               "approvalLabel": "approve",
+               "typePurchaseLabel":"Purchase type",
+               "table": {
+                  "cphh": {
+                     "title": "With the list of goods and expected costs as follows",
+                     "no": "No",
+                     "goods_services": "Goods,services",
+                     "recommended_supplier": "Recommended supplier",
+                     "estimated_unit_price" : "Estimated unit price (excluding VAT)",
+                     "unit": "Unit",
+                     "amount": "Amount",
+                     "unit_price": "Unit price",
+                     "into_money": "Into money",
+                     "spending_code": "Spending code",
+                     "total": "Total estimate"
+                  },
+                  "bpcm": {
+                     "title": "Related Department of Expertise",
+                     "no": "No",
+                     "department": "Part",
+                     "fullname": "Full name"
+                  }
+               }
+            },
+            "file": {
+               "dinh_kem": {
+                  "type": "Files must be xls, xlsx, xlsm, doc, docx,pdf only.",
+                  "size": "The file size should not exceed 5 MB."
+               }
+            },
+            "msg": {
+               "create_success": "You have successfully created a purchase request!"
+            }
+         },
+         "DETAIL": {
+            "title": "List Purchase requets",
+            "searchHint": "Search",
+            "statusHint": "Status",
+            "fastHint": "Quick Search",
+            "table": {
+               "detail": {
+                  "referenceCodeLabel": "Reference Code",
+                  "proponentLabel": "Proponent",
+                  "contentLabel": "Content",
+                  "departmentLabel":"Department",
+                  "totalAmountLabel": "Total Amount",
+                  "requestDateLabel": "Request Date",
+                  "statusLabel": "Status Date",
+                  "manipulationLabel": "Manipulation"
+               }
+            }
+         }
+      },
+      "CONTRACT":{
+         "CREATE":{
+            "title":"Thêm mới Yêu cầu mua sắm",
+            "step_1":{
+               "title":"Thông tin yêu cầu",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "title":{
+                     "label":"Tiêu đề",
+                     "placeholderVN":"Tiêu đề tiếng Việt",
+                     "placeholderEN":"Tiêu đề tiếng Anh",
+                     "required":"Tiêu đề là bắt buộc nhập."
+                  },
+                  "internal_report":{
+                     "label":"Tờ trình nội bộ",
+                     "placeholder":"Lựa chọn tờ trình nội bộ"
+                  },
+                  "item_type":{
+                     "label":"Loại mặt hàng",
+                     "placeholder":"Lựa chọn loại mặt hàng",
+                     "required":"Loại mặt hàng là bắt buộc."
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Lựa chọn loại hồ sơ",
+                     "button":"Tải lên văn bản",
+                     "required":"Vui lòng lựa chọn loại hồ sơ!"
+                  },
+                  "explain":{
+                     "label":"Diễn giải"
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Hàng hoá, dịch vụ",
+               "sub_title":"Danh sách thông tin",
+               "form":{
+                  "date":{
+                     "label":"Ngày cần hàng mong muốn",
+                     "placeholder":"Lựa chọn ngày",
+                     "required":"Giao hàng ngày muốn là bắt buộc."
+                  },
+                  "supplier":{
+                     "label":"Chỉ định nhà cung cấp",
+                     "yes":"Có",
+                     "no":"Không"
+                  },
+                  "goods_services":{
+                     "label":"Hàng hóa/dịch vụ",
+                     "placeholder":"Lựa chọn Hàng hóa, dịch vụ",
+                     "required":"Hàng hóa, dịch vụ là bắt buộc."
+                  },
+                  "budget_code":{
+                     "label":"Mã ngân sách",
+                     "placeholder":"Lựa chọn mã ngân sách",
+                     "required":"Mã ngân sách là bắt buộc."
+                  },
+                  "amount":{
+                     "label":"Số lượng",
+                     "required":"Số lượng là bắt buộc nhập."
+                  },
+                  "estimated_price":{
+                     "label":"Giá dự toán",
+                     "required":"Giá dự toán là bắt buộc nhập."
+                  },
+                  "total_estimate":{
+                     "label":"Tổng dự toán",
+                     "required":"Vượt quá ngân sách cả năm"
+                  },
+                  "note":{
+                     "label":"Chú thích",
+                     "placeholderVN":"Chú thích tiếng Việt",
+                     "placeholderEN":"Chú thích tiếng Anh"
+                  },
+                  "specifications":{
+                     "label":"Quy cách",
+                     "placeholderVN":"Quy cách tiếng Việt",
+                     "placeholderEN":"Quy cách tiếng Anh"
+                  },
+                  "recommended_supplier":{
+                     "label":"Nhà cung cấp đề xuất",
+                     "placeholder":"Lựa chọn nhà cung cấp đề xuất",
+                     "required":"Nhà cung cấp đề xuất là bắt buộc",
+                     "requiredQuantity":"Nhà cung cấp bắt buộc tối thiểu là {{value}}"
+                  }
+               },
+               "table":{
+                  "no":"STT",
+                  "goods_services":"Hàng hóa, dịch vụ",
+                  "amount":"Số lượng",
+                  "estimated_price":"Dự toán đơn giá (chưa VAT)",
+                  "total_estimate":"Dự toán Thành tiền (chưa VAT)",
+                  "total":"Tổng dự toán"
+               }
+            },
+            "step_3":{
+               "title":"Bộ phận liên quan",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found"
+               }
+            },
+            "step_4": {
+               "title": "Finish",
+               "titlePurchaseDetail": "PROPOSE SIGN CONTRACT",
+               "titleProgess": "PROGRESS",
+               "titleApprove": "Approved",
+               "titleNotApprove": "Not approve",
+               "titleRequestApprove": "Request",
+               "titleApprovePurchaseRequest": "Approve/Reject Purchase Request",
+               "companyName": "HYUNDAI THANH CONG VN AUTO JOINT VENTURE JSC",
+               "dearLabel": "Dear",
+               "dearPerson": "Mr/Ms",
+               "basedOn": "Base on",
+               "attachDocs": "Attached Docs",
+               "departmentLabel": "Department",
+               "andLabel": "and",
+               "referenceCodeLabel":"Number Contract",
+               "purchaseNumberLabel":"Number Purchase",
+               "proposeNumberLabel":"Number Propose",
+               "typeContractLabel":"Type contract",
+               "paymentLabel":"Payment conditions",
+               "supplierNumberLabel":"Number choose supplier",
+               "insuranceLabel":"Insurance",
+               "guaranteeLabel":"Guarantee",
+               "contractPartnerLabel":"Contract partner",
+               "proponentLabel":"Proponent",
+               "contentLabel":"Content",
+               "suggestionsLabel": "would like to propose the following contents",
+               "submitForApproveLabel": "would like to submit to Mr/Ms",
+               "approvalLabel": "approve",
+               "table": {
+                  "cphh": {
+                     "title": "Goods,services info",
+                     "no": "No",
+                     "goods_services": "Goods,services",
+                     "specification": "Specification",
+                     "recommended_supplier": "Recommended supplier",
+                     "estimated_unit_price" : "Estimated unit price (excluding VAT)",
+                     "unit": "Unit",
+                     "amount": "Amount",
+                     "unit_price": "Unit price (No VAT)",
+                     "into_money": "Total money (No VAT)",
+                     "spending_code": "Spending code",
+                     "note":"Note",
+                     "total": "Total money (VAT)",
+                     "discount":"Discount"
+                  },
+                  "bpcm": {
+                     "title": "Related Department of Expertise",
+                     "no": "No",
+                     "department": "Part",
+                     "fullname": "Full name"
+                  },
+                  "contract": {
+                     "title": "Outline contract",
+                     "no": "No",
+                     "note": "Note",
+                     "contractService": "Contract service"
+                  }
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã tạo Yêu cầu mua sắm thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Propose sign contract",
+            "searchHint":"Search",
+            "statusHint": "Status",
+            "fastHint": "Quick Search",
+            "table":{
+               "detail":{
+                  "referenceCodeLabel":"Number ĐNKHĐ",
+                  "purchaseNumberLabel":"Number Purchase",
+                  "proponentLabel":"Proponent",
+                  "contentLabel":"Content",
+                  "departmentLabel":"Department",
+                  "requestDateLabel":"Createcdate",
+                  "supplierLabel":"Supplier",
+                  "statusLabel":"Status",
+                  "manipulationLabel":"Action"
+               }
+            }
+         }
+      },
+      "SUPPLIER":{
+         "CREATE":{
+            "title":"Thêm mới Yêu cầu mua sắm",
+            "step_1":{
+               "title":"Thông tin yêu cầu",
+               "form":{
+                  "type_of_business":{
+                     "label":"Loại nghiệp vụ",
+                     "placeholder":"Lựa chọn loại nghiệp vụ",
+                     "required":"Loại nghiệp vụ là bắt buộc."
+                  },
+                  "title":{
+                     "label":"Tiêu đề",
+                     "placeholderVN":"Tiêu đề tiếng Việt",
+                     "placeholderEN":"Tiêu đề tiếng Anh",
+                     "required":"Tiêu đề là bắt buộc nhập."
+                  },
+                  "internal_report":{
+                     "label":"Tờ trình nội bộ",
+                     "placeholder":"Lựa chọn tờ trình nội bộ"
+                  },
+                  "item_type":{
+                     "label":"Loại mặt hàng",
+                     "placeholder":"Lựa chọn loại mặt hàng",
+                     "required":"Loại mặt hàng là bắt buộc."
+                  },
+                  "attachments":{
+                     "label":"Tài liệu đính kèm",
+                     "placeholder":"Lựa chọn loại hồ sơ",
+                     "button":"Tải lên văn bản",
+                     "required":"Vui lòng lựa chọn loại hồ sơ!"
+                  },
+                  "explain":{
+                     "label":"Diễn giải"
+                  }
+               }
+            },
+            "step_2":{
+               "title":"Hàng hoá, dịch vụ",
+               "sub_title":"Danh sách thông tin",
+               "form":{
+                  "date":{
+                     "label":"Ngày cần hàng mong muốn",
+                     "placeholder":"Lựa chọn ngày",
+                     "required":"Giao hàng ngày muốn là bắt buộc."
+                  },
+                  "supplier":{
+                     "label":"Chỉ định nhà cung cấp",
+                     "yes":"Có",
+                     "no":"Không"
+                  },
+                  "goods_services":{
+                     "label":"Hàng hóa/dịch vụ",
+                     "placeholder":"Lựa chọn Hàng hóa, dịch vụ",
+                     "required":"Hàng hóa, dịch vụ là bắt buộc."
+                  },
+                  "budget_code":{
+                     "label":"Mã ngân sách",
+                     "placeholder":"Lựa chọn mã ngân sách",
+                     "required":"Mã ngân sách là bắt buộc."
+                  },
+                  "amount":{
+                     "label":"Số lượng",
+                     "required":"Số lượng là bắt buộc nhập."
+                  },
+                  "estimated_price":{
+                     "label":"Giá dự toán",
+                     "required":"Giá dự toán là bắt buộc nhập."
+                  },
+                  "total_estimate":{
+                     "label":"Tổng dự toán",
+                     "required":"Vượt quá ngân sách cả năm"
+                  },
+                  "note":{
+                     "label":"Chú thích",
+                     "placeholderVN":"Chú thích tiếng Việt",
+                     "placeholderEN":"Chú thích tiếng Anh"
+                  },
+                  "specifications":{
+                     "label":"Quy cách",
+                     "placeholderVN":"Quy cách tiếng Việt",
+                     "placeholderEN":"Quy cách tiếng Anh"
+                  },
+                  "recommended_supplier":{
+                     "label":"Nhà cung cấp đề xuất",
+                     "placeholder":"Lựa chọn nhà cung cấp đề xuất",
+                     "required":"Nhà cung cấp đề xuất là bắt buộc",
+                     "requiredQuantity":"Nhà cung cấp bắt buộc tối thiểu là {{value}}"
+                  }
+               },
+               "table":{
+                  "no":"STT",
+                  "goods_services":"Hàng hóa, dịch vụ",
+                  "amount":"Số lượng",
+                  "estimated_price":"Dự toán đơn giá (chưa VAT)",
+                  "total_estimate":"Dự toán Thành tiền (chưa VAT)",
+                  "total":"Tổng dự toán"
+               }
+            },
+            "step_3":{
+               "title":"Bộ phận liên quan",
+               "sub_title":"Bộ phận chuyên môn",
+               "department":{
+                  "label":"Bộ phận chuyên môn",
+                  "placeholder":"Lựa chọn bộ phận chuyên môn"
+               },
+               "table":{
+                  "no":"STT",
+                  "department":"Bộ phận",
+                  "fullname":"Họ tên",
+                  "action":"Xoá",
+                  "no_data_found":"No data found"
+               }
+            },
+            "step_4": {
+               "title": "Finish",
+               "titlePurchaseDetail": "PROPOSE CHOOSE SUPPLIER",
+               "titleProgess": "PROGRESS",
+               "titleApprove": "Approved",
+               "titleNotApprove": "Not approve",
+               "titleRequestApprove": "Request",
+               "titleApprovePurchaseRequest": "Approve/Reject Purchase Request",
+               "companyName": "HYUNDAI THANH CONG VN AUTO JOINT VENTURE JSC",
+               "dearLabel": "Dear",
+               "dearPerson": "Mr/Ms",
+               "basedOn": "Base on",
+               "attachDocs": "Attached Docs",
+               "departmentLabel": "Department",
+               "andLabel": "and",
+               "referenceCodeLabel":"Number ĐXLCNCC",
+               "purchaseNumberLabel":"Number Purchase",
+               "proposeNumberLabel":"Number Propose",
+               "formalityLabel":"Formality",
+               "paymentLabel":"Payment conditions",
+               "supplierNumberLabel":"Number choose supplier",
+               "insuranceLabel":"Insurance",
+               "guaranteeLabel":"Guarantee",
+               "contractPartnerLabel":"Contract partner",
+               "proponentLabel":"Proponent",
+               "contentLabel":"Content",
+               "createDateLabel":"Create date",
+               "suggestionsLabel": "would like to propose the following contents",
+               "submitForApproveLabel": "would like to submit to Mr/Ms",
+               "approvalLabel": "approve",
+               "table": {
+                  "cphh": {
+                     "title": "Goods,services info",
+                     "no": "No",
+                     "goods_services": "Goods,services",
+                     "specification": "Specification",
+                     "recommended_supplier": "Recommended supplier",
+                     "estimated_unit_price" : "Estimated unit price (excluding VAT)",
+                     "unit": "Unit",
+                     "amount": "Amount",
+                     "unit_price": "Unit price (No VAT)",
+                     "into_money": "Total money (No VAT)",
+                     "spending_code": "Spending code",
+                     "note":"Note",
+                     "total": "Total money (VAT)",
+                     "discount":"Discount"
+                  },
+                  "bpcm": {
+                     "title": "Related Department of Expertise",
+                     "no": "No",
+                     "department": "Part",
+                     "fullname": "Full name"
+                  },
+                  "contract": {
+                     "title": "Propose choose supplier",
+                     "no": "No",
+                     "supplier": "Supplier"
+                  }
+               }
+            },
+            "file":{
+               "dinh_kem":{
+                  "type":"Chỉ được các tệp như xls, xlsx, xlsm, doc, docx.",
+                  "size":"Kích thước tệp không được vượt quá 5 MB."
+               }
+            },
+            "msg":{
+               "create_success":"Bạn đã tạo Yêu cầu mua sắm thành công!"
+            }
+         },
+         "DETAIL":{
+            "title":"Propose choose supplier",
+            "searchHint":"Search",
+            "statusHint": "Status",
+            "fastHint": "Quick Search",
+            "table":{
+               "detail":{
+                  "referenceCodeLabel":"Number LLCNCC",
+                  "purchaseNumberLabel":"Number Purchase",
+                  "proponentLabel":"Proponent",
+                  "contentLabel":"Content",
+                  "departmentLabel":"Department",
+                  "requestDateLabel":"Createcdate",
+                  "supplierLabel":"Supplier",
+                  "statusLabel":"Status",
+                  "manipulationLabel":"Action"
+               }
+            }
+         }
+      },
+      "SUBMISSIONS": {
+         "CREATE": {
+            "title": "Add a new submission",
+            "step_1": {
+               "title": "Information submission",
+               "form": {
+                  "type_of_business": {
+                     "label": "Type of business",
+                     "placeholder": "Select type of business",
+                     "required": "Business type is required."
+                  },
+                  "propose": {
+                     "code": "Prose code",
+                     "name": "Prose name",
+                     "level": "Signing level",
+                     "budget": "Budget type",
+                     "placeholderVN": "Title Vietnamese",
+                     "placeholderEN": "Title English",
+                     "required": "The Prose name is required to enter."
+                  },
+                  "attachments": {
+                     "label": "Attachments",
+                     "placeholder": "Select a profile type",
+                     "button": "Upload document",
+                     "required": "The Attachments is required."
+                  },
+                  "explain": {
+                     "label": "Explain",
+                     "required": "The explain is required."
+                  }
+               }
+            },
+            "step_2": {
+               "title": "Goods, services",
+               "costTitle": "Propose with cost limit",
+               "form": {
+                  "table": {
+                     "no": "STT",
+                     "Expenses": "Expense",
+                     "amount": "Number",
+                     "estimated_price": "Estimated price",
+                     "total_estimate": "Estimated total",
+                     "code": "Spend code"
+                  }
+               }
+            },
+            "step_3": {
+               "title": "Related department",
+               "sub_title": "Department",
+               "department": {
+                  "label": "Department",
+                  "placeholder": "Selecting a department"
+               },
+               "table": {
+                  "no": "No",
+                  "department": "Part",
+                  "fullname": "Full name",
+                  "action": "Delete",
+                  "no_data_found": "No data found",
+                  "content": "Contents",
+                  "status": "State",
+                  "date": "Process date"
+               }
+            },
+            "step_4": {
+               "title": "Finish",
+               "titleDetail": "Propose detail",
+               "titleHeader": "PROPOSE",
+               "titleProgess": "PROGRESS",
+               "titleApprove": "Approved",
+               "titleNotApprove": "Not approve",
+               "titleRequestApprove": "Request",
+               "titleCost": "With the list of goods and estimated costs as follows:",
+               "titleApprovePurchaseRequest": "Approve/Reject Purchase Request",
+               "companyName": "HYUNDAI THANH CONG VN AUTO JOINT VENTURE JSC",
+               "numberPropose": "Propose number",
+               "dearLabel": "Dear",
+               "dearPerson": "Mr/Ms",
+               "basedOn": "Base on",
+               "attachDocs": "Attached Docs",
+               "departmentLabel": "Department",
+               "andLabel": "and",
+               "suggestionsLabel": "would like to propose the following contents",
+               "submitForApproveLabel": "would like to submit to Mr/Ms",
+               "approvalLabel": "approve",
+               "table": {
+                  "no": "STT",
+                  "Expenses": "Expense",
+                  "amount": "Number",
+                  "estimated_price": "Estimated price",
+                  "total_estimate": "Estimated total",
+                  "code": "Cost",
+                  "totalMoney": "Total"
+               }
+            },
+            "file": {
+               "dinh_kem": {
+                  "type": "Files must be xls, xlsx, xlsm, doc, docx only.",
+                  "size": "The file size should not exceed 5 MB."
+               }
+            },
+            "msg": {
+               "create_success": "You have successfully created a propose!"
+            }
+         },
+         "DETAIL": {
+            "title": "List propose documents",
+            "searchHint": "Search",
+            "statusHint": "Status",
+            "fastHint": "Quick Search",
+            "table": {
+               "detail": {
+                  "referenceCodeLabel": "Reference Code",
+                  "proponentLabel": "Proponent",
+                  "contentLabel": "Content",
+                  "totalAmountLabel": "Total Amount",
+                  "requestDateLabel": "Request Date",
+                  "statusLabel": "Status Date",
+                  "manipulationLabel": "Manipulation"
+               }
+            }
+         }
+      },
+      "PAYMENT": {
+         "LIST": {
+            "table": {
+               "internalNumberLabel": "Internal number"
+            }
+         },
+         "CREATE": {
+            "title": "Add a new payment request",
+            "step_1": {
+               "title": "Request payment info",
+               "form": {
+                  "type_of_business": {
+                     "label": "Type of business",
+                     "placeholder": "Select type of business",
+                     "required": "Business type is required."
+                  },
+                  "propose": {
+                     "contractNumber":"Contract Number",
+                     "contractAnnex":"Contract Annex",
+                     "billNumber":"Bill Number",
+                     "requestPurchaseNumber":"Purchase Number",
+                     "completedPurchase":"Complete Purchase",
+                     "proposeNumber":"Propose Number",
+                     "taxCode":"Tax code/ Employee code",
+                     "supplier":"Supplier",
+                     "requestType":"Request Type",
+                     "requestDetail":"RequestDetail",
+                     "paymentType":"Payment Type",
+                     "requestContent":"RequestContent"
+                  },
+                  "attachments": {
+                     "label": "Attachments",
+                     "placeholder": "Select a profile type",
+                     "button": "Upload document",
+                     "required": "The Attachments is required."
+                  },
+                  "explain": {
+                     "label": "Explain",
+                     "required": "The explain is required."
+                  }
+               }
+            },
+            "step_2": {
+               "title": "Attachment files",
+               "costTitle": "Propose with cost limit",
+               "form": {
+                  "table": {
+                     "no": "STT",
+                     "Expenses": "Expense",
+                     "amount": "Number",
+                     "estimated_price": "Estimated price",
+                     "total_estimate": "Estimated total",
+                     "code": "Cost"
+                  }
+               }
+            },
+            "step_3": {
+               "title": "Payment detail",
+               "sub_title": "Department",
+               "department": {
+                  "label": "Department",
+                  "placeholder": "Selecting a department"
+               },
+               "table": {
+                  "no": "No",
+                  "department": "Part",
+                  "fullname": "Full name",
+                  "action": "Delete",
+                  "no_data_found": "No data found",
+                  "content": "Contents",
+                  "status": "State",
+                  "date": "Process date"
+               }
+            },
+            "step_4": {
+               "title": "Finish",
+               "titleDetail": "Payment request detail",
+               "titleHeader": "REQUEST PAYMENT",
+               "titleProgess": "PROGRESS",
+               "titleApprove": "Approved",
+               "titleNotApprove": "Not approve",
+               "titleRequestApprove": "Request",
+               "titleCost": "With the list of goods and estimated costs as follows:",
+               "titleApprovePurchaseRequest": "Approve/Reject Purchase Request",
+               "companyName": "HYUNDAI THANH CONG VN AUTO JOINT VENTURE JSC",
+               "numberPropose": "Propose number",
+               "dearLabel": "Dear",
+               "dearPerson": "Mr/Ms",
+               "basedOn": "Base on",
+               "attachDocs": "Attached Docs",
+               "departmentLabel": "Department",
+               "andLabel": "and",
+               "suggestionsLabel": "would like to propose the following contents",
+               "submitForApproveLabel": "would like to submit to Mr/Ms",
+               "approvalLabel": "approve",
+               "table": {
+                  "no": "STT",
+                  "Expenses": "Expense",
+                  "amount": "Number",
+                  "estimated_price": "Estimated price",
+                  "total_estimate": "Estimated total",
+                  "code": "Cost",
+                  "totalMoney": "Total"
+               }
+            },
+            "file": {
+               "dinh_kem": {
+                  "type": "Files must be xls, xlsx, xlsm, doc, docx only.",
+                  "size": "The file size should not exceed 5 MB."
+               }
+            },
+            "msg": {
+               "create_success": "You have successfully created a propose!"
+            }
+         },
+         "DETAIL": {
+            "title": "List payment requests",
+            "searchHint": "Search text",
+            "statusHint": "Status",
+            "fastHint": "Quick Search",
+            "table": {
+               "detail": {
+                  "referenceCodeLabel": "Reference Code",
+                  "proponentLabel": "Proponent",
+                  "contentLabel": "Content",
+                  "totalAmountLabel": "Total Amount",
+                  "requestDateLabel": "Request Date",
+                  "statusLabel": "Status Date",
+                  "manipulationLabel": "Manipulation",
+                  "voucherNumberLabel":"Voucher Number",
+                  "totalForeignLabel":"Total foreign",
+                  "supplier":"Supplier",
+                  "departmentLabel":"Department",
+                  "attachmentFiles":"Attachment Files",
+                  "endDateLabel":"End Date",
+                  "paymentType":"Payment Type",
+                  "internalNumberLabel ":"Internal Voucher Number",
+                  "paymentDate":"Payment Date"
+               }
+            }
+         }
+      }
+   }
+}

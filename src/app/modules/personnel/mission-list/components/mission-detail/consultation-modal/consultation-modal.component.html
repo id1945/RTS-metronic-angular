@@ -1,0 +1,76 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="825"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Tham vấn'"
+    (nzOnOk)="isVisible = false">
+
+    <form [formGroup]="formGroup" class="scroll-gray" style="max-height: calc(100vh - 250px);">
+        <div class="form-group px-10 my-10">
+            <label class="ctrl_label">Nội dung văn bản trình kí <span class="text-danger">(*)</span></label>
+            <div [ngxSummernote]="config" formControlName="noiDungTrinhKi"  class="position-relative"></div>
+            <div class="form-text text-danger"
+                *ngIf="f?.noiDungTrinhKi?.errors && (f?.noiDungTrinhKi?.touched || isSubmit)">
+                <span>Nội dung văn bản trình kí là bắt buộc</span>
+            </div>
+        </div>
+        <div class="form-group px-10 my-10">
+            <label class="ctrl_label">Kiểm tra rà soát nội dung <span class="text-danger">(*)</span></label>
+            <div [ngxSummernote]="config" formControlName="noiDungKiemTra" class="position-relative"></div>
+            <div class="form-text text-danger"
+                *ngIf="f?.noiDungKiemTra?.errors && (f?.noiDungKiemTra?.touched || isSubmit)">
+                <span>Kiểm tra rà soát nội dung là bắt buộc</span>
+            </div>
+        </div>
+        <div class="form-group px-10 my-10">
+            <div formArrayName="noiDungThuKiThamVans">
+                <label class="ctrl_label mb-0">Tham vấn của thư kí TGĐ <span class="text-danger">(*)</span></label>
+                <div class="col-12 row m-0 p-0" *ngFor="let item of f?.noiDungThuKiThamVans?.controls; let i = index">
+                    <div class="col-10" style="padding: 0%;" [formGroupName]="i">
+                        <textarea formControlName="noiDungThamVan" placeholder="Nhập thông tin tham vấn"
+                            class="form-control input_42 pt-3 mt-3" rows="2"
+                            ></textarea>
+                        <div class="form-text text-danger"
+                            *ngIf="item?.controls?.noiDungThamVan?.errors && (item?.noiDungThamVan?.controls?.touched || isSubmit)">
+                            <span>Tham vấn của thư kí TGĐ là bắt buộc</span>
+                        </div>
+                    </div>
+                    <div class="col-2 pr-0 mt-4">
+                        <!-- </div> -->
+                        <div class="d-flex justify-content-center align-items-center pl-1">
+                            <button
+                                nz-popconfirm
+                                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                [nzIcon]="iconTpl"
+                                [nzOkText]="'COMMON.btn.yes' | translate"
+                                [nzCancelText]="'COMMON.btn.no' | translate"
+                                class="btn btn-icon btn-hover text-danger"
+                                (nzOnConfirm)="removeItem(i)"
+                                style="font-weight: 500; font-size: 14px">
+                                <i class="fas fa-trash-alt icon-lg text-danger mr-2"></i>Xoá</button>
+                            <ng-template #iconTpl>
+                                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group px-8 my-10">
+            <div class="col">
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="addItem()"><i class="fa fa-plus icon-md"></i> Thêm tham vấn</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()">Xác nhận</button>
+        </div>
+    </div>
+    
+</nz-modal>

@@ -1,0 +1,159 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Thông tin văn bản trình duyệt'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại văn bản <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="LoaiVanBanKey" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Lựa chọn loại văn bản"
+                        [nzOptions]="loaiVanBanOptions" style="width: 100%;">
+                    </nz-select>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.INSTITUTION.DETAIL.documentName' | translate }}  <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="TenVanBan" placeholder="{{ 'DOCUMENT.INSTITUTION.DETAIL.documentName' | translate }}"
+                        class="form-control input_42 pt-3" rows="1"
+                        ></textarea>
+                    <div class="form-text text-danger"
+                        *ngIf="f?.TenVanBan?.errors && (f?.TenVanBan?.touched || isSubmit)">
+                        <span>Tên văn bản là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label"> {{ 'DOCUMENT.INSTITUTION.DETAIL.scope' | translate }} <span class="text-danger">(*)</span> </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="PhamViApDungs" nzMode="multiple" nzPlaceHolder="{{ 'DOCUMENT.INSTITUTION.DETAIL.scope' | translate }}"
+                        nzAllowClear nzShowSearch nzServerSearch style="width: 100%;">
+                        <ng-container *ngFor="let o of phamViApDung">
+                            <nz-option [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label"> {{ 'DOCUMENT.INSTITUTION.DETAIL.accessRights' | translate }} <span class="text-danger">(*)</span> </div> 
+
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="QuyenTruyCaps" nzMode="multiple" nzPlaceHolder="{{ 'DOCUMENT.INSTITUTION.DETAIL.accessRights' | translate }}"
+                        nzAllowClear nzShowSearch nzServerSearch style="width: 100%;">
+                        <ng-container *ngFor="let o of quyenTruyCap">
+                            <nz-option [nzValue]="o.value" [nzLabel]="o.label"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.INSTITUTION.DETAIL.effectiveDateFrom' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="NgayHieuLuc" nzPlaceHolder="  {{ 'DOCUMENT.INSTITUTION.DETAIL.effectiveDateFrom' | translate }}"
+                        [nzFormat]="'dd-MM-yyyy'" class="form-control input_42" rows="1"
+                        style="min-height: 42px;">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    {{ 'DOCUMENT.INSTITUTION.DETAIL.effectiveDateTo' | translate }}
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="NgayHetHieuLuc" nzPlaceHolder=" {{ 'DOCUMENT.INSTITUTION.DETAIL.effectiveDateTo' | translate }}"
+                        [nzFormat]="'dd-MM-yyyy'" class="form-control input_42" rows="1"
+                        style="min-height: 42px;">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Văn bản trình duyệt <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="row mx-0 mb-2 align-items-center" *ngFor="let item of dataDetail?.attachments; let i = index; trackBy:trackByFn">
+                        <div class="col-12 pl-0 truncate">
+                            <i class="flaticon2-file-1 icon-lg mx-3" style="color: #FF8F1F;"></i>
+                            <span class="text-hover-primary-no">{{item?.tenFile}}</span>
+                        </div>
+                    </div>
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải lên văn bản'" 
+                        [(selectedFiles)]="dinhKems">
+                    </app-select-file>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Văn bản thay thế 
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="VanBanThayTheKey" nzShowSearch nzAllowClear
+                        nzPlaceHolder="Lựa chọn văn bản thay thế"
+                        [nzOptions]="vanBanThayTheOptions" style="width: 100%;">
+                    </nz-select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tài liệu bổ sung
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-file 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải lên văn bản'" 
+                        [(selectedFiles)]="taiLieuBoSungs">
+                    </app-select-file>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button 
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

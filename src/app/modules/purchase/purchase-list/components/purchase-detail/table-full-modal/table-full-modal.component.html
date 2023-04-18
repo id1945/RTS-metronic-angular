@@ -1,0 +1,97 @@
+<nz-modal nzCentered [nzWidth]="1000" [(nzVisible)]="isVisible" [nzFooter]="null" (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false" [nzTitle]="'Danh mục hàng hoá và chi phí dự kiến'" (nzOnOk)="isVisible = false">
+
+    <div class="card card-custom">
+        <div class="card-body" *ngIf="dataDetail?.thongTinHangHoaDichVus?.length">
+            <nz-table
+                [nzLoading]=""
+                [nzSize]="'small'"
+                [nzData]="dataDetail?.thongTinHangHoaDichVus"
+                [nzShowPagination]="false"
+                class="ant-table-border"
+                [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+                <thead>
+                    <tr>
+                        <th [nzWidth]="'50px'" [nzAlign]="'center'">STT</th>
+                        <th [nzWidth]="'250px'">Hàng hóa, dịch vụ</th>
+                        <th [nzWidth]="'150px'">Quy cách</th>
+                        <th [nzWidth]="'70px'">ĐVT</th>
+                        <th [nzWidth]="'150px'" [nzAlign]="'right'">Giá tham khảo</th>
+                        <th [nzWidth]="'150px'" [nzAlign]="'right'">Số lượng</th>
+                        <th [nzWidth]="'185px'" [nzAlign]="'right'">Dự toán đơn giá (chưa VAT)</th>
+                        <th [nzWidth]="'195px'" [nzAlign]="'right'">Dự toán thành tiền (chưa VAT)</th>
+                        <th [nzWidth]="'150px'">Mã ngân sách</th>
+                        <th [nzWidth]="'150px'" style="text-align: center;">Bộ phận tự mua</th>
+                        <th [nzWidth]="'130px'">Ngày mong muốn</th>
+                        <th [nzWidth]="'150px'">NCC đã giao dịch</th>
+                        <th [nzWidth]="'250px'">NCC đề xuất</th>
+                        <th [nzWidth]="'250px'">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of dataDetail?.thongTinHangHoaDichVus; let i = index">
+                        <ng-container>
+                            <td [nzAlign]="'center'">{{i + 1}}</td>
+                            <td [title]="item?.tenHangHoaDichVu">
+                                {{item?.tenHangHoaDichVu || '-'}}
+                            </td>
+                            <td [title]="item?.quyCach">
+                                {{item?.quyCach || '-'}}
+                            </td>
+                            <td [title]="item?.dvt">
+                                {{item?.dvt || '-'}}
+                            </td>
+                            <td [title]="item?.giaThamKhao" [nzAlign]="'right'">
+                                {{item?.giaThamKhao | number}}
+                            </td>
+                            <td [title]="item?.soLuong" [nzAlign]="'right'">
+                                {{ item?.soLuong | number}}
+                            </td>
+                            <td [title]="item?.duToanDonGia" [nzAlign]="'right'">
+                                {{item?.duToanDonGia | number}}
+                            </td>
+                            <td [title]="item?.duToanThanhTien" [nzAlign]="'right'">
+                                {{item?.duToanThanhTien | number}}
+                            </td>
+                            <td [title]="item?.maNganSach">
+                                {{item?.maNganSach || '-'}}
+                            </td>
+                            <td class="text-center">
+                                <span *ngIf="item?.isBoPhanTuMua" style="color:blue;" class="container text-center" >
+                                    <input type="checkbox" checked disabled="disabled"> 
+                                    <span class="checkmark"></span>
+                                </span>
+                            </td>
+                            <td [title]="item?.ngayMongMuon | date: 'dd/MM/yyyy'">
+                                {{item?.ngayMongMuon*1000 | date: 'dd/MM/yyyy'}}
+                            </td>
+                            <td [title]="item?.nccDaGiaoDich">
+                                {{item?.nccDaGiaoDich?.join(',') || '-'}}
+                            </td>
+                            <td [title]="item?.nccDeXuat?.join(',')">
+                                {{item?.nccDeXuat?.join(',') || '-'}}
+                            </td>
+                            <td [title]="item?.ghiChu">
+                                {{item?.ghiChu || '-'}}
+                            </td>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <td colspan="13" class="tr_footer pr-2">
+                            <div class="text-left text-blue-01">
+                                Tổng dự toán: <b>{{dataDetail?.tongDuToan | number}} VND</b>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 w_130 mr-2" (click)="isVisible = false" [translate]="'COMMON.btn.close'"></button>
+        </div>
+    </div>
+
+</nz-modal>

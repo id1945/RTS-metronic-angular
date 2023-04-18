@@ -1,0 +1,183 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="dataModal ? 'Cập nhật KPI mục tiêu' : 'Thêm mới KPI mục tiêu'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mục tiêu<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="mucTieuKey" [nzOptions]="mucTieuOptions" nzShowSearch nzAllowClear nzPlaceHolder="Mục tiêu" class="w-100"></nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.phongBanKey?.errors && f?.phongBanKey?.touched">
+                        <span>Mục tiêu là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên KPI<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="tenKPI" placeholder="Tên KPI" class="form-control input_42 pt-3" rows="3" maxlength="500"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.tenChucVu?.errors && f?.tenChucVu?.touched">
+                        <span>Tên KPI là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Nội dung công thức tính
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="noiDungCongThuc" placeholder="Nội dung công thức tính" class="form-control input_42 pt-3" rows="3" maxlength="500"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thành phần
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-tags-button [(tags)]="thanhPhanTags" (onAdd)="addIngredientsTargetKpi.showModal()" btnLable="Thêm thành phần"></app-select-tags-button>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Công thức tính toán
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea formControlName="congThucTinhToan" placeholder="Công thức tính toán" class="form-control input_42 pt-3" rows="3" maxlength="500"></textarea>
+                </div>
+            </div>
+
+            <!-- <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Số máy lẻ
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="loaiCongThucKey" placeholder="Số máy lẻ" class="form-control input_42"/>
+                </div>
+            </div> -->
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại công thức
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="loaiCongThucKey" [nzOptions]="loaiCongThucOptions" nzShowSearch nzAllowClear nzPlaceHolder="Loại công thức" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Nhân sự chịu trách nhiệm
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="nhanSuChiuTrachNhiemKey" [nzOptions]="nhanSuChiuTrachNhiemOptions" nzShowSearch nzAllowClear nzPlaceHolder="Nhân sự chịu trách nhiệm" class="w-100"></nz-select>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Phòng ban
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="phongBanKey" [nzOptions]="phongBanOptions" nzShowSearch nzAllowClear nzPlaceHolder="Phòng ban" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Đơn vị tính
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="donViTinhKey" [nzOptions]="donViTinhOptions" nzShowSearch nzAllowClear nzPlaceHolder="Đơn vị tính" class="w-100"></nz-select>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại KPI
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="loaiKPIKey" [nzOptions]="loaiKPIOptions" nzShowSearch nzAllowClear nzPlaceHolder="Loại KPI" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tần suất theo dõi
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="tanSuatTheoDoiKey" [nzOptions]="tanSuatKPIOptions" nzShowSearch nzAllowClear nzPlaceHolder="Tần suất theo dõi" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Trọng số (%)
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-input-number
+                        [nzMin]="0"
+                        [nzMax]="100"
+                        [nzStep]="1"
+                        [nzFormatter]="formatter"
+                        [nzParser]="parser"
+                        formControlName="trongSo"
+                        nzPlaceHolder="Trọng số" class="form-control input_42 text-left">
+                    </nz-input-number>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    STT
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="number" formControlName="stt" numbersOnly min="0" placeholder="STT" class="form-control input_42"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 w_130 py-3 mr-2"
+                    (nzOnCancel)="isVisible = true"
+                    (nzOnConfirm)="isVisible = false"
+                    [translate]="'COMMON.btn.cancel'">
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="dataModal ? onEdit() : onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+    <!-- Thêm mới thành phần -->
+    <app-add-ingredients-modal
+        #addIngredientsTargetKpi="add-ingredients"
+        (thanhPhan)="onAddThanhPhan($event)"
+        [apiStt]="'/api/kpimuctieu-nam-bophan-dm/trang-thai-thanh-phan'"
+        [apiCreate]="'/api/kpimuctieu-nam-bophan-create/thanh-phan'">
+    </app-add-ingredients-modal>
+</nz-modal>

@@ -1,0 +1,78 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="dataDetail ? 'Cập nhật Quận huyện' : 'Thêm mới quận huyện'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên quận huyện<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenQuanHuyen" placeholder="Tên quận huyện" class="form-control form-control-sm input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.tenQuanHuyen?.errors && f?.tenQuanHuyen?.touched">
+                        <span>Tên quận huyện là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mã quận huyện <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="maQuanHuyen" placeholder="Mã quận huyện" class="form-control form-control-sm input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.maQuanHuyen?.errors && f?.maQuanHuyen?.touched">
+                        <span>Mã quận huyện là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-5" *ngIf="!dataDetail">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thuộc tỉnh thành
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="tinhThanhId"  nzShowSearch
+                        nzAllowClear nzPlaceHolder="Thuộc tỉnh thành" style="width: 100%;">
+                    </nz-select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ghi chú
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="ghiChu" placeholder="Ghi chú" class="form-control input_42" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" >
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="dataDetail ? onEdit() : onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

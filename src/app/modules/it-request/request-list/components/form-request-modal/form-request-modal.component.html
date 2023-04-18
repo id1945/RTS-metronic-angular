@@ -1,0 +1,99 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="725"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="mode == 1 ? 'Tạo mới yêu cầu hỗ trợ' : mode == 2 ? 'Cập nhật yêu cầu hỗ trợ' : 'Chi tiết'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Loại yêu cầu
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="service_id" [nzOptions]="serviceOptions" [nzDisabled]="mode == 3" nzShowSearch nzAllowClear nzPlaceHolder="Lựa chọn" class="w-100"></nz-select>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Nội dung yêu cầu
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" formControlName="name" class="form-control input_42" [attr.disabled]="mode == 3 ? true : null">
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Yêu cầu chi tiết
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="description" class="form-control input_42" [attr.disabled]="mode == 3 ? true : null"></textarea>
+                </div>
+            </div>
+        </form>
+
+        <ng-container *ngIf="mode == 3">
+            <div class="row my-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Người thực hiện
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" [value]="dataDetail?.user_name" class="form-control input_42" [attr.disabled]="true">
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ngày yêu cầu
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" [value]="dataDetail?.start_date" class="form-control input_42" [attr.disabled]="true">
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Trạng thái
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" [value]="dataDetail?.stage_name" class="form-control input_42" [attr.disabled]="true">
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <ng-container *ngIf="mode != 3; else btnClose">
+                <div>
+                    <button
+                        nz-popconfirm
+                        nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                        [nzIcon]="iconTpl"
+                        [nzOkText]="'COMMON.btn.yes' | translate"
+                        [nzCancelText]="'COMMON.btn.no' | translate"
+                        class="btn btn-light btn-14 py-3 w_130 mr-2"
+                        (nzOnCancel)="isVisible = true"
+                        (nzOnConfirm)="isVisible = false">
+                        Hủy
+                    </button>
+                    <ng-template #iconTpl>
+                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                    </ng-template>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-14 py-3 w_130" (click)="mode == 1 ? onCreate() : onEdit()">Ghi lại</button>
+                </div>
+            </ng-container>
+            <ng-template #btnClose>
+                <button class="btn btn-light btn-14 py-3 w_130" (click)="isVisible = false">{{'COMMON.btn.close' | translate}}</button>
+                <button *ngIf="dataDetail?.is_approve" class="btn btn-danger btn-14 py-3 w_130 ml-2" (click)="onApprove(false)">{{'COMMON.btn.reject' | translate}}</button>
+                <button *ngIf="dataDetail?.is_approve" class="btn btn-primary btn-14 py-3 w_130 ml-2" (click)="onApprove(true)">{{'COMMON.btn.approve' | translate}}</button>
+            </ng-template> 
+        </div>
+    </div>
+</nz-modal>

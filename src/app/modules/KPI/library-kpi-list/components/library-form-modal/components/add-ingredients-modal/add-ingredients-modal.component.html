@@ -1,0 +1,57 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Thêm mới thành phần'"
+    (nzOnOk)="isVisible = false">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 180px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên thành phần <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="tenThanhPhan" class="form-control pt-3 input_42"></textarea>
+                    <div class="form-text text-danger" *ngIf="f?.tenThanhPhan?.errors && f?.tenThanhPhan?.touched">
+                        <span>Tên thành phần là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">STT</div>
+                <div class="col-12 col-md-7">
+                    <input type="number" formControlName="stt" numbersOnly class="form-control input_42">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">Trạng thái</div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select formControlName="trangThaiThanhPhanKey" nzShowSearch nzAllowClear [nzOptions]="trangThaiOptions" class="w-100"></nz-select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = true"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

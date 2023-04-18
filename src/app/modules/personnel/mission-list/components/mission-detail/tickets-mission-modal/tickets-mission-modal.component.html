@@ -1,0 +1,49 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="600"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="'Cập nhật thông tin vé máy bay, khách sạn'"
+    (nzOnOk)="isVisible = false">
+
+    <div class="p-10">
+        <form [formGroup]="formGroup">
+            <div class="row">
+                <div class="col-5 ctrl_label">
+                    Nội dung phê duyệt
+                </div>
+                <div class="col-7">
+                    <textarea formControlName="ghiChu" placeholder="Nhập nội dung phê duyệt" class="form-control input_42" rows="3">
+                    </textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-5 ctrl_label" >
+                    Thông tin vé máy bay
+                </div>
+                <div class="col-7">
+                    <textarea formControlName="thongTinDatVe" placeholder="Nhập thông tin vé máy bay" class="form-control input_42" rows="3">
+                    </textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-5 ctrl_label">
+                   Thông tin khách sạn
+                </div>
+                <div class="col-7">
+                    <textarea formControlName="thongTinKhachSan" placeholder="Nhập thông tin khách sạn" class="form-control input_42" rows="3">
+                    </textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 mr-2 w_130" (click)="isVisible = false" [translate]="'COMMON.btn.cancel'"></button>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmitTickets()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

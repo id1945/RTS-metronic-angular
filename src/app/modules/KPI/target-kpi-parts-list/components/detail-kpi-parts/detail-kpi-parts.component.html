@@ -1,0 +1,83 @@
+<div class="w-100 box-shadow">
+    <!--begin::Content-->
+    <div class="card card-custom">
+        <div class="card-header border-0">
+            <div class="card-title d-flex justify-content-between align-content-center w-100 m-0">
+                <h3 class="card-label">E_Danh sách mục tiêu bộ phận - KHCV - KPI</h3>
+                <button type="button" *ngIf="permission?.mucTieuDoiChieu?.kpiMucTieuNamBoPhanId" (click)="openTargetNewWindows()" class="btn btn-info d-block h_42 min_w_90">
+                    <i nz-icon nzType="windows" nzTheme="outline"></i> Hiển thị mục tiêu đối chiếu
+                </button>
+            </div>
+        </div>
+        <div class="card-body py-0">
+            <nz-tabset [nzSelectedIndex]="tabIdx" [ngSwitch]="tabIdx" (nzSelectedIndexChange)="tabIdx = $event; tabIdx == 0">
+                <nz-tab nzTitle="E_Mục tiêu bộ phận">
+                    <app-e-target-list *ngSwitchCase="0" #target="target" [id]="params?.kpiMucTieuNamBoPhanId" [permission]="permission"></app-e-target-list>
+                </nz-tab>
+                <nz-tab nzTitle="E_Kế hoạch công việc" *ngIf="permission?.isAllowViewKHCV">
+                    <app-e-plan-list *ngSwitchCase="1" #plan="plan" [id]="params?.kpiMucTieuNamBoPhanId" [permission]="permission"></app-e-plan-list>
+                </nz-tab>
+                <nz-tab nzTitle="KPI">
+                    <app-e-kpi-list *ngSwitchCase="2" #kpi="kpi" [id]="params?.kpiMucTieuNamBoPhanId" [permission]="permission"></app-e-kpi-list>
+                </nz-tab>
+            </nz-tabset>
+
+            <ng-container *ngIf="permission?.lichSuPheDuyet?.items?.length">
+                <!-- Trạng thái hồ sơ hiện tại -->
+                <table class="table table_classic table_40 mt-5">
+                    <tr>
+                        <td class="pl-5">Trạng thái hồ sơ hiện tại</td>
+                        <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{statusFinal?.tinhTrang || '-'}}</span></td>
+                        <td class="pl-5">Người phê duyệt</td>
+                        <td class="pl-5"><span class="text-blue-01 font-weight-bolder">{{statusFinal?.nguoiDuyet || '-'}}</span></td>
+                    </tr>
+                </table>
+
+                <!-- Lịch sử phê duyệt -->
+                <h5 class="text-blue-01 my-5">Lịch sử phê duyệt</h5>
+                <nz-table
+                    [nzLoading]=""
+                    [nzSize]="'small'"
+                    [nzData]="dataTable.items"
+                    [nzShowPagination]="false"
+                    [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+                    <thead>
+                        <tr>
+                            <ng-container *ngFor="let col of dataTable.columns">
+                                <th
+                                    [nzAlign]="col?.align"
+                                    [nzWidth]="col?.width">
+                                    {{ col?.title }}
+                                </th>
+                            </ng-container>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of dataTable.items; let i = index">
+                            <ng-container *ngFor="let col of dataTable.columns">
+                                <td *ngIf="col?.field" class="px-5" [ngSwitch]="col.field" [nzAlign]="col?.align">
+                                    <span *ngSwitchCase="'stt'">{{ i + 1 }}</span>
+                                    <span *ngSwitchCase="'ngayDuyet'">{{ data[col.field] * 1000 | date: col?.pipe }}</span>
+                                    <span *ngSwitchDefault class="truncate-2 cursor-pointer" [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </ng-container>
+            
+            <!-- footer  -->
+            <div class="footer">
+                <div class="row float-right my-5">
+                    <button *ngIf="permission?.isAllowPheDuyet" (click)="approveTargetKpiParts?.showModal(params?.kpiMucTieuNamBoPhanId, false)" class="btn btn-danger btn-14 py-3 m-1 w_130" [translate]="'COMMON.btn.reject'"></button>
+                    <button *ngIf="permission?.isAllowPheDuyet" (click)="approveTargetKpiParts?.showModal(params?.kpiMucTieuNamBoPhanId, true)" class="btn btn-primary btn-14 py-3 m-1 w_130" [translate]="'COMMON.btn.approve'"></button>
+                    <button *ngIf="permission?.isAllowDeXuat" (click)="onDeXuat()" class="btn btn-primary btn-14 py-3 m-1 w_130" [translate]="'E_Đề xuất'"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Content-->
+</div>
+
+<!-- Aprrove/Reject -->
+<app-approve-target-kpi-parts-modal #approveTargetKpiParts="approve-target-kpi-parts" (loadList)="getPermission()"></app-approve-target-kpi-parts-modal>

@@ -1,0 +1,194 @@
+<!--begin::Thư viện ảnh công ty-->
+<div class="card card-custom card-collapsed gutter-b" data-card="true" id="kt_card_4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label" >{{'COMPANY_INFO.INTRODUCE.imageLibrary'| translate }}</h3>
+        </div>
+        <div class="card-toolbar">
+            <a class="btn btn-icon btn-sm btn-light-primary mr-1" (click)="isCollapsedPhoto = !isCollapsedPhoto"
+                [attr.aria-expanded]="!isCollapsedPhoto" aria-controls="collapsePhoto">
+                <i class="ki ki-arrow-down icon-nm"></i>
+            </a>
+            <a class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                <i class="ki ki-reload icon-nm"></i>
+            </a>
+        </div>
+    </div>
+    <div id="collapsePhoto" [ngbCollapse]="isCollapsedPhoto">
+        <div class="card-body gutter-b" *ngIf="imageObject?.length">
+            <app-image-slider [images]="imageObject" (clickEvent)="imageClick($event)"></app-image-slider>
+        </div>
+    </div>
+</div>
+<!-- end:Thư viện ảnh công ty -->
+<!-- start:Thư viện phim công ty -->
+<div class="card card-custom card-collapsed gutter-b" data-card="true" id="kt_card_4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">{{'COMPANY_INFO.INTRODUCE.videoLibrary' | translate }}</h3>
+        </div>
+        <div class="card-toolbar">
+            <a class="btn btn-icon btn-sm btn-light-primary mr-1" (click)="isCollapsedVideo = !isCollapsedVideo"
+                [attr.aria-expanded]="!isCollapsedVideo" aria-controls="collapseVideo">
+                <i class="ki ki-arrow-down icon-nm"></i>
+            </a>
+            <a class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                <i class="ki ki-reload icon-nm"></i>
+            </a>
+        </div>
+    </div>
+    <div id="collapseVideo" [ngbCollapse]="isCollapsedVideo">
+        <div class="card-body">
+            <div class="row">
+                <!--begin::Content-->
+                <div class="col-xxl-8 order-1 order-xxl-1">
+                    <div class="scroll-gray-box-6">
+                        <iframe width="100%" *ngIf="videoID" height="597px" [src]="('https://www.youtube.com/embed/' + videoID) | safe: 'resourceUrl'"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+                <!--end::Content-->
+                <!--begin::Aside-->
+                <div class="col-lg-12 col-xxl-4 order-2 order-xxl-2 mt-5 mt-sm-5 mt-md-5 mt-lg-5 mt-xl-5 mt-xxl-0">
+                    <div class="scroll-gray tab-content" style="max-height: 597px;">
+                        <div class="tab-pane fade show active" id="kt_tab_pane_1_1" role="tabpanel"
+                            aria-labelledby="kt_tab_pane_1_1">
+                            <ng-container *ngFor="let item of videoYoutube; let last = last">
+                                <!--begin::Tap pane-->
+                                <!--begin::Item-->
+                                <div class="d-flex align-items-center cursor-pointer hv_shadow" [ngClass]="{'mb-3 pb-3': !last}" (click)="videoID = item?.id">
+                                    <!--begin::Symbol-->
+                                    <div class="symbol symbol-140 symbol-2by3 flex-shrink-0 mr-4">
+                                        <div class="symbol-label"
+                                            style="background-image: url('https://img.youtube.com/vi/{{item?.id}}/sddefault.jpg')">
+                                        </div>
+                                    </div>
+                                    <!--end::Symbol-->
+                                    <!--begin::Section-->
+                                    <div class="d-flex flex-column flex-grow-1">
+                                        <!--begin::Title-->
+                                        <a
+                                            class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg mb-1">{{item?.title}}</a>
+                                        <!--end::Title-->
+                                        <!--begin::Desc-->
+                                        <span
+                                            class="text-dark-50 font-weight-normal font-size-sm">{{item?.content}}</span>
+                                        <!--begin::Desc-->
+                                    </div>
+                                    <!--end::Section-->
+                                </div>
+                                <!--end::Item-->
+                            </ng-container>
+                            <!--end::Tap pane-->
+                        </div>
+                    </div>
+                </div>
+                <!--end::Aside-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:Thư viện phim công ty -->
+<!-- start:Tài liệu công ty -->
+<div class="card card-custom card-collapsed" data-card="true" id="kt_card_4">
+    <div class="card-header">
+        <div class="card-title">
+            <h3 class="card-label">Tài liệu công ty</h3>
+        </div>
+        <div class="card-toolbar">
+            <a class="btn btn-icon btn-sm btn-light-primary mr-1" (click)="isCollapsedDocs = !isCollapsedDocs"
+                [attr.aria-expanded]="!isCollapsedDocs" aria-controls="collapseDocs">
+                <i class="ki ki-arrow-down icon-nm"></i>
+            </a>
+            <a class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                <i class="ki ki-reload icon-nm"></i>
+            </a>
+        </div>
+    </div>
+    <div id="collapseDocs" [ngbCollapse]="isCollapsedDocs">
+        <div class="card-body">
+            <div class="row">
+                <!--begin::Content-->
+                <div class="col-xxl-9 order-1 order-xxl-1">
+                    <div class="scroll-gray-box-7">
+                        <ngx-extended-pdf-viewer *ngIf="urlPdf" [src]="urlPdf" [useBrowserLocale]="true"
+                            [textLayer]="true" [showHandToolButton]="true" height="700px">
+                        </ngx-extended-pdf-viewer>
+                    </div>
+                </div>
+                <!--end::Content-->
+                <!--begin::Aside-->
+                <div class="col-lg-12 col-xxl-3 order-2 order-xxl-2 mt-5 mt-sm-5 mt-md-5 mt-lg-5 mt-xl-5 mt-xxl-0">
+                    <div class="card card-custom card-stretch card-stretch-half gutter-b">
+                        <div class="card-header border-0 pt-5">
+                            <h3 class="card-label">Tài liệu tiếng Việt</h3>
+                        </div>
+                        <!--begin::Body-->
+                        <div class="card-body pt-2 scroll-gray-box-6">
+                            <div class="pt-1">
+                                <ng-container *ngFor="let itemVanBan of ListTaiLieuTiengViet">
+                                    <!--begin::Item-->
+                                    <div class="d-flex align-items-center pb-5">
+                                        <!--begin::Symbol-->
+                                        <div class="symbol symbol-45 symbol-light-primary mr-4">
+                                            <span class="symbol-label">
+                                                <span class="svg-icon svg-icon-2x svg-icon-dark-50">
+                                                    <i class="far fa-file-word text-primary icon-2x"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <!--end::Symbol-->
+                                        <!--begin::Text-->
+                                        <div class="d-flex flex-column flex-grow-1">
+                                            <a (click)="previewPdf(itemVanBan)" class="text-dark-75 text-hover-primary mb-1">{{itemVanBan?.tenTaiLieu}}</a>
+                                        </div>
+                                        <!--end::Text-->
+                                    </div>
+                                    <!--end::Item-->
+                                    </ng-container>
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                    <div class="card card-custom card-stretch card-stretch-half gutter-b">
+                        <div class="card-header border-0 pt-5">
+                            <h3 class="card-label">Tài liệu tiếng Anh</h3>
+                        </div>
+                        <!--begin::Body-->
+                        <div class="card-body pt-2 scroll-gray-box-6">
+                            <div class="pt-1">
+                                <ng-container *ngFor="let itemVanBan of ListTaiLieuTiengAnh">
+                                <!--begin::Item-->
+                                <div class="d-flex align-items-center pb-5">
+                                    <!--begin::Symbol-->
+                                    <div class="symbol symbol-45 symbol-light-primary mr-4">
+                                        <span class="symbol-label">
+                                            <span class="svg-icon svg-icon-2x svg-icon-dark-50">
+                                                <i class="far fa-file-word text-primary icon-2x"></i>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <!--end::Symbol-->
+                                    <!--begin::Text-->
+                                    <div class="d-flex flex-column flex-grow-1">
+                                        <a href="#" class="text-dark-75 text-hover-primary mb-1">{{itemVanBan?.tenTaiLieu}}</a>
+                                    </div>
+                                    <!--end::Text-->
+                                </div>
+                                <!--end::Item-->
+                                    
+                                </ng-container>
+
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                    </div>
+                </div>
+                <!--end::Aside-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end:Tài liệu công ty -->

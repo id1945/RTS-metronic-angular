@@ -1,0 +1,57 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="dataDetail ? 'Cập nhật Loại nghiệp vụ' : 'Thêm mới loại nghiệp vụ'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên loại nghiệp vụ<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenLoaiNghiepVu" placeholder="Tên loại nghiệp vụ" class="form-control form-control-sm input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.tenLoaiNghiepVu?.errors && f?.tenLoaiNghiepVu?.touched">
+                        <span>Tên loại nghiệp vụ là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">Hiệu lực</div>
+                <div class="col-12 col-md-7">
+                    <nz-switch #switch formControlName="isHieuLuc" nzCheckedChildren="" nzUnCheckedChildren=""></nz-switch>
+                    <!-- <span class="ml-3"
+                        [class.active_switch]="isHieuLuc?.value"
+                        [translate]="isHieuLuc?.value ? 'Còn hiệu lực' : 'Hết hiệu lực'">
+                    </span> -->
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" >
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="dataDetail ? onEdit() : onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

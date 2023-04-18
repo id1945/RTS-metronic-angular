@@ -1,0 +1,435 @@
+<div class="detail">
+    <div class="title d-flex justify-content-between my-3">
+        <div>{{ 'PAYMENT.CREATE.step_4.titleDetail' | translate }}</div>
+        <div>
+            <button *ngIf="dataDetail?.isAllowPrint" class="btn btn-outline-info btn-14 py-3 mr-2 w_130" (click)="onPrint(dataDetail?.hoSoId)"><i class="fas fa-print"></i>{{'COMMON.btn.print' | translate }}</button>
+        </div>
+    </div>
+    <div class="d-flex flex-column-fluid">
+        <div #getElementHeight class="col-10 col-lg-9 col-xxl-10 order-1 order-xxl-1 pl-0">
+            <div class="box-shadow p-8 radius-10 bg-white">
+                <div class="detail_header">
+                    <div class="text-left">
+                        <div class="company">{{ 'PAYMENT.CREATE.step_4.companyName' | translate }}</div>
+                        <div class="no">Số đề nghị: <b>{{dataDetail?.soChungTu}}</b></div>
+                    </div>
+                    <div class="text-right">
+                        <div><img src="assets/media/logos/ycmh_logo_paper.png" alt="logo" height="16" width="240">
+                        </div>
+                        <div class="today">Hà Nội, Ngày {{dataDetail?.ngayTao * 1000 | date: 'dd'}} tháng {{dataDetail?.ngayTao * 1000 | date: 'MM'}} năm {{dataDetail?.ngayTao * 1000 | date: 'yyyy'}}</div>
+                    </div>
+                </div>
+                <div class="detail_name">
+                    <p>{{ 'PAYMENT.CREATE.step_4.titleHeader' | translate }} </p>
+                    <p>{{dataDetail?.noiDungDeNghi}} </p>
+                </div>
+                <div class="dear_name" *ngIf="dataDetail?.isAllowPheDuyet">
+                    Kính gửi: Ông/Bà <b>{{tenNguoiPheDuyet}}</b>
+                </div>
+                <div class="content_text">
+                    Bộ phận {{dataDetail?.tenPhongBanNguoiTao}} xin {{dataDetail?.loaiDeNghiDisplay}} với thông tin chi tiết như sau :
+                </div>
+                <div>
+                    <table class="table table_classic table_40 mt-5 mb-8">
+                        <tr>
+                            <td class="min_w_120">Người tạo</td>
+                            <td><span class="truncate-2 min_w_180 font-weight-bolder">{{dataDetail?.tenNguoiTao || '-'}}</span></td>
+                            <td class="min_w_180">Bộ phận</td>
+                            <td><span class="truncate-2 min_w_180 font-weight-bolder">{{dataDetail?.tenPhongBanNguoiTao || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="min_w_120">Số hợp đồng</td>
+                            <td><span class="truncate-2 min_w_180 font-weight-bolder">{{dataDetail?.soHopDong || '-'}}</span></td>
+                            <td class="min_w_180">Phụ lục hợp đồng</td>
+                            <td><span class="truncate-2 min_w_180 font-weight-bolder">{{dataDetail?.soPhuLucHopDong || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mã số thuế / Mã nhân viên</td>
+                            <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.maSoThue || '-'}}</span></td>
+                            <td>Nhà cung cấp</td>
+                            <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.tenNhaCungCap || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Số hóa đơn</td>
+                            <td colspan="3"><span class="truncate-2 font-weight-bolder">{{dataDetail?.soHoaDon || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tờ trình</td>
+                            <td>
+                                <a class="truncate-2 font-weight-bolder" target="_blank" [routerLink]="['/', 'submissions', 'detail', dataDetail?.toTrinhId]">{{dataDetail?.tenToTrinh || '-'}}</a>
+                            </td>
+                            <td>Số Yêu cầu mua sắm</td>
+                            <td>
+                                <a class="truncate-2 font-weight-bolder"  target="_blank" [routerLink]="['/', 'purchase', 'detail',dataDetail?.idYCMH, dataDetail?.maYCMH]">{{dataDetail?.maYCMH || '-'}}</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Loại đề nghị</td>
+                            <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.loaiDeNghiDisplay || '-'}}</span></td>
+                            <td>Loại thanh toán</td>
+                            <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.loaiHinhThanhToanDisplay || '-'}}</span></td>
+                        </tr>
+                        <!-- Đề nghị hoàn ứng -->
+                        <ng-container *ngIf="dataDetail?.loaiDeNghiDisplay == 'Đề nghị hoàn ứng'">
+                            <tr>
+                                <td>Đề nghị tạm ứng</td>
+                                <td><a class="truncate-2 font-weight-bolder"  target="_blank" [routerLink]="['/', 'submissions', 'payment-detail', dataDetail?.deNghiTamUngKey]">{{dataDetail?.deNghiTamUngDisplay || '-'}}</a></td>
+                                <td>Tổng tiền tạm ứng</td>
+                                <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.tongTienTamUng || 0 | number: '1.0'}}</span></td>
+                            </tr>
+                        </ng-container>
+                        <!-- Chuyển khoản -->
+                        <ng-container *ngIf="dataDetail?.loaiHinhThanhToanDisplay == 'Chuyển Khoản'">
+                            <tr>
+                                <td>Số tài khoản</td>
+                                <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.soTaiKhoan || '-'}}</span></td>
+                                <td>Tên tài khoản</td>
+                                <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.tenTaiKhoan || '-'}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ngân hàng</td>
+                                <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.tenNganHang || '-'}}</span></td>
+                                <td>Chi nhánh</td>
+                                <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.tenChiNhanh || '-'}}</span></td>
+                            </tr>
+                        </ng-container>
+                        <tr>
+                            <td>Giá trị hợp đồng</td>
+                            <td>
+                                <span class="font-weight-bolder mr-5">{{dataDetail?.giaTriHopDong || 0 | number: '1.0'}} (VND)</span>
+                                <span class="font-weight-bolder" *ngIf="totalSoTien?.eur > 0">{{totalSoTien?.eur || 0 | number: '1.0'}} ({{dataDetail?.ngoaiTeKey}})</span>
+                            </td>
+                            <td>Hoàn thành TT cho YCMS</td>
+                            <td><span class="truncate-2 font-weight-bolder">{{dataDetail?.isThanhToanCuoi ? 'Có' : 'Không'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Nội dung đề nghị</td>
+                            <td colspan="3"><span class="font-weight-bolder">{{dataDetail?.noiDungDeNghi || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ghi chú</td>
+                            <td colspan="3"><span class="font-weight-bolder">{{dataDetail?.ghiChu || '-'}}</span></td>
+                          
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Lịch sử thanh toán -->
+                <ng-container *ngIf="dataDetail?.lichSuThanhToan?.items?.length > 0 && dataDetail?.soHopDong">
+                    <div class="mb-2 title_top">
+                        Lịch sử thanh toán
+                    </div>
+                    <div class="mb-8">
+                        <table class="table table_classic table_40 table_blue">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="width: 20%">Số YC thanh toán</th>
+                                    <th style="width: 20%">Phụ lục HD</th>
+                                    <th style="width: 10%">Ngày thanh toán</th>
+                                    <th style="width: 20%">Số tiền đề nghị thanh toán</th>
+                                    <th style="width: 20%">Số tiền đề nghị thanh toán (ngoại tệ)</th>
+                                    <th style="width: 10%">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of dataDetail?.lichSuThanhToan?.items">
+                                    <td [title]="item?.soChungTu">
+                                        <span class="truncate-2">
+                                            <a class="font-weight-bolder" target="_blank" [routerLink]="['/', 'submissions', 'payment-detail', item?.hoSoId]">{{item?.soChungTu || '-'}}</a>
+                                        </span>
+                                    </td>
+                                    <td [title]="item?.phuLucHopDong">
+                                        <span class="truncate-2">{{item?.phuLucHopDong || '-'}}</span>
+                                    </td>
+                                    <td>{{item?.ngayThanhToan * 1000 | date: 'dd/MM/yyyy'}}</td>
+                                    <td class="text-right">{{item?.tongTien || 0 | number: '1.0'}}</td>
+                                    <td class="text-right">{{item?.tongTienNgoaiTe}}</td>
+                                    <td [title]="item?.tenTrangThaiThanhToan">
+                                        <span class="truncate-2" style="color: #61BD4F">{{item?.tenTrangThaiThanhToan || '-'}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+
+                <!-- Chi tiết chỉ tiêu -->
+                <div class="mb-2 title_top">
+                    Tài liệu đính kèm   
+                </div>
+                <div class="mb-9">
+                    <ng-container *ngFor="let item of dataDetail?.dinhKem?.items">
+                        <a href="javascript:void(0)" [title]="item?.fileName" class="truncate-2" (click)="downloadFile(item?.hoSoGiayToId, item?.fileName)"><i class="flaticon2-file icon-md mr-1 text-warning"></i> {{item?.fileName }}</a>
+                    </ng-container>
+                </div>
+                <!-- Tài liệu chứng từ bổ sung -->
+                <div class="mb-2 title_top" *ngIf="dataDetail?.dinhKem?.chungTuBoSungItems?.length > 0 || dataDetail?.lyDoYeuCauBoSungChungTu || dataDetail?.phanHoiYeuCauBoSungChungTu">
+                    Tài liệu chứng từ bổ sung  
+                </div>
+                <div class="mb-9" *ngIf="dataDetail?.dinhKem?.chungTuBoSungItems?.length > 0 || dataDetail?.lyDoYeuCauBoSungChungTu || dataDetail?.phanHoiYeuCauBoSungChungTu">
+                    <table class="table table_classic table_40 mt-5 mb-8">
+                        <tr>
+                            <td>Lý do yêu cầu bổ sung</td>
+                            <td><span class="font-weight-bolder">{{dataDetail?.lyDoYeuCauBoSungChungTu || '-'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ý kiến bổ sung</td>
+                            <td><span class="font-weight-bolder">{{dataDetail?.phanHoiYeuCauBoSungChungTu || '-'}}</span></td>
+                        </tr>
+                        <tr *ngIf="dataDetail?.dinhKem?.chungTuBoSungItems?.length">
+                           <td colspan="2">
+                               <ng-container *ngFor="let item of dataDetail?.dinhKem?.chungTuBoSungItems">
+                                   <a href="javascript:void(0)" [title]="item?.fileName" class="truncate-2" (click)="downloadFile(item?.hoSoGiayToId, item?.fileName)"><i class="flaticon2-file icon-md mr-1 text-warning"></i> {{item?.fileName }}</a>
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Nội dung chi tiết -->
+                <ng-container *ngIf="dataDetail?.chiTietThanhToan?.items?.length > 0">
+                    <div class="mb-2 title_top">
+                        Nội dung chi tiết
+                    </div>
+                    <table class="table table_classic table_40 table_blue">
+                        <thead>
+                            <tr class="text-center">
+                                <th rowspan="2" class="w_50">STT</th>
+                                <th rowspan="2" class="min_w_100 max_w_150">Nội dung chi tiết</th>
+                                <th rowspan="2" class="min_w_100 max_w_150">Mã CP</th>
+                                <th rowspan="2" class="min_w_100 max_w_150">Mã CT</th>
+                                <th rowspan="2" class="min_w_100 max_w_150" style="display: none;">Năm</th>
+                                <th rowspan="2" class="min_w_100 max_w_150" style="display: none;">Tháng</th>
+                                <th colspan="2" class="text-center min_w_120 max_w_200">Số tiền có CT hợp lệ</th>
+                                <th colspan="2" class="text-center min_w_120 max_w_200">Số tiền không đủ CT hợp lệ</th>
+                                <th rowspan="2" class="w_150">Ghi chú</th>
+                            </tr>
+                            <tr>
+                                <ng-container *ngIf="totalSoTien?.eur == 0">
+                                    <th class="text-center border-left-0" colspan="2">VND</th>
+                                    <th class="text-center" colspan="2">VND</th>
+                                </ng-container>
+                                <ng-container *ngIf="totalSoTien?.eur > 0">
+                                    <th class="text-center border-left-0" colspan="0">VND</th>
+                                    <th class="text-center" colspan="0">{{dataDetail?.ngoaiTeKey || '-'}}</th>
+                                    <th class="text-center" colspan="0">VND</th>
+                                    <th class="text-center" colspan="0">{{dataDetail?.ngoaiTeKey || '-'}}</th>
+                                </ng-container>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dataDetail?.chiTietThanhToan?.items; let i = index;">
+                                <ng-container>
+                                    <td class="text-center">{{i + 1}}</td>
+                                    <td class="min_w_100 max_w_150">
+                                        <span class="truncate-2" [title]="item?.noiDungChiTiet">
+                                            {{item?.noiDungChiTiet || '-'}}
+                                        </span>
+                                    </td>
+                                    <td class="min_w_100 max_w_150">
+                                        <span class="truncate-2" [title]="item?.maChiPhiKey">
+                                            {{item?.maChiPhiKey || '-'}}
+                                        </span>
+                                    </td>
+                                    <td class="min_w_100 max_w_150">
+                                        <span class="truncate-2" [title]="item?.maCT">
+                                            {{item?.maCT || '-'}}
+                                        </span>
+                                    </td>
+                                    <td class="min_w_100 max_w_150" style="display: none;">
+                                        <span class="truncate-2" [title]="item?.yearPay">
+                                            {{item?.yearPay || '-'}}
+                                        </span>
+                                    </td>
+                                    <td class="min_w_100 max_w_150" style="display: none;">
+                                        <span class="truncate-2" [title]="item?.monthPay">
+                                            {{item?.monthPay || '-'}}
+                                        </span>
+                                    </td>
+                                    <ng-container *ngIf="totalSoTien?.eur == 0">
+                                        <td colspan="2" class="text-right">
+                                            {{item?.soTienCoCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="2" class="text-right">
+                                            {{item?.soTienKhongCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="totalSoTien?.eur > 0">
+                                        <td colspan="0" class="text-right min_w_50">
+                                            {{item?.soTienCoCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right min_w_50">
+                                            {{item?.soTienCoCTNT || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right min_w_50">
+                                            {{item?.soTienKhongCTVN || 0 | number: '1.0'}}
+                                        </td>
+                                        <td colspan="0" class="text-right min_w_50">
+                                            {{item?.soTienKhongCTNT || 0 | number: '1.0'}}
+                                        </td>
+                                    </ng-container>
+                                    <td colspan="0" class="min_w_100 min_w_50">
+                                        {{item?.ghiChu || '-'}}
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-center border_top" style="vertical-align: middle;" colspan="4"></td>
+                                <ng-container *ngIf="totalSoTien?.eur == 0">
+                                    <td class="text-right border_top border_left" colspan="2"><span>{{totalSoTienCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left" colspan="2"><span>{{totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                </ng-container>
+                                <ng-container *ngIf="totalSoTien?.eur > 0">
+                                    <td class="text-right border_top border_left" colspan="0"><span>{{totalSoTienCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left" colspan="0"><span>{{totalSoTienCoCT?.eur || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left" colspan="0"><span>{{totalSoTienKhongCoCT?.vnd || 0 | number: '1.0'}}</span></td>
+                                    <td class="text-right border_top border_left" colspan="0"><span>{{totalSoTienKhongCoCT?.eur || 0 | number: '1.0'}}</span></td>
+                                </ng-container>
+                                <td rowspan="2" class="border_top border_left text-center">
+                                    <button (click)="getNganSach()" class="btn btn-sm btn-google">Chi tiết ngân sách</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right border_top" style="vertical-align: middle;" colspan="4">
+                                    <span class="font-weight-bolder text-blue-01">Tổng tiền đề nghị thanh toán:</span>
+                                </td>
+                                <ng-container *ngIf="totalSoTien?.eur == 0">
+                                    <td class="text-right border_top border_left" colspan="4"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)</span></td>
+                                </ng-container>
+                                <ng-container *ngIf="totalSoTien?.eur > 0">
+                                    <td class="text-right border_top border_left w_100" colspan="2"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.vnd || 0 | number: '1.0'}} (VND)</span></td>
+                                    <td class="text-right border_top border_left w_100" colspan="2"><span class="font-weight-bolder text-blue-01">{{totalSoTien?.eur || 0 | number: '1.0'}} ({{dataDetail?.ngoaiTeKey}})</span></td>
+                                </ng-container>
+                            </tr>
+                            <ng-container *ngIf="dataDetail?.loaiDeNghiDisplay == 'Đề nghị hoàn ứng'">
+                                <tr><td colspan="9" class="border-top border-bottom"></td></tr>
+                                <tr class="bg_blue">
+                                    <td rowspan="2" colspan="4"></td>
+                                    <td colspan="2" class="border-bottom text-center">Hoàn ứng</td>
+                                    <td colspan="2" class="border-bottom text-center">Chi thêm</td>
+                                    <td rowspan="2" colspan="0"></td>
+                                </tr>
+                                <tr class="bg_blue">
+                                    <ng-container *ngIf="totalSoTien?.eur == 0">
+                                        <td colspan="2" class="border_top text-center border-left-0">VND</td>
+                                        <td colspan="2" class="border_top text-center">VND</td>
+                                    </ng-container>
+                                    <ng-container *ngIf="totalSoTien?.eur > 0">
+                                        <td colspan="0" class="border_top text-center border-left-0">VND</td>
+                                        <td colspan="0" class="border_top text-center">{{dataDetail?.ngoaiTeKey || '-'}}</td>
+                                        <td colspan="0" class="border_top text-center">VND</td>
+                                        <td colspan="0" class="border_top text-center">{{dataDetail?.ngoaiTeKey || '-'}}</td>
+                                    </ng-container>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-right">
+                                        <span class="text-blue-01 font-weight-bolder">Tổng tiền cần quyết toán:</span>
+                                    </td>
+                                    <ng-container *ngIf="totalSoTien?.eur == 0">
+                                        <td colspan="2" class="text-right border_left">{{dataDetail?.hoanUngVN || 0 | number: '1.0'}}</td>
+                                        <td colspan="2" class="text-right border_left border_right">{{dataDetail?.chiThemVN || 0 | number: '1.0'}}</td>
+                                    </ng-container>
+                                    <ng-container *ngIf="totalSoTien?.eur > 0">
+                                        <td colspan="0" class="text-right border_left">{{dataDetail?.hoanUngVN || 0 | number: '1.0'}}</td>
+                                        <td colspan="0" class="text-right border_left">{{dataDetail?.hoanUngNT || 0 | number: '1.0'}}</td>
+                                        <td colspan="0" class="text-right border_left">{{dataDetail?.chiThemVN || 0 | number: '1.0'}}</td>
+                                        <td colspan="0" class="text-right border_left border_right">{{dataDetail?.chiThemNT || 0 | number: '1.0'}}</td>
+                                    </ng-container>
+                                </tr>
+                            </ng-container>
+                        </tfoot>
+                    </table>
+                </ng-container>
+                <div *ngIf="dataDetail?.isAllowPheDuyet">
+                    Bộ phận {{dataDetail.tenPhongBanNguoiTao}} kính trình ông/bà {{tenNguoiPheDuyet}} phê duyệt.
+                </div>
+            </div>
+
+            <!-- footer  -->
+            <div class="footer mt-5">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <button *ngIf="dataDetail?.isAllowYeuCauBoSungChungTu" class="btn btn-primary btn-14 py-3 mr-2" (click)="confirmInputBasic.showModal(null, dataDetail?.hoSoId)"><i class="fas fa-plus"></i>{{'Yêu cầu bổ sung chứng từ' | translate }}</button>
+                        <button *ngIf="dataDetail?.isAllowBoSungChungTu" class="btn btn-primary btn-14 py-3 mr-2" (click)="confirmInputFile.showModal(null, dataDetail?.hoSoId)"><i class="fas fa-plus"></i>{{'Bổ sung chứng từ' | translate }}</button>
+                    </div>
+                    <div>
+                        <button *ngIf="dataDetail?.isAllowPheDuyet" class="btn btn-danger btn-14 py-3 mr-2 w_130" (click)="approveModalComponent.showModal(dataDetail, false)" [translate]="'COMMON.btn.reject'"></button>
+                        <button *ngIf="dataDetail?.isAllowPheDuyet" class="btn btn-primary btn-14 py-3 mr-2 w_130" (click)="approveModalComponent.showModal(dataDetail, true)" [translate]="'COMMON.btn.approve'"></button>
+                        <button
+                            *ngIf="dataDetail?.isAllowUpdateThanhToanUuTien"
+                            nz-popconfirm 
+                            nzPopconfirmTitle="Bạn có chắc chắn xác nhận Thanh toán ưu tiên không ?"
+                            [nzOkText]="'COMMON.btn.yes' | translate"
+                            [nzCancelText]="'COMMON.btn.no' | translate"
+                            class="btn btn-primary btn-14 mr-2 py-3 w_130" 
+                            (nzOnConfirm)="xacNhanUuTien(dataDetail)">
+                            Ưu tiên
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-lg-3 col-xxl-2 order-2 order-xxl-1 box-shadow radius-10 scroll-gray bg-white"
+            [style.height.px]="getElementHeight?.offsetHeight - 19">
+            <app-time-line-approve [data]="timeLine"></app-time-line-approve>
+        </div>
+    </div>
+</div>
+
+<!-- Phê duyệt - Từ chối -->
+<app-approve-requests-payment-modal #approveModalComponent (loadTimeLine)="getDetail()"></app-approve-requests-payment-modal>
+
+<!-- Yêu cầu bổ sung chứng từ -->
+<app-confirm-input-basic
+    #confirmInputBasic="confirm-input-basic" 
+    [confirm]="'Lý do'"
+    [title]="'Yêu cầu bổ sung chứng từ'"
+    (submit)="onYCBoSung($event)">
+</app-confirm-input-basic>
+
+<!-- Bổ sung chứng từ -->
+<app-confirm-input-file
+    #confirmInputFile="confirm-input-file"
+    [title]="'Bổ sung chứng từ'"
+    [lableContent]="'Phản hồi yêu cầu bổ xung'"
+    (submit)="onBoSung($event)">
+</app-confirm-input-file>
+
+<!-- Hiển thị ngân sách -->
+<app-basic-content-modal #basicContent="basic-content" [title]="'Chi tiết ngân sách'" [width]="1000">
+    <app-table [data]="dataTable.items" [maxHeight]="'calc(100vh - 250px)'" [minHeight]="'400px'">
+        <thead>
+            <tr>
+                <ng-container *ngFor="let col of dataTable.columns">
+                    <th
+                        [style.borderBottom]="'1px solid #e3ebf6'"
+                        [nzAlign]="'center'"
+                        [rowspan]="col?.rowspan"
+                        [colspan]="col?.colspan"
+                        [style.minWidth]="col?.width">
+                        {{ col?.title }}
+                    </th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dataTable.items; let i = index">
+                <ng-container *ngFor="let col of dataTable.columns">
+                    <td [ngSwitch]="col.field" [nzAlign]="col?.align" [style.minWidth]="col?.width" [class]="col?.className" class="px-3">
+                        <span *ngSwitchCase="'stt'">{{ i + 1 }}</span>
+                        <span *ngSwitchCase="'BudgetName'">{{ data[col.field] }} - {{data?.Description}}</span>
+                        <span *ngSwitchCase="'DeparmentBudget'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'FullYearBudget'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'PercentBudgetOfAll'">{{ data[col.field] | number }}%</span>
+                        <span *ngSwitchCase="'BudgetToUse'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'UsedBudget'">{{ data[col.field] | number }}</span>
+                        <span *ngSwitchCase="'RemainingBudget'">{{ data[col.field] | number }}</span>
+                        <!-- <span *ngSwitchCase="'SavingsRatio'">{{ data[col.field] | number }}</span> -->
+                        <span *ngSwitchDefault [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </app-table>
+</app-basic-content-modal>

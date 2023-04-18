@@ -1,0 +1,71 @@
+:host {
+  .title {
+    text-align: center;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 14px;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    background: #ffffff;
+  }
+  .timeline {
+    color: #000000;
+    padding: 28px 0 28px 20px;
+    .phase_block {
+      position: relative;
+      display: block;
+      border-left: 4px solid #ececec;
+      min-height: 150px;
+
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      padding-left: 16px;
+      .time,
+      .date {
+        opacity: 0.35;
+        margin-bottom: 5px;
+      }
+      .name {
+        opacity: 0.65;
+        margin-bottom: 5px;
+      }
+      .action {
+        margin-bottom: 5px;
+      }
+      .icon_dot {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: 0px;
+        left: -14.5px;
+        border-radius: 50px;
+        background-color: #ffffff;
+        &_accept {
+          border: 7.2px solid #f4b149;
+        }
+        &_reject {
+          border: 7.2px solid #e57890;
+        }
+        &_undefined {
+          border: 7.2px solid #5a5a5a3f;
+        }
+        &_ {
+          border: 7.2px solid #5a5a5a3f;
+        }
+      }
+      .description {
+        padding-left: 5px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        border-left: 1px solid #003469;
+      }
+    }
+    .border_blank {
+      border-left: 4px solid #ffffff00;
+      min-height: unset;
+    }
+  }
+}

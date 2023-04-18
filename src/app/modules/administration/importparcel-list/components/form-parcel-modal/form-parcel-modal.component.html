@@ -1,0 +1,161 @@
+<nz-modal nzCentered [(nzVisible)]="isVisible" [nzWidth]="700" [nzFooter]="null" [nzKeyboard]="false"
+    [nzMaskClosable]="false" (nzOnCancel)="saveDraft()" [nzTitle]="buuPhamId ? 'Cập nhật cán bộ nhận bưu phẩm' :'Thêm mới cán bộ nhận bưu phẩm'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên người gửi<span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenNguoiGui" placeholder="Tên người gửi" class="form-control input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.tenNguoiGui?.errors && (f?.tenNguoiGui?.touched || isSubmit)">
+                        <span>Tên người gửi là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên công ty gửi
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="tenCongTyGui" placeholder="Tên công ty gửi" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Số điện thoại gửi
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="sdtNguoiGui" placeholder="Số điện thoại gửi" class="form-control input_42" />
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Địa chỉ người gửi <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="diaChiNguoiGui" placeholder="Địa chỉ người gửi" class="form-control input_42" />
+                    <div class="form-text text-danger" *ngIf="f?.diaChiNguoiGui?.errors && (f?.diaChiNguoiGui?.touched || isSubmit)">
+                        <span>Địa chỉ người gửi là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Ngày gửi
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker formControlName="ngayGiao" nzPlaceHolder="Chọn ngày"
+                        [nzFormat]="'dd-MM-yyyy'" class="form-control input_42" rows="1"
+                        style="min-height: 42px;">
+                    </nz-date-picker>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Hình thức
+                </div>
+                <div class="col-12 col-md-7 ">
+                    <nz-radio-group formControlName="hinhThucKey">
+                        <ng-container *ngFor="let item of loaiOptions">
+                            <label nz-radio [nzValue]="item.value">{{item.label}}</label>
+                        </ng-container>
+                    </nz-radio-group>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Cán bộ nhận bưu phẩm <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7 select_42">
+                    <nz-select
+                        nzPlaceHolder="Tìm kiếm cán bộ nhận bưu phẩm"
+                        nzAllowClear
+                        nzShowSearch
+                        nzServerSearch
+                        style="width: 100%;"
+                        formControlName="nguoiNhanId" 
+                        (ngModelChange)="onSelectCBNhanBP($event)"
+                        (nzOnSearch)="searchCBBP$.next($event)">
+                        <ng-container *ngFor="let item of nguoiNhanOptions">
+                            <nz-option *ngIf="!isLoadingOption" [nzValue]="item?.nguoiDungId" nzLabel="{{item?.tenDangNhap}} - {{item?.hoTen}}"></nz-option>
+                        </ng-container>
+                        <nz-option *ngIf="isLoadingOption" nzDisabled nzCustomContent>
+                            <i nz-icon nzType="loading" class="loading-icon"></i>
+                            Tải dữ liệu...
+                        </nz-option>
+                    </nz-select>
+                    <div class="form-text text-danger" *ngIf="f?.nguoiNhanId?.errors && (f?.nguoiNhanId?.touched || isSubmit)">
+                        <span>Cán bộ nhận bưu phẩm là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tên cán bộ nhận
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" placeholder="Tên cán bộ nhận" value="{{nguoiNhanSelected?.hoTen}}" class="form-control input_42" disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Mã nhân viên
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" placeholder="Số máy lẻ" value="{{nguoiNhanSelected?.maNhanVien}}" class="form-control input_42" disabled/>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Phòng ban
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" placeholder="Phòng ban" value="{{nguoiNhanSelected?.tenPhongBan}}" class="form-control input_42" disabled/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Số máy lẻ
+                </div>
+                <div class="col-12 col-md-7">
+                    <input type="text" placeholder="Số máy lẻ" value="{{nguoiNhanSelected?.soMayLe}}" class="form-control input_42" disabled/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button 
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure_save_draft' | translate }}" 
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                    (nzOnCancel)="saveDraft()" 
+                    (nzOnConfirm)="saveDraft()">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="buuPhamId ? onEdit() : onCreate()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

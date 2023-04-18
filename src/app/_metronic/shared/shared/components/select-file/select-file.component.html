@@ -1,0 +1,53 @@
+<ng-container *ngIf="show">
+    <ng-container *ngIf="acceptKey === 'image'; else isFile">
+        <div *ngFor="let item of selectedFiles" class="image-input image-input-outline mb-5 mx-3">
+            <img nz-image [nzSrc]="item?.base64" class="image-input-wrapper cursor-pointer w-100 h_250">
+            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" (click)="removeAll()" data-action="remove" data-toggle="tooltip" title="Remove">
+                <i class="ki ki-bold-close icon-xs text-muted"></i>
+            </span>
+        </div>
+    </ng-container>
+    
+    <ng-template #isFile>
+        <div class="row mx-0 mb-2 align-items-center" *ngFor="let item of detailReadOnly">
+            <div class="col-12 text-left truncate px-0" [title]="item?.name">
+                <i class="flaticon2-file-1 icon-lg text-warning mr-3"></i>
+                <a href="javascript:void()" (click)="download(item?.url, item?.name)">{{item?.name}}</a>
+            </div>
+        </div>
+        <div class="row mx-0 mb-1 align-items-center" *ngFor="let item of selectedFiles; let i = index;">
+            <div [class.col-12]="disabled" [class.col-10]="!disabled" class="text-left truncate px-0" [title]="item?.name">
+                <i class="flaticon2-file-1 icon-lg text-warning mr-3"></i>
+                <a href="javascript:void()" (click)="download(item?.base64, item?.name)">{{item?.name}}</a>
+            </div>
+            <div 
+                *ngIf="!disabled"
+                class="col-2 px-0 cursor-pointer text-right" 
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                (nzOnConfirm)="removeFile(i)">
+                <i class="fas fa-trash-alt icon-md text-danger"></i>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</ng-container>
+
+<button type="button" class="btn w-100 mt-1 cursor-pointer h_42" [class]="btnClassName" (click)="onSubmit()" [attr.disabled]="disabled ? true : null">
+    <img src="assets/media/svg/icons/Files/Upload.svg" alt="Download" class="icon-lg w_20">
+    {{text}}
+</button>
+
+<input 
+    #file 
+    type="file"
+    class="d-none"
+    (click)="$event.target.value=null"
+    (change)="onSelectFile(file.files)"
+    [multiple]="multiple ? 'multiple' : ''" 
+    [accept]="acceptsActive && acceptsActive.label"/>

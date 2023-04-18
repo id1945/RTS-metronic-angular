@@ -1,0 +1,116 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label"> Kế hoạch công tác tháng</h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-sm-8 col-xxl-8 px-0 input-group">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+                    <input type="text" class="form-control" placeholder="{{'PURCHASE.DETAIL.searchHint' | translate }}" (input)="search$.next($event.target.value)" />
+                </div>
+                <ng-container *ngIf="isSearchAdvance">
+                    <nz-select ngModel="selectStatusOptions"
+                        (ngModelChange)="paginator.TrangThaiKey = $event; getList()"
+                        [nzOptions]="statusOptions" nzAllowClear
+                        nzPlaceHolder="{{'Trạng thái' | translate }}"
+                        class="w_200">
+                    </nz-select>
+                    <nz-select ngModel="selectTinhTrangOptions"
+                        (ngModelChange)="paginator.TinhTrangKey = $event; getList()"
+                        [nzOptions]="tinhTrangOptions" nzAllowClear
+                        nzPlaceHolder="{{'Tình trạng' | translate }}"
+                        class="w_200">
+                    </nz-select>
+                    <nz-range-picker [ngModel]="null" (ngModelChange)="onChangeDateRange($event)" [nzPlaceHolder]="['Ngày tạo từ', 'Ngày tạo đến']" nzFormat="dd/MM/yyyy"></nz-range-picker>
+                </ng-container>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-xxl-4 px-0 text-lg-right">
+                <button type="button" class="btn m-0 m-md-1" [class.btn-primary]="!isSearchAdvance" [class.btn-info]="isSearchAdvance" style="width: 50px" (click)="isSearchAdvance = !isSearchAdvance">
+                    <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                    <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="purchaseForm.showModal()">{{ 'COMMON.btn.add_new' | translate }}</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 360px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            *ngIf="col?.sortField"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width"
+                            [nzSortOrder]="col.sortOrder || null"
+                            (nzSortOrderChange)="sortOrderChange($event, col?.sortField)">
+                            {{ col?.title }}
+                        </th>
+                        <th
+                            *ngIf="!col?.sortField"
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of dataTable.items; let i = index" class="cursor-pointer" >
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <td *ngIf="col?.field" [ngSwitch]="col.field" [nzAlign]="col?.align" class="px-5" [class.font-weight-bolder]="data?.isAllowPheDuyet|| data?.isAllowTrinhDuyet || data?.isAllowThamVan">
+                            <span *ngSwitchCase="'STT'" (click)="showDetail(data)">  {{i +1 }}</span>
+                            <span *ngSwitchCase="'ngayTao'" (click)="showDetail(data)" [title]="data[col.field] | date: 'dd/MM/yyyy'">  {{data[col.field] * 1000 | date: "dd/MM/yyyy HH:mm"}}</span>
+                            <span *ngSwitchCase="'tinhTrangDisplay'" (click)="showDetail(data)" [title]="data[col.field]">
+                                <ng-container [ngSwitch]="true">
+                                    <span *ngSwitchCase="data[col.field]?.includes('duyệt') && !data[col.field]?.includes('Chờ')" class="label label-light-primary label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchCase="data[col.field] == 'Từ chối'" class="label label-light-danger label-inline">
+                                        {{ data[col.field] }}
+                                    </span>
+                                    <span *ngSwitchDefault class="label label-light-warning label-inline">{{ data[col.field] }}</span>
+                                </ng-container>
+                            </span>
+                            <!-- <span *ngSwitchCase="'thaoTac'">
+                                <a *ngIf="data?.isAllowDelete" 
+                                    title="Delete"
+                                    class="btn btn-icon btn-hover btn-sm mx-2 cursor-pointer"
+                                    nz-popconfirm
+                                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                                    [nzIcon]="iconTpl"
+                                    [nzOkText]="'COMMON.btn.yes' | translate"
+                                    [nzCancelText]="'COMMON.btn.no' | translate" 
+                                    (nzOnConfirm)="onDelete(data?.hoSoId)">
+                                    <img src="assets/media/bg/Vector_delete.svg" class="align-self-center w_30 h_30"
+                                        style="width:30px;height:30px;">
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </a>
+                            </span> -->
+                            <span *ngSwitchCase="'thaoTac'">
+                                <a *ngIf="data?.isAllowTrinhDuyet" title="Edit" (click)="purchaseForm.showModal(data)" class="btn btn-icon btn-hover btn-sm mx-2">
+                                    <img src="assets/media/bg/Vector_edit.svg" class="align-self-center w_30 h_30">
+                                </a>
+                            </span>
+                            <span *ngSwitchDefault (click)="showDetail(data)" class="truncate-2 cursor-pointer" [title]="data[col.field]">{{ data[col.field] || '-' }}</span>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<app-monthplan-form-modal #purchaseForm (loadList)="getList()"></app-monthplan-form-modal>

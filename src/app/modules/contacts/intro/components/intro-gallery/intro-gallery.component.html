@@ -1,0 +1,39 @@
+<div class="w-100 box-shadow">
+    <!--begin::Content-->
+    <div class="card card-custom">
+        <div class="card-header border-0 my-3">
+            <div class="d-flex align-items-center">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-45 symbol-light mr-5">
+                    <div class="image-input image-input-outline m-2">
+                        <img nz-image [nzSrc]="thuVienAnh?.urlAnh" class="image-input-wrapper w_80 h_80" [title]="thuVienAnh?.tenAlbumAnh">
+                    </div>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Text-->
+                <div class="d-flex flex-column flex-grow-1">
+                    <h3 class="card-label font-size-lg">Thư viện ảnh</h3>
+                    <span class="font-weight-bold font-size-lg">{{thuVienAnh?.tenAlbumAnh}}</span>
+                    <span class="text-muted font-weight-bold">{{thuVienAnh?.moTa}}</span>
+                </div>
+                <!--end::Text-->
+            </div>
+        </div>
+        <hr class="m-0">
+        <div class="card-body pt-4 text-center">
+            <nz-image-group>
+                <article class="gallery">
+                    <ng-container *ngFor="let item of thuVienAnh?.albumItems">
+                        <div class="image-box">
+                            <img class="item cursor-pointer" nz-image [nzSrc]="item?.urlAnh" [title]="item?.tenAnh">
+                        </div>
+                    </ng-container>
+                </article>
+            </nz-image-group>
+            <div *ngIf="thuVienAnh?.albumItems?.length === 0" class="text-center">
+                Không có dữ liệu!
+            </div>
+        </div>
+    </div>
+    <!--end::Content-->
+</div>

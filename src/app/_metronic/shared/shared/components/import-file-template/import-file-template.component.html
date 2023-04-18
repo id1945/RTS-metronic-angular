@@ -1,0 +1,58 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="625"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false"
+    [nzTitle]="'Import file excel'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <div class="row mb-5">
+            <div class="col-12 col-md-5 ctrl_label">
+                Download Format
+            </div>
+            <div class="col-12 col-md-7">
+                <div class="d-flex align-items-center mx-3">
+                    <i class="d-block icon-lg" nz-icon [nzType]="'file-excel'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
+                    <a class="d-block ml-2" href="javascript:void(0)" (click)="onTemplate()">Excel Template</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-5 ctrl_label">
+                Tài liệu đính kèm <span class="text-danger">(*)</span>
+            </div>
+            <div class="col-12 col-md-7">
+                <app-select-file 
+                    [reset]="true" 
+                    [multiple]="isMultiple" 
+                    [acceptKey]="'excel_word_pdf_rar_zip'" 
+                    [text]="'Tải tài liệu lên'" 
+                    [(selectedFiles)]="selectedFiles">
+                </app-select-file>
+                <div class="form-text text-danger" *ngIf="selectedFiles?.length === 0">
+                    <span>Tài liệu đính kèm là bắt buộc</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button nz-popconfirm nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" [nzIcon]="iconTpl"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="onImport()">Ghi lại</button>
+            </div>
+        </div>
+    </div>
+</nz-modal>

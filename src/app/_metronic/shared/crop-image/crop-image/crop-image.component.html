@@ -1,0 +1,23 @@
+<input #file type="file" (click)="$event.target.value=null" (change)="fileChangeEvent($event)" class="d-none" />
+
+<image-cropper
+    *ngIf="imageChangedEvent"
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    [imageBase64]="croppedImageOrigin"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()">
+</image-cropper>
+
+<button class="btn btn-light w-100 cursor-pointer h_42 mt-4" [class]="btnClassName" (click)="file?.click()" [attr.disabled]="disabled ? true : null">
+    <img src="assets/media/svg/icons/Files/Upload.svg" alt="Download" class="icon-lg w_20">
+    {{btnSelectLable}}
+</button>
+
+<button *ngIf="croppedImage && imageChangedEvent" class="btn btn-info w-100 cursor-pointer h_42 mt-4" (click)="croppedImageOrigin = croppedImage">
+    <i class="la la-crop-alt icon-2x"></i>
+    {{btnCropLable}}
+</button>

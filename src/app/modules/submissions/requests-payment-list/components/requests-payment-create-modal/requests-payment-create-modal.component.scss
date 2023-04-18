@@ -1,0 +1,63 @@
+.form_step {
+  .btn {
+    &:not(.btn-icon) {
+      min-width: 130px;
+    }
+    height: 44px;
+    &-light {
+      background-color: #ffffff;
+      border: 1px solid #e3ebf6;
+      color: #000000;
+    }
+    &-14 {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .form {
+    border: 1px solid #e3ebf6;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-top: 15px;
+    padding: 30px 40px;
+    margin-bottom: 20px;
+  }
+
+  .header_a4 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #000000;
+    margin-top: 40px;
+    margin-bottom: 48px;
+    .company {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 25px;
+    }
+    .no {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 25px;
+    }
+    .today {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+
+  .detail_name {
+    color: #003469;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 25px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+}

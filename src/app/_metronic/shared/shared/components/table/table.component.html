@@ -1,0 +1,19 @@
+<div 
+    class="scroll-gray-15 w-100 border"
+    [class]="classNameContainer"
+    [class.border_radius]="radius"
+    [style.minHeight]="data?.length ? minHeight : null"
+    [style.maxHeight]="maxHeight"
+    [style.maxWidth]="maxWidth"
+    (window:resize)="resize.emit()">
+    <table
+        class="table table-hover table_sticky table_no table_40"
+        [class.table-bordered]="border"
+        [class.border_radius]="radius"
+        [class]="className">
+        <ng-content></ng-content>
+    </table>
+    <nz-empty *ngIf="data?.length == 0" nzNotFoundImage="simple"></nz-empty>
+</div>
+<!-- paginator -->
+<app-paginator *ngIf="paginator" class="d-flex justify-content-between align-items-center flex-wrap my-2" [paginator]="paginator" (paginate)="paginate.emit($event)"></app-paginator>

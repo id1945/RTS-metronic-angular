@@ -1,0 +1,64 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="900"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="'Kiểm tra lịch họp người tham dự'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <table class="table table_classic">
+            <thead class="thead-light">
+                <tr>
+                    <th class="w_200">Họ tên</th>
+                    <th>8h</th>
+                    <th>9h</th>
+                    <th>10h</th>
+                    <th>11h</th>
+                    <th>12h</th>
+                    <th>13h</th>
+                    <th>14h</th>
+                    <th>15h</th>
+                    <th>16h</th>
+                    <th>17h</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of kiemTraLichHop">
+                    <td class="cursor-pointer" (click)="false">
+                        <div class="text-blue-01">{{item?.hoTen}}</div>
+                        <!-- <div>Tối đa 10 người</div> -->
+                    </td>
+                    <td colspan="10">
+                        <div class="progress h_40 my-4">
+                            <ng-container *ngFor="let cv of item?.lichHop?.items; let i = index; let odd = odd; let even = even">
+                                <div class="progress-bar progress-bar-success" [style.width.%]="percentMod(item?.lichHop?.items, i)"></div>
+                                <div
+                                    class="progress-bar bg-info font_size_11"
+                                    [class.bg-info]="even"
+                                    [class.bg-success]="odd"
+                                    [style.width.%]="percentCurrent(cv)"
+                                    nzTooltipTitle="{{cv?.thoiGianBatDau * 1000 | date: 'HH:mm'}} - {{cv?.thoiGianKetThuc * 1000 | date: 'HH:mm'}}"
+                                    nzTooltipPlacement="top"
+                                    nz-tooltip>
+                                    {{cv?.thoiGianBatDau * 1000 | date: 'HH:mm'}} - {{cv?.thoiGianKetThuc * 1000 | date: 'HH:mm'}}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="kiemTraLichHop?.length == 0">
+                    <td colspan="11" class="text-center text-danger px-0">
+                        <nz-alert nzType="warning" nzBanner nzMessage="Không có dữ liệu!"></nz-alert>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-light btn-14 py-3 w_130" (click)="isVisible = false">Huỷ bỏ</button>
+        </div>
+    </div>
+</nz-modal>

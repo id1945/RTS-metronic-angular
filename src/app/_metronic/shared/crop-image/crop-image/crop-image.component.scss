@@ -1,0 +1,8 @@
+.hiden {
+  visibility: hidden;
+}
+:ng-deep {
+  image-cropper {
+    padding: 0 !important;
+  }
+}

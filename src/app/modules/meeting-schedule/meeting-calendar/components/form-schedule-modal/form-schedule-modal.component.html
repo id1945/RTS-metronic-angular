@@ -1,0 +1,277 @@
+<nz-modal
+    nzCentered
+    [(nzVisible)]="isVisible"
+    [nzWidth]="925"
+    [nzFooter]="null"
+    [nzKeyboard]="false"
+    [nzMaskClosable]="false"
+    (nzOnCancel)="isVisible = false" [nzTitle]="mode == 'create' ? 'Thêm mới lịch họp' : mode == 'edit' ? 'Cập nhật lịch họp' : 'Thông tin chi tiết lịch họp'">
+    <div class="scroll-gray-8 p-8" style="max-height: calc(100vh - 230px);">
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tiêu đề <span *ngIf="mode != 'detail'" class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <input formControlName="TieuDe" placeholder="Tiêu đề" [class.readonly]="mode == 'detail'" class="form-control input_42" />
+                    <input *ngIf="f?.TieuDe?.value" formControlName="TieuDeEng" placeholder="Tiêu đề tiếng anh" [class.readonly]="mode == 'detail'" class="form-control input_42" />
+                    <div class="form-text text-danger" *ngIf="(f?.TieuDe?.errors || f?.TieuDeEng?.errors) && f?.TieuDe?.touched">
+                        <span>Tiêu đề là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Số lượng người tham gia <span *ngIf="mode != 'detail'" class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-input-number
+                        [nzMin]="0"
+                        [nzStep]="1"
+                        formControlName="SoLuong"
+                        nzPlaceHolder="Số lượng người tham gia" class="form-control input_42 text-left" [class.readonly]="mode == 'detail'">
+                    </nz-input-number>
+                    <div class="form-text text-danger" *ngIf="f?.SoLuong?.errors && f?.SoLuong?.touched">
+                        <span>Số lượng người tham gia là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thời gian bắt đầu <span *ngIf="mode != 'detail'" class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker
+                        class="form-control input_42"
+                        [class.readonly]="mode == 'detail'"
+                        [nzShowTime]="true"
+                        [nzDisabledDate]="disabledDate"
+                        [nzDisabledTime]="disabledDateTime"
+                        formControlName="ThoiGianBatDau"
+                        [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                        nzFormat="dd/MM/yyyy HH:mm">
+                    </nz-date-picker>
+                    <div class="form-text text-danger" *ngIf="f?.ThoiGianBatDau?.errors && f?.ThoiGianBatDau?.touched">
+                        <span>Thời gian bắt đầu là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thời gian kết thúc <span *ngIf="mode != 'detail'" class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <nz-date-picker
+                        class="form-control input_42"
+                        [class.readonly]="mode == 'detail'"
+                        [nzShowTime]="true"
+                        [nzDisabledDate]="disabledDate"
+                        [nzDisabledTime]="disabledDateTime"
+                        formControlName="ThoiGianKetThuc"
+                        [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                        nzFormat="dd/MM/yyyy HH:mm">
+                    </nz-date-picker>
+                    <div class="form-text text-danger" *ngIf="f?.ThoiGianKetThuc?.errors && f?.ThoiGianKetThuc?.touched">
+                        <span>Thời gian kết thúc là bắt buộc</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Thành phần khách mời
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="ThanhPhanKhach" placeholder="Thành phần khách mời" [class.readonly]="mode == 'detail'" class="form-control input_42 pt-3 min_h_42"></textarea>
+                </div>
+            </div>
+
+            <ng-container *ngIf="mode != 'detail'">
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Bộ phận
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="PhongBanKey" [nzOptions]="phongBanOptions"
+                            nzShowSearch nzAllowClear nzPlaceHolder="Bộ phận" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+            
+                <div class="row mb-5">
+                    <div class="col-12 col-md-5 ctrl_label">
+                        Họ và tên
+                    </div>
+                    <div class="col-12 col-md-7 select_42">
+                        <nz-select formControlName="NhanVienKey" [nzOptions]="nhanVienOptions"
+                            nzShowSearch nzAllowClear nzPlaceHolder="Họ và tên" style="width: 100%;">
+                        </nz-select>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="row mb-5">
+                <table class="table table_classic table_40 table_no mx-3 mb-0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ và tên</th>
+                            <th>Bộ phận</th>
+                            <th *ngIf="mode != 'detail'" class="w_50 text-center">Xoá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of nhanVienTable; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>{{item?.nhanVienDisplay}}</td>
+                            <td>{{item?.phongBanDisplay}}</td>
+                            <td *ngIf="mode != 'detail'" class="w_50 text-center">
+                                <div class="d-flex justify-content-around align-items-center">
+                                    <button 
+                                        nz-popconfirm 
+                                        nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}" 
+                                        [nzIcon]="iconTpl"
+                                        [nzOkText]="'COMMON.btn.yes' | translate"
+                                        [nzCancelText]="'COMMON.btn.no' | translate"
+                                        class="btn btn-icon btn-hover" 
+                                        (nzOnConfirm)="removeNhanVien(i)">
+                                        <i class="fas fa-trash-alt icon-lg text-danger"></i>
+                                    </button>
+                                    <ng-template #iconTpl>
+                                        <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                                    </ng-template>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="nhanVienTable?.length == 0">
+                            <td colspan="6" class="text-center text-danger px-0">
+                                <nz-alert
+                                    nzType="warning"
+                                    nzBanner
+                                    nzMessage="Không có dữ liệu người tham dự!"
+                                ></nz-alert>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div *ngIf="mode != 'detail'" class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Kiểm tra lịch họp người tham dự
+                </div>
+                <div class="col-12 col-md-7">
+                    <button class="btn btn-light w-100" (click)="participants?.showModal()">
+                        <i class="fas fa-user-tag icon-md"></i>
+                        Người tham dự
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Tài liệu đính kèm
+                </div>
+                <div class="col-12 col-md-7">
+                    <app-select-file 
+                        [disabled]="mode == 'detail'" 
+                        [reset]="false" 
+                        [multiple]="true" 
+                        [acceptKey]="'excel_word_pdf_rar_zip'" 
+                        [text]="'Tải tài liệu lên'" 
+                        [(selectedFiles)]="selectedFiles">
+                    </app-select-file>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Dịch vụ phòng họp
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="row">
+                        <div class="col-12 col-xl-4 pr-0"><label nz-checkbox formControlName="DvTra" [class.readonly]="mode == 'detail'" >Trà</label></div>
+                        <div class="col-12 col-xl-3 pr-0"><label nz-checkbox formControlName="DvCoffee" [class.readonly]="mode == 'detail'" >Coffee</label></div>
+                        <div class="col-12 col-xl-5 pr-0"><label nz-checkbox formControlName="DvTeaBreak" [class.readonly]="mode == 'detail'" >Hoa quả/Teabreak</label></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-xl-4 pr-0"><label nz-checkbox formControlName="DvHoa" [class.readonly]="mode == 'detail'" >Hoa trang trí</label></div>
+                        <div class="col-12 col-xl-3 pr-0"><label nz-checkbox formControlName="DvBienTen" [class.readonly]="mode == 'detail'" >Biển tên</label></div>
+                        <div class="col-12 col-xl-5 pr-0"><label nz-checkbox formControlName="DvBackdrop" [class.readonly]="mode == 'detail'" >Backdrop, standee..</label></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Yêu cầu khác
+                </div>
+                <div class="col-12 col-md-7">
+                    <textarea rows="3" formControlName="YeuCauKhac" placeholder="Yêu cầu khác" [class.readonly]="mode == 'detail'" class="form-control input_42 pt-3 min_h_42"></textarea>
+                </div>
+            </div>
+            
+            <div *ngIf="mode != 'detail'" class="row mb-5">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Phòng họp <span class="text-danger">(*)</span>
+                </div>
+                <div class="col-12 col-md-7">
+                    <div *ngIf="tenPhongHop" class="text-primary">
+                        <i class="fas fa-store-alt mr-2 text-info"></i>{{tenPhongHop}}
+                    </div>
+                    <button *ngIf="mode == 'edit'" [class.btn-info]="!tenPhongHop" [class.btn-light]="tenPhongHop" class="btn btn-light w-100 mt-2" (click)="areaRoom?.showModal()">
+                        <i class="fa fa-paper-plane"></i>
+                        Yêu cầu phòng họp PD17 hoặc HCM-T16
+                    </button>
+                    <button class="btn btn-light w-100 mt-4" (click)="meetingRoom?.showModal()">
+                        <i class="la la-gears icon-lg"></i>
+                        Chọn phòng họp
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-md-5 ctrl_label">
+                    Trạng thái lịch họp
+                </div>
+                <div class="col-12 col-md-7">
+                    <label nz-checkbox formControlName="IsCoHieuLuc" [class.readonly]="mode == 'detail'" >Có hiệu lực</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <ng-container *ngIf="mode != 'detail'; else isDetail">
+                <button
+                    nz-popconfirm 
+                    nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                    [nzIcon]="iconTpl"
+                    [nzOkText]="'COMMON.btn.yes' | translate"
+                    [nzCancelText]="'COMMON.btn.no' | translate"
+                    class="btn btn-light btn-14 py-3 w_130 mr-2" 
+                    (nzOnCancel)="isVisible = true" 
+                    (nzOnConfirm)="isVisible = false">
+                    Hủy
+                </button>
+                <ng-template #iconTpl>
+                    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+                </ng-template>
+                <button class="btn btn-primary btn-14 py-3 w_130" (click)="mode == 'create' ? onCreate() : onEdit()">Ghi lại</button>
+            </ng-container>
+            <ng-template #isDetail>
+                <button class="btn btn-light btn-14 py-3 w_130" (click)="isVisible = false">Hủy</button>
+            </ng-template>
+        </div>
+    </div>
+    <!-- Chọn phòng họp -->
+    <app-meeting-room-modal #meetingRoom="meeting-room" [formGroup]="formGroup" (phongHopEmit)="onPhongHop($event)"></app-meeting-room-modal>
+    <!-- Chọn khu vực phòng họp -->
+    <app-area-room-modal #areaRoom="area-room" [formGroup]="formGroup" (phongHopEmit)="onPhongHop($event)"></app-area-room-modal>
+    <!-- Kiểm tra trang thái người họp -->
+    <app-participants-modal #participants="participants" [formGroup]="formGroup" [nhanViens]="nhanVienTable"></app-participants-modal>
+</nz-modal>

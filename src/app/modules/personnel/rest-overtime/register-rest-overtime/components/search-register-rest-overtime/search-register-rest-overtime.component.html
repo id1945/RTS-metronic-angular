@@ -1,0 +1,231 @@
+<ng-container [ngSwitch]="params?.screen || '' | lowercase">
+    <!-- Holiday -->
+    <ng-container *ngSwitchCase="PER_SCREEN.HOLIDAY">
+        <form [formGroup]="formGroup1">
+            <div class="p-5">
+                <div class="row">
+                    <div class="col-4 ctrl_label">
+                        Loại nghỉ<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8 select_42">
+                        <nz-select [nzOptions]="holidayTypeOptions" formControlName="TYPELEAVE" nzShowSearch nzAllowClear nzPlaceHolder="Loại nghỉ" class="w-100">
+                        </nz-select>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Từ ngày<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <nz-date-picker formControlName="FROMDATE" nzFormat="dd/MM/yyyy" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Đến ngày<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <nz-date-picker formControlName="TODATE" nzFormat="dd/MM/yyyy" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div class="row pt-3">
+                    <div class="col-4 ctrl_label"></div>
+                    <div class="col-8">
+                        <label nz-checkbox formControlName="IS_DOTXUAT" class="pt-2">Đột xuất</label>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Lý do<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <textarea formControlName="NOTE" cols="30" rows="3" class="w-100 form-control input_42 pt-3" placeholder="Lý do"></textarea>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">Người nhận bàn giao</div>
+                    <div class="col-8">
+                        <nz-input-group nzSearch [nzAddOnAfter]="searchPersonIconButton">
+                            <input type="text" [ngModel]="recipientSelected?.FULLNAME_VN" placeholder="Người nhận bàn giao" class="form-control input_42" [ngModelOptions]="{standalone: true}"/>
+                            <input type="text" formControlName="RECIPIENT" disabled readonly class="d-none"/>
+                        </nz-input-group>
+                        <ng-template #searchPersonIconButton>
+                            <button class="btn btn-primary btn-square h_42 btn_search_person" (click)="handoverRecipient.showModal()"><i nz-icon nzType="search"></i></button>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div class="row justify-content-end pt-5">
+                    <div class="col-8">
+                        <button class="btn btn-warning w-100" (click)="onRegister(true)">Đăng ký</button>
+                    </div>
+                </div>
+                
+                <hr class="my-5">
+                <div class="row"><div class="col-12 text-blue-01 font_size_16">Điều kiện lọc:</div></div>
+                <div class="row pt-3">
+                    <div class="col-12">
+                        <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="onChangeStatus($event, 1)">
+                            <div><label nz-checkbox nzValue="0" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-success">Đăng ký</label></div>
+                            <div><label nz-checkbox nzValue="1" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-warning">Chờ phê duyệt</label></div>
+                            <div><label nz-checkbox nzValue="2" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-primary">Đã phê duyệt</label></div>
+                            <div><label nz-checkbox nzValue="3" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-danger">Từ chối</label></div>
+                        </nz-checkbox-wrapper>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <span class="text-danger">Chú ý:</span> 
+                        Chuột phải để đăng ký, gửi duyệt hoặc xóa đăng ký nghỉ
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+
+    <!-- overtime -->
+    <ng-container *ngSwitchCase="PER_SCREEN.OVERTIME">
+        <form [formGroup]="formGroup2">
+            <div class="p-5">
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Từ giờ<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <nz-date-picker formControlName="FromHour" [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm" [nzPlaceHolder]="'Từ giờ'" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Đến giờ<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <nz-date-picker formControlName="ToHour" [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm" [nzPlaceHolder]="'Đến giờ'" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label"></div>
+                    <div class="col-8">
+                        <label nz-checkbox formControlName="IS_QUENCHAMCONG">Check vân tay</label>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Lý do<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" formControlName="Remark" class="form-control input_42" placeholder="Lý do">
+                    </div>
+                </div>
+
+                <div class="row justify-content-end pt-5">
+                    <div class="col-8">
+                        <button class="btn btn-warning w-100" (click)="onRegister(true)">Đăng ký</button>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+                <div class="row"><div class="col-12 text-blue-01 font_size_16">Điều kiện lọc:</div></div>
+                <div class="row pt-3">
+                    <div class="col-12">
+                        <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="onChangeStatus($event, 2)">
+                            <div><label nz-checkbox nzValue="0" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-success">Đăng ký</label></div>
+                            <div><label nz-checkbox nzValue="1" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-warning">Chờ phê duyệt</label></div>
+                            <div><label nz-checkbox nzValue="2" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-primary">Đã phê duyệt</label></div>
+                            <div><label nz-checkbox nzValue="3" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-danger">Từ chối</label></div>
+                        </nz-checkbox-wrapper>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <span class="text-danger">Chú ý:</span> 
+                        Chuột phải để đăng ký, gửi duyệt hoặc xóa đăng ký nghỉ
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    
+    <!-- wleo -->
+    <ng-container *ngSwitchCase="PER_SCREEN.WLEO">
+        <form [formGroup]="formGroup3">
+            <div class="p-5">
+                <div class="row">
+                    <div class="col-4 ctrl_label">
+                        Loại đi muộn về sớm<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8 select_42">
+                        <nz-select [nzOptions]="typeWLEOOptions" formControlName="TYPEREGISTERID" nzShowSearch nzAllowClear nzPlaceHolder="Loại đi muộn về sớm" class="w-100">
+                        </nz-select>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Từ giờ<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <nz-date-picker formControlName="FROMHOUR" [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Đến giờ<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8">
+                        <nz-date-picker formControlName="TOHOUR" [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="dd/MM/yyyy HH:mm" class="form-control input_42"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Thời gian đăng ký
+                    </div>
+                    <div class="col-8">
+                        <input type="text" formControlName="ReTime" class="form-control input_42 text-right readonly" placeholder="Phút" readonly>
+                    </div>
+                </div>
+
+                <div class="row pt-5">
+                    <div class="col-4 ctrl_label">
+                        Lý do<span class="text-danger">(*)</span>
+                    </div>
+                    <div class="col-8 select_42">
+                        <nz-select [nzOptions]="reasonWLEOOptions" formControlName="REASONID" nzShowSearch nzAllowClear nzPlaceHolder="Lý do" class="w-100">
+                        </nz-select>
+                    </div>
+                </div>
+
+                <div class="row justify-content-end pt-5">
+                    <div class="col-8">
+                        <button class="btn btn-warning w-100" (click)="onRegister(true)">Đăng ký</button>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+                <div class="row"><div class="col-12 text-blue-01 font_size_16">Điều kiện lọc:</div></div>
+                <div class="row pt-3">
+                    <div class="col-12">
+                        <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="onChangeStatus($event, 3)">
+                            <div><label nz-checkbox nzValue="0" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-success">Đăng ký</label></div>
+                            <div><label nz-checkbox nzValue="1" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-warning">Chờ phê duyệt</label></div>
+                            <div><label nz-checkbox nzValue="2" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-primary">Đã phê duyệt</label></div>
+                            <div><label nz-checkbox nzValue="3" [ngModel]="true" [ngModelOptions]="{standalone: true}" class="pt-2 text-danger">Từ chối</label></div>
+                        </nz-checkbox-wrapper>
+                    </div>
+                    <div class="col-12 pt-3">
+                        <span class="text-danger">Chú ý:</span> 
+                        Chuột phải để đăng ký, gửi duyệt hoặc xóa đăng ký nghỉ
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    <!-- *ngSwitchDefault -->
+</ng-container>
+<app-handover-recipient-modal #handoverRecipient="handover-recipient" (selected)="recipientSelected = $event; f1.RECIPIENT.setValue($event?.EMPLOYEE_ID)"></app-handover-recipient-modal>

@@ -1,0 +1,64 @@
+<nz-modal
+    nzCentered
+    [nzWidth]="500"
+    [(nzVisible)]="isVisible"
+    [nzFooter]="null"
+    (nzOnCancel)="isVisible = false"
+    [nzMaskClosable]="false"
+    [nzTitle]="title"
+    (nzOnOk)="isVisible = false">
+
+    <div class="p-8">
+        <h6 *ngIf="confirm">{{confirm}}</h6>
+        <form [formGroup]="formGroup">
+            <div class="row mb-5">
+                <div class="col-12">
+                    {{lableContent}} <span *ngIf="requiredContent" class="text-danger">(*)</span>
+                </div>
+                <div class="col-12">
+                    <textarea rows="3" formControlName="content" class="form-control input_42 pt-3"></textarea>
+                    <div class="form-text text-danger" *ngIf="requiredContent && f?.content?.errors && f?.content?.touched">
+                        {{msgContent}}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12">
+                {{lableFile}} <span *ngIf="requiredFile" class="text-danger">(*)</span>
+            </div>
+            <div class="col-12">
+                <app-select-file 
+                    [reset]="true" 
+                    [multiple]="isMultiple" 
+                    [acceptKey]="'excel_word_pdf_rar_zip'" 
+                    [text]="lableFileBtn" 
+                    [(selectedFiles)]="selectedFiles">
+                </app-select-file>
+                <div class="form-text text-danger" *ngIf="requiredFile && selectedFiles?.length === 0">
+                    {{msgFile}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="d-flex justify-content-end">
+            <button
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'COMMON.btn.are_you_sure' | translate }}"
+                [nzIcon]="iconTpl"
+                [nzOkText]="'COMMON.btn.yes' | translate"
+                [nzCancelText]="'COMMON.btn.no' | translate"
+                class="btn btn-light btn-14 w_130 py-3 mr-2"
+                (nzOnCancel)="isVisible = true"
+                (nzOnConfirm)="isVisible = false"
+                [translate]="'COMMON.btn.cancel'">
+            </button>
+            <ng-template #iconTpl>
+                <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+            </ng-template>
+            <button class="btn btn-primary btn-14 py-3 w_130" (click)="onSubmit()" [translate]="'COMMON.btn.confirm'"></button>
+        </div>
+    </div>
+</nz-modal>

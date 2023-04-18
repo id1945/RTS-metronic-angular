@@ -1,0 +1,399 @@
+<div class="row">
+    <div class="col-xxl-12 order-1 order-xxl-1">
+        <!--begin::Header-->
+        <h5 class="card-title font-weight-bolder text-primary-gray mb-2">
+            {{ 'PERSONAL.Title' | translate }}
+        </h5>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="row col-12 alert alert-custom alert-white mx-0 p box-shadow">
+            <div class="col-1 pl-0">
+                <div>
+                    <div class="symbol symbol-circle symbol-100">
+                        <img [src]="infoNhanVien?.anhDaiDien" onError="this.src='assets/media/users/blank.png'" width="100px" height="100px" alt="image">
+                    </div>
+                    <div class="symbol symbol-lg-100 symbol-circle symbol-primary d-none">
+                        <span class="font-size-h3 font-weight-boldest">JM</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <!--begin::Title-->
+                <div class="d-flex flex-column row py-3">
+                    <a class="text-primary-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{infoNhanVien?.hoTen}}</a>
+                    <span class="text-primary-dark-5 font-weight-bold">{{infoNhanVien?.tenChucVu}}</span>
+                </div>
+                <div class="d-flex justify-content-start align-items-center my-2">
+                    <span class="bg-light mx-2">
+                        <i class="la la-envelope-open-text text-primary-dark p-2"></i>
+                    </span>
+                    <a class="text-dark text-hover-primary font-weight-bold">{{infoNhanVien?.emailCongTy}}</a>
+
+                    <span class="bg-light mx-2">
+                        <i class="la la-phone text-primary-dark p-2"></i>
+                    </span>
+                    <a class="text-dark text-hover-primary font-weight-bold">
+                        {{infoNhanVien?.soDienThoai}} 
+                        (ext: {{infoNhanVien?.soMayLe}})
+                    </a>
+                    <div class="d-flex justify-content-start align-items-center my-2">
+                        <span class="bg-light mx-2">
+                            <i class="la la-map-marker-alt text-primary-dark p-2"></i>
+                        </span>
+                        <a class="text-dark text-hover-primary font-weight-bold">{{infoNhanVien?.diaChiCuTru}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-5 py-3">
+                <div class="d-flex align-items-center mb-3 ">
+                    <!--begin::Symbol-->
+                    <div class="col-lg-4">
+                        <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15">{{ 'PERSONAL.WORK.KPI_MONTH' | translate }}</a>
+                    </div>
+                    <!--end::Symbol-->
+                    <!--begin::Text-->
+                    <div class="col-lg-8">
+                        <input class="form-control mr-2"
+                            style="background-color: #F6C244;color: white;text-align: center; height: 25px;width: 100%;"
+                            readonly value="80%" />
+                    </div>
+                    <!--end::Text-->
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <!--begin::Symbol-->
+                    <div class="col-lg-4">
+                        <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15">{{ 'PERSONAL.WORK.KPI_QUARTERLY' | translate }}</a>
+                    </div>
+                    <!--end::Symbol-->
+                    <!--begin::Text-->
+                    <div class="col-lg-8">
+                        <input class="form-control mr-2"
+                            style="background-color: #5FCD89;color: white;text-align: center; height: 25px;width: 60%;"
+                            readonly value="60%" />
+                    </div>
+                    <!--end::Text-->
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <!--begin::Symbol-->
+                    <div class="col-lg-4">
+                        <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15">{{ 'PERSONAL.WORK.KPI_YEAR' | translate }}</a>
+                    </div>
+                    <!--end::Symbol-->
+                    <!--begin::Text-->
+                    <div class="col-lg-8">
+                        <input class="form-control mr-2"
+                            style="background-color: #4E9EEF;color: white;text-align: center; height: 25px;width: 50%;"
+                            readonly value="30%" />
+                    </div>
+                    <!--end::Text-->
+                </div>
+            </div>
+        </div>
+        <!--end::Body-->
+
+        <div class="col-12 alert alert-custom alert-white gutter-b mx-0 box-shadow flex-wrap">
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-60 symbol-light">
+                    <span class="symbol-label">
+                        <img src="assets/media/bg/Vector_thanhtoan.svg" class="h-60 align-self-center">
+                    </span>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Title-->
+                <div class="text-blue-01 truncate ml-2" routerLink="/submissions/requests-payment">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Thanh toán/tạm ứng"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'PERSONAL.WORK.REQUEST_PAYMENT' | translate }}
+                    </div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.thanhToanTamUng || 0}}</div>
+                    </div>
+                </div>
+                <!--end::Title-->
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-60 symbol-light">
+                    <span class="symbol-label">
+                        <img src="assets/media/bg/Vector_totrinh.svg" class="h-60 align-self-center">
+                    </span>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Title-->
+                <div class="text-blue-01 ml-2" routerLink="/submissions/list">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Tờ trình"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>
+                        {{ 'PERSONAL.WORK.PROPOSE_DOCUMENT' | translate }}
+                    </div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.toTrinh || 0}}</div>
+                    </div>
+                </div>
+                <!--end::Title-->
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <div>
+                        <img src='assets/media/bg/Vector_hosokhac.svg'
+                            onError="this.src='assets/media/bg/image_not_available.png'" alt="image">
+                    </div>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Title-->
+                <div class="text-blue-01 ml-2" routerLink="/purchase/list">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Mua hàng"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'PERSONAL.WORK.PURCHASE' | translate }}</div>
+                    <div class="font-size-h1 font-weight-bolder d-flex">
+                        <div>{{asideMenu?.totalMuaHang$ | async}}</div>
+                    </div>
+                </div>
+                <!--end::Title-->
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <div>
+                        <img src='assets/media/bg/Vector_nhansu.svg'
+                            onError="this.src='assets/media/bg/image_not_available.png'" alt="image">
+                    </div>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Title-->
+                <div class="text-blue-01 ml-2">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Nhân sự"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'PERSONAL.WORK.Staffing' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.nhanSu || 0}}</div>
+                    </div>
+                </div>
+                <!--end::Title-->
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <div>
+                        <img src='assets/media/bg/Vector_pheduyetkhac.svg' alt="image">
+                    </div>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Title-->
+                <div class="text-blue-01 ml-2">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Phê duyệt khác"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'PERSONAL.WORK.SCHEDULE' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.pheDuyetKhac || 0}}</div>
+                    </div>
+                </div>
+                <!--end::Title-->
+            </div>
+
+            <div class="col-6 col-sm-2 col-xxl-2 d-flex align-items-center px-0">
+                <!--begin::Symbol-->
+                <div class="symbol symbol-60 flex-shrink-0">
+                    <div>
+                        <img src='assets/media/bg/Vector_congvieckhac.svg'
+                            onError="this.src='assets/media/bg/image_not_available.png'" alt="image">
+                    </div>
+                </div>
+                <!--end::Symbol-->
+                <!--begin::Title-->
+                <div class="text-blue-01 ml-2">
+                    <div class="font-size-lg font-weight-bold truncate" nzTooltipTitle="Công việc"
+                        nzTooltipPlacement="top" nz-button nz-tooltip>{{ 'PERSONAL.WORK.KPI_YEAR' | translate }}</div>
+                    <div class="font-size-h2 font-weight-bolder d-flex align-items-center">
+                        <div>{{choToiPheDuyet?.congViec || 0}}</div>
+                    </div>
+                </div>
+                <!--end::Title-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-row">
+    <!--begin::Aside-->
+    <div class="flex-row-auto offcanvas-mobile w-300px w-xl-350px box-shadow" id="kt_profile_aside">
+        <div class="card card-custom card-stretch">
+            <!--begin::Body-->
+            <!--begin::Card-->
+            <div class="card card-custom card-stretch">
+                <!--begin::Body-->
+                <div class="card-body pt-4 employee_box px-4">
+
+                    <!--begin::Info-->
+                    <div class="mb-7 px-3">
+                        <div class="d-flex align-items-center mb-5">
+                            <button class="form-control mr-2 text-white" (click)="menuKey = 'user_info'" style="background-color: #4E9EEF;">
+                                <i class="fa fa-user text-white"></i> {{ 'PERSONAL.Title' | translate }}
+                            </button>
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-bag icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" routerLink="/purchase/list">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_PURCHASE' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-suitcase icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" routerLink="/submissions/requests-payment">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_PAYMENT' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-file-2 icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" routerLink="/submissions/list">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_PROPOSE' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-time-2 icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_Timekeeping' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-coins icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" routerLink="/administration/registervehicle">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_VEHICLE' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-coins icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" routerLink="/administration/delivery">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_DELIVER' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-coins icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" routerLink="/administration/parcel">
+                                    {{ 'PERSONAL.PERSONAL_INFO.MY_PARCEL' | translate }}
+                                </a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-profile-1 icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15">{{ 'PERSONAL.PERSONAL_INFO.MY_IMAGE' | translate }}</a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Symbol-->
+                            <div class="symbol symbol-40 symbol-light-primary flex-shrink-0 mr-4">
+                                <span class="h_40 w_40">
+                                    <i class="flaticon-chat-2 icon-2x text-primary-dark p-2"></i>
+                                </span>
+                            </div>
+                            <!--end::Symbol-->
+                            <!--begin::Text-->
+                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 mr-2">
+                                <a class="text-primary-dark font-weight-bold text-hover-primary mb-0 font_size_15" (click)="menuKey = 'signature'">{{ 'Quản lý chữ ký số' | translate }}</a>
+                            </div>
+                            <!--end::Text-->
+                        </div>
+                    </div>
+                    <!--end::Info-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Card-->
+            <!--end::Body-->
+        </div>
+    </div>
+    <!--end::Aside-->
+
+    <!--begin::Content-->
+    <div class="flex-row-fluid ml-lg-8 box-shadow">
+        <div [ngSwitch]="menuKey" class="card card-custom card-stretch p-10">
+            <app-user-info *ngSwitchCase="'user_info'" [infoNhanVien]="infoNhanVien"></app-user-info>
+            <app-image-signature *ngSwitchCase="'signature'"></app-image-signature>
+        </div>
+    </div>
+    <!--end::Content-->
+</div>

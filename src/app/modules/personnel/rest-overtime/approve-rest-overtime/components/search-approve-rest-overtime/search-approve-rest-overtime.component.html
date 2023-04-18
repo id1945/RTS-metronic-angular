@@ -1,0 +1,60 @@
+<div class="row search_table">
+    <!-- Input text -->
+    <div class="col-12 px-0 input-group">
+        <div class="input-group-prepend position-relative">
+            <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 30px; right: 15px;"></i>
+            <input type="text" class="form-control" placeholder="Tìm kiếm nhân viên" (input)="SearchText$.next($event.target.value)" />
+        </div>
+        <button 
+            type="button" 
+            class="btn ml-2"
+            [class.btn-primary]="!isSearchAdvance" 
+            [class.btn-info]="isSearchAdvance" 
+            style="width: 50px"
+            (click)="isSearchAdvance = !isSearchAdvance;">
+            <i *ngIf="!isSearchAdvance" nz-icon nzType="appstore-add" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+            <i *ngIf="isSearchAdvance" nz-icon nzType="appstore" nzTheme="outline" class="p-0 pb-1 icon-lg"></i>
+        </button>
+    </div>
+    <!-- Search advance -->
+    <ng-container *ngIf="isSearchAdvance">
+        <div class="col-12 px-0 mb-2 input-group">
+            <nz-date-picker
+                [ngModel]="paginator.FromDate"
+                (ngModelChange)="paginator.FromDate = $event; emit()"
+                [nzPlaceHolder]="'Ngày bắt đầu'"
+                nzFormat="dd/MM/yyyy"
+                style="width: 170px;">
+            </nz-date-picker>
+                <nz-date-picker
+                [ngModel]="paginator.ToDate"
+                (ngModelChange)="paginator.ToDate = $event; emit()"
+                [nzPlaceHolder]="'Ngày kết thúc'"
+                nzFormat="dd/MM/yyyy"
+                style="width: 170px;">
+            </nz-date-picker>
+            <ng-container [ngSwitch]="params?.screen || '' | lowercase">
+                <ng-container *ngSwitchCase="PER_SCREEN.HOLIDAY">
+                    <nz-select
+                        ngModel="null"
+                        (ngModelChange)="paginator.Type = $event; emit()"
+                        [nzOptions]="holidayTypeOptions"
+                        nzAllowClear
+                        nzPlaceHolder="Loại nghỉ"
+                        style="width: 230px;">
+                    </nz-select>
+                </ng-container>
+                <ng-container *ngSwitchCase="PER_SCREEN.WLEO">
+                    <nz-select
+                        ngModel="null"
+                        (ngModelChange)="paginator.Type = $event; emit()"
+                        [nzOptions]="typeWLEOOptions"
+                        nzAllowClear
+                        nzPlaceHolder="Loại đi muộn về sớm"
+                        style="width: 230px;">
+                    </nz-select>
+                </ng-container>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

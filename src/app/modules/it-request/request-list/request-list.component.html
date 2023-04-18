@@ -1,0 +1,72 @@
+<div class="card card-custom">
+    <div class="card-header border-0">
+        <div class="card-title">
+            <h3 class="card-label"> {{'Danh sách yêu cầu hỗ trợ' | translate }} </h3>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <!-- begin: search -->
+        <div class="row search_table">
+            <div class="col-12 col-md-6 text-left px-0">
+                <div class="input-group-prepend position-relative">
+                    <i class="fab la-sistrix icon-lg position-absolute" style="bottom: 20px; right: 15px;"></i>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm email ..." [value]="paginator.email" (input)="SearchText$.next($event.target.value)" />
+                </div>
+            </div>
+            <div class="col-12 col-md-6 text-right px-0">
+                <button type="button" class="btn btn-primary mb-3 mb-md-0 mx-0 mx-md-1 w_150" (click)="formItRequest.showModal(null, 1)">{{ 'COMMON.btn.add_new' | translate }}</button>
+            </div>
+        </div>
+        <!-- end: search -->
+        <!-- begin: table -->
+        <nz-table
+            [nzLoading]=""
+            [nzSize]="'small'"
+            [nzData]="dataTable.items"
+            [nzShowPagination]="false"
+            [nzScroll]="{ x: '1100px', y: 'calc(100vh - 365px)' }">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let col of dataTable.columns">
+                        <th
+                            [nzAlign]="col?.align"
+                            [nzWidth]="col?.width">
+                            {{ col?.title }}
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let data of dataTable.items">
+                    <tr class="cursor-pointer">
+                        <ng-container *ngFor="let col of dataTable.columns">
+                            <td [nzAlign]="col?.align" class="px-1" [ngSwitch]="col.field">
+                                <span *ngSwitchCase="'stage_name'">
+                                    <ng-container [ngSwitch]="true">
+                                        <span *ngSwitchCase="data[col.field]?.includes('duyệt') && !data[col.field]?.includes('Chờ')" class="label label-success label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchCase="data[col.field] == 'Đã hủy'" class="label label-danger label-inline">
+                                            {{ data[col.field] }}
+                                        </span>
+                                        <span *ngSwitchDefault class="label label-light label-inline">{{ data[col.field] }}</span>
+                                    </ng-container>
+                                </span>
+                                <!-- <div *ngSwitchCase="'thaoTac'" class="d-flex justify-content-center">
+                                    <a title="Edit" (click)="formItRequest.showModal(data, 2)" class="btn btn-icon btn-hover btn-sm mx-2">
+                                        <img src="assets/media/bg/Vector_edit.svg" class="align-self-center w_30 h_30">
+                                    </a>
+                                </div> -->
+                                <span *ngSwitchDefault class="truncate-2" [title]="data[col.field]" (click)="formItRequest.showModal(data, 3)">{{ data[col.field] || '-' }}</span>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </nz-table>
+        <!-- end: table -->
+        <app-paginator [paginator]="paginator" (paginate)="getList()"></app-paginator>
+    </div>
+</div>
+<!-- Form -->
+<app-form-request-modal #formItRequest="form-it-request" (loadList)="getList()"></app-form-request-modal>
